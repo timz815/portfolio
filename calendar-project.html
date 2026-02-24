@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project - Tim</title>
+  <link rel="icon" href="https://media.githubusercontent.com/media/timz815/portfolio/main/icon/waving-hand.svg" type="image/svg+xml">
+
+<!-- Google Fonts -->
+<!-- Source: https://fonts.google.com/specimen/Lato -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<link rel="stylesheet" href="css/normalize.css">
+
+<!-- Main Stylesheet -->
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/project.css">
+<link rel="stylesheet" href="css/lightbox.css">
+
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: #FDFBF7;
+    margin: 0 auto;
+    font-family: "Lato", sans-serif;
+  }
+  
+</style>
+</head>
+
+<body>
+<header id="top" role="banner">
+<div class="header-divider">
+
+  <nav class="navbar" aria-label="Primary navigation">
+    <div class="logo">
+      <a class="link" href="index.html#works">Timothy Zhang</a>
+    </div>
+    <div class="nav-links">
+      <a class="link" href="index.html">Works</a>
+      <!-- <a class="link" href="misc.html">Misc.</a> -->
+      <a class="link" href="about.html">About</a>
+    </div>
+  </nav>
+
+</div>
+</header>
+
+<main role="main">
+<div class="main-divider">
+
+  <section class="title-section">
+    <div class="title-card" id="calendar-banner">
+      <div class="title-card-content">
+        <div class="title-card-wrapper">
+          <h1 class="card-title">Hangout Calendar</h1>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="content-section">
+    <div class="article-max-width">
+        <div class="article-text-width">
+          <section id="intro">
+            <div class="para-section">
+              <h2 id="intro-opening">
+                HangoutCalendar is a cross-platform scheduling app that reduces the time and cognitive load students face when coordinating group meetings.
+              </h2>
+              <p>
+                It shows group members' overlapping free time and users’ personal calendars, giving users an easy way to confirm meeting times with reminders.
+              </p>
+              <a class="underline-link" href="#solution">Jump to Solution</a>
+              <a class="underline-link" href="https://github.com/jjrbf/HangoutCalendarApp" target="_blank">View Project Code</a>
+            </div>
+          </section>
+
+          <hr class="doc-divider">
+
+          <section id="overview">
+            <h2>Project Overview</h2>
+            <div class="overview-container">
+              <!-- First container (Team & Tools) -->
+              <div>
+                <!-- Team -->
+                <div class="para-section">
+                  <h3 id="cal-team">Team</h3>
+                  <ul>
+                    <li>Johann Ferrera</li>
+                    <li>Timothy Zhang</li>
+                  </ul>
+                </div>
+                <!-- Tools -->
+                <div class="para-section">
+                  <h3 id="cal-tools">Tools</h3>
+                  <ul>
+                    <li>Figma</li>
+                    <li>Expo Go</li>
+                    <li>React Native</li>
+                    <li>Firebase</li>
+                  </ul>
+                </div>
+              </div>
+              <!-- Second container (Context & Contributions) -->
+              <div>
+                <!-- Context -->
+                <div class="para-section">
+                  <h3>Context</h3>
+                  <p>
+                    This was a seven-week team project (Oct - Dec 2024) completed as part of a <a class="underline-link" href="https://www.sfu.ca/outlines.html?2024/fall/iat/359/d100" target="blank_">app development course</a>.
+                  </p>
+                </div>
+                <!-- Contributions -->
+                <div class="para-section" id="overview-last">
+                  <h3>Contributions</h3>
+                  <p>
+                    I worked both across both design and front-end implementation, from the problem framing and designing the dual-calendar model to coding front-end features. My teammate focused on back end architecture, system logic, authentication and availability visualization.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <hr class="doc-divider">
+
+          <section id="process">
+            <h2>The Process</h2>
+            <div class="para-section">
+              <h3>Problem Space</h3>
+              <p>
+                Coordinating group meetings can be messy and frustrating, especially when participants have conflicting schedules. For instance, university students, whose schedules often vary due to different classes and commitments, can find it difficult to coordinate a time that works for everyone.
+              </p>
+              <p>
+                Traditional tools like Google Calendar or Outlook focus on individual scheduling while providing little support for group planning. Conversely, group scheduling solutions such as Calendly are either geared towards individual appointment bookings or unintuitive and not optimized for group scheduling workflows. Together, these limitations leave users without an efficient way to coordinate group meetings.
+              </p>
+            </div>
+            <div class="para-section">
+              <h3>Opportunity</h3>
+              <p>
+                Users could benefit from a tool that helps groups efficiently find meeting times and reduce scheduling friction.
+              </p>
+            </div>
+            <div class="para-section">
+              <h3>Research + Insights</h3>
+              <p>
+                To understand how students currently coordinate group meetings, we conducted informal interviews with classmates and friends on planning group meetings and thoughts on prototypes.
+              </p>
+              <p>
+                Our main takeaways were:
+              </p>
+              <section class="insight-list">
+                <div class="insight-card">
+                  <h3>Users value social boundaries and privacy</h3>
+                  <p>
+                    Participants want to keep calendar events and details separate for unrelated social circles (friends, classmates, family), because what they are comfortable and willing to share are different between groups. 
+                  </p>
+
+                </div>
+                <div class="insight-card">
+                  <h3>Users want real-time clarity without real-time participation</h3>
+                  <p>
+                    Users understand availability most easily when everyone can respond simultaneously, but it isn't always feasible. When scheduling asynchronously, suggested times and availability become scattered as without a shared source of truth, coordination slows and planning can stall.
+                  </p>
+
+                </div>
+              </section>
+            </div>
+            <div class="para-section">
+              <p>
+                Based on these findings, we created a current user journey to capture how students  coordinate meetingsand identify points where asynchronous delays create friction.
+              </p>
+            </div>
+          </section>
+        </div>
+
+        <section class="article-img">
+          <div class="image-board">
+            <div class="image-item rounded-nm contain">
+              <img src="https://media.githubusercontent.com/media/timz815/portfolio/main/media/calendar-journey.png" alt="calendar journey flow">
+            </div>
+          </div>
+          <figcaption class="article-caption">The current user journey based on our research.</figcaption>
+        </section>
+
+        <div class="article-text-width">
+          <section>
+            <div class="para-section">
+              <h3>Design Focus</h3>
+              <p>
+                Thus, our driving question became:
+                How might we help groups quickly identify and confirm shared availability without requiring real-time response, while preserving separation between social contexts in an intuitive way?
+              </p>
+            </div>
+          </section>
+
+          <hr class="doc-divider" id="solution">
+
+          <section id="briefing">
+            <h2>Solution Briefing</h2>
+            <div class="para-section">
+              <h3>Hangout Calendar App</h3>
+              <p>
+                A design that organizes personal and group schedules into a clear, visual interface for students to coordinate meetings efficiently by acting directly on information surfaced from all available times.
+              </p>
+            </div>
+            <h3>Familiar Interaction Patterns</h3>
+          </section>
+        </div>
+
+        <section class="article-img">
+          <div class="image-board">
+            <div class="image-item demo-img-height justify-center rounded-nm">
+              <img src="https://media.githubusercontent.com/media/timz815/portfolio/main/media/app-preview-1.png" alt="two app screens">
+            </div>
+          </div>
+          <figcaption class="article-caption">Left screen: friend adding, right screen: group calendars.</figcaption>
+        </section>
+
+        <div class="article-text-width">
+          <section>
+            <div class="para-section">
+              <p>
+                Although HangoutCalendar introduces a new approach to group scheduling, it is grounded in familiar interaction patterns to reduce onboarding friction. By borrowing conventions from messaging and social apps, such as profile-based identity, adding contacts, and bottom tab navigation, users can quickly move between personal calendars, group calendars, and their profile without learning a new mental model.
+              </p>
+            </div>
+            <h3>Group-based Seperation</h3>
+          </section>
+        </div>
+
+        <section class="article-img">
+          <div class="image-board">
+            <div class="image-item demo-img-height justify-center rounded-nm">
+              <img src="https://media.githubusercontent.com/media/timz815/portfolio/main/media/app-preview-2.png" alt="two app screens">
+            </div>
+          </div>
+          <figcaption class="article-caption">Left screen: group page, right screen: adding a group event.</figcaption>
+        </section>
+
+        <div class="article-text-width">
+          <section>
+            <div class="para-section">
+              <p>
+                Scheduling happens within group spaces, where users can add members, similar to how conversations are organized in messaging apps. Within each group, users can view and manage plans specific to that group, which makes commitments within the group clear and easy to understand.
+              </p>
+              <p>
+                When creating a new event, availability is presented as a timetable with unavailable timeslots greyed out (red). This is derived from each members’ personal calendars, so shared free slots can be identified without revealing each individual commitment. Events then can be confirmed directly within the group.
+              </p>
+            </div>
+            <h3>Synced Personal Calendar</h3>
+        </div>
+
+        <section class="article-img">
+          <div class="image-board">
+            <div class="image-item demo-img-height justify-center rounded-nm">
+              <img src="https://media.githubusercontent.com/media/timz815/portfolio/main/media/app-preview-3.png" alt="two app screens">
+            </div>
+          </div>
+          <figcaption class="article-caption">Left screen: personal calendar, right screen: single event details.</figcaption>
+        </section>
+
+        <div class="article-text-width">
+          <section>
+            <div class="para-section">
+              <p>
+                The personal calendar tab serves as a dashboard for users to view all their commitments and personal schedule in one place. Continuous syncing with group calendars keeps it up to date automatically.
+              </p>
+            </div>
+          </section>
+        </div>
+
+        <div class="article-text-width">
+          <section>
+            <div class="para-section">
+              <h3>Interaction Design & Challenges</h3>
+              <p>
+                Most scheduling apps rely on a compact calendar header at the top of the screen to keep users oriented. Week view for quick scanning of the days in the current week, while month view provides structure for planning ahead. Because users move between these views frequently while scheduling, preserving spatial and temporal context during the week-to-month transition became a core interaction to get right in HangoutCalendar.
+              </p>
+              <p>
+                In reviewing existing calendar app plugins, we found many handled this transition poorly. Some replaced the week view abruptly with a full month, while others used inconsistent gesture controls which resulted in interactions that felt non-continuous and disjointed.
+              </p>
+              <p>
+                In the end, we anchored the interaction based on physical calendars. Horizontal swiping moves forward and backward in time, such as across weeks in week view or months in month view, similar to flipping calendar pages. Vertical gestures adjust the level of detail like transitioning between week and month views. This consistent gesture direction keeps navigation predictable, aligns with user intent, and also accommodates months of varying length smoothly (between 4 to 6 rows).
+              </p>
+            </div>
+          </section>
+        </div>
+
+        <section class="article-img">
+          <div class="image-board">
+            <div class="image-item justify-center rounded-nm">
+              <img src="https://media.githubusercontent.com/media/timz815/portfolio/main/media/calendar-solution.png" alt="two app screens">
+            </div>
+          </div>
+          <figcaption class="article-caption">The push and pull method to adjust from current week to current month.</figcaption>
+        </section>
+
+        <div class="article-text-width">
+
+          <hr class="doc-divider">
+
+          <section id="reflection">
+            <!-- <h2>Reflection</h2> -->
+            <h3>Locking Back...</h3>
+            <p>
+              Working under a tight deadline requires our team to be deliberate about our prioritization and scope. Early on the project, we defined clear boundaries around what was essential to demo HangoutCalendar’s core value from nice to have features. This gave us a framework for making tradeoffs and balancing our ambition with realistic execution as constraints emerged.
+            </p>
+            <p>
+              As the project progressed, we set clear cutoffs for feature exploration and used the roadmap to decide when ideas should be simplified or deferred. We prioritized delivering a reliable, synced calendar with simplified block event entries over implementing a full hour-by-hour vertical timetable day view, which was unlikely to be completed on time and deferred features like a dedicated notifications tab or colour coded calendars when they risked pulling focus from smoothing out core feature interactions.
+            </p>
+            <p>
+              This approach allowed us to deliver a cohesive, fully functioning app within the timeframe and successfully demonstrate the intended user experience and core interactions. It reinforced for me the value of focusing on user-facing outcomes rather than feature completeness, especially when working in a team setting under tight deadlines.
+
+            </p>
+          </section>
+          <section id="article-nav">
+            <a class="left-article" href="wrco-project.html">
+              <span class="material-symbols-outlined">arrow_left_alt</span>
+              <span class="article-link">Orchestra</span>
+            </a>
+
+            <a class="right-article" href="translate-project.html">
+              <span class="article-link">AI Translator</span>
+              <span class="material-symbols-outlined">arrow_right_alt</span>
+            </a>
+          </section>
+          
+        </div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" hidden>
+    <div class="lightbox-controls">
+        <button class="lightbox-btn lightbox-zoom" id="lightbox-zoom" aria-label="Zoom">
+          <span class="material-symbols-outlined">zoom_in</span>
+        </button>
+        <button class="lightbox-btn lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+    </div>
+
+    <nav class="lightbox-nav" id="lightbox-prev-nav" aria-label="Previous image">
+      <button id="lightbox-prev" class="lightbox-btn">
+        <span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
+      </button>
+    </nav>
+
+    <nav class="lightbox-nav" id="lightbox-next-nav" aria-label="Next image">
+      <button id="lightbox-next" class="lightbox-btn">
+        <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+      </button>
+    </nav>
+
+    
+    <div class="lightbox-content">
+        <img id="lightbox-image" src="" alt="">
+    </div>
+</div>
+
+<footer role="contentinfo">
+<div class="footer-divider">
+  <section class="footer-column">
+    <h3>Github Pages</h3>
+      <p>Designed and coded by me :)</p>
+      <p><a class="footer-link" href="https://github.com/timz815/" target="_blank">Page updated: 01-05-2026</a></p>
+  </section>
+
+  <section class="footer-column">
+    <h3>Contact</h3>
+    <p><a class="footer-link" href="mailto:tza92@sfu.ca">tza92@sfu.ca</a></p>
+    <p><a class="footer-link" href="https://www.linkedin.com/in/timothy-zhang-65a479230/" target="_blank">LinkedIn</a></p>
+  </section>
+
+  <section class="footer-column footer-right">
+    <a class="footer-link back-to-top" href="#top">
+      <span class="material-symbols-outlined">arrow_insert</span>
+      <span class="back-to-top-text">Back to top</span>
+    </a>
+  </section>
+
+
+</div>
+</footer>
+
+<script src="js/lightbox.js"></script>
+<script src="js/backtotop.js"></script>
+
+</body>
+</html>
