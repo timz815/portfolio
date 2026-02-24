@@ -15,6 +15,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentImages = []; // Current set of images to cycle through
     let hasMultipleImages = false; // Whether current group has multiple images
     
+    // State flags
+    let imageReady = false; // Whether current image is fully loaded and dimensions cached
+    let isTransitioning = false; // Whether we're in the middle of an image swap
+    
     // Group images by their parent image-board
     const imageGroups = [];
     imageBoards.forEach(board => {
@@ -49,7 +53,16 @@ document.addEventListener('DOMContentLoaded', function() {
     let naturalImgWidth = 0;
     let naturalImgHeight = 0;
 
+    // Container dimensions for layout stability
+    let containerWidth = 0;
+    let containerHeight = 0;
+
     function getZoomScale() {
+        // Guard against unloaded image
+        if (cachedImgWidth === 0 || cachedImgHeight === 0) {
+            return 1.5; // Fallback safe value
+        }
+        
         // Target: natural pixel size, clamped so image never exceeds 1.5x the viewport
         const maxScaleX = (window.innerWidth * 1.5) / cachedImgWidth;
         const maxScaleY = (window.innerHeight * 1.5) / cachedImgHeight;
@@ -70,6 +83,38 @@ document.addEventListener('DOMContentLoaded', function() {
         // Also store natural dimensions
         naturalImgWidth = lightboxImage.naturalWidth;
         naturalImgHeight = lightboxImage.naturalHeight;
+    }
+
+    function setContainerSizeFromImage() {
+        // Set fixed container dimensions based on current image to prevent layout shift
+        const maxVh = 90; // Match your CSS max-height: 90vh
+        const maxVw = 90; // Match your CSS max-width: 90vw
+        
+        // Calculate target display size while maintaining aspect ratio
+        const targetWidth = Math.min(naturalImgWidth, window.innerWidth * maxVw / 100);
+        const targetHeight = Math.min(naturalImgHeight, window.innerHeight * maxVh / 100);
+        
+        // Adjust to maintain aspect ratio if one dimension is constrained
+        const aspectRatio = naturalImgWidth / naturalImgHeight;
+        let finalWidth, finalHeight;
+        
+        if (targetWidth / targetHeight > aspectRatio) {
+            // Width is too large, constrain by height
+            finalHeight = targetHeight;
+            finalWidth = targetHeight * aspectRatio;
+        } else {
+            // Height is too large, constrain by width
+            finalWidth = targetWidth;
+            finalHeight = targetWidth / aspectRatio;
+        }
+        
+        // Apply fixed dimensions to container
+        lightboxContent.style.width = `${finalWidth}px`;
+        lightboxContent.style.height = `${finalHeight}px`;
+        
+        // Store for later use
+        containerWidth = finalWidth;
+        containerHeight = finalHeight;
     }
 
     function applyTransform() {
@@ -115,13 +160,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 currentIndex = indexInGroup;
                 hasMultipleImages = group.hasMultiple;
                 hasDragged = false;
-                updateLightbox();
+                imageReady = false; // New image not ready yet
+                isTransitioning = false;
+                
+                // Update UI to show loading state
+                lightboxZoom.style.opacity = '0.5';
+                lightboxZoom.style.pointerEvents = 'none';
+                
+                updateLightbox(true); // Open immediately
                 lightbox.classList.add('active');
                 enableFocusTrap();
                 document.body.style.overflow = 'hidden';
                 updateNavVisibility();
-                // Cache dimensions immediately so getZoomScale() is never working with stale zeroes
-                requestAnimationFrame(() => cacheDimensions());
             });
         });
     });
@@ -136,8 +186,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (lightboxPrev) {
         lightboxPrev.addEventListener('click', (e) => {
             e.stopPropagation();
-            if (isZoomed || !hasMultipleImages) return;
+            if (isZoomed || !hasMultipleImages || isTransitioning || !imageReady) return;
             currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+            imageReady = false;
+            isTransitioning = true;
+            lightboxZoom.style.opacity = '0.5';
+            lightboxZoom.style.pointerEvents = 'none';
             updateLightbox();
         });
     }
@@ -145,8 +199,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (lightboxNext) {
         lightboxNext.addEventListener('click', (e) => {
             e.stopPropagation();
-            if (isZoomed || !hasMultipleImages) return;
+            if (isZoomed || !hasMultipleImages || isTransitioning || !imageReady) return;
             currentIndex = (currentIndex + 1) % currentImages.length;
+            imageReady = false;
+            isTransitioning = true;
+            lightboxZoom.style.opacity = '0.5';
+            lightboxZoom.style.pointerEvents = 'none';
             updateLightbox();
         });
     }
@@ -164,17 +222,27 @@ document.addEventListener('DOMContentLoaded', function() {
         lightbox.classList.remove('active');
         disableFocusTrap();
         document.body.style.overflow = '';
+        
+        // Reset container styles
+        lightboxContent.style.width = '';
+        lightboxContent.style.height = '';
     }
 
-
     function toggleZoom() {
+        // Prevent zoom if image isn't ready
+        if (!imageReady) return;
+        
         const wasZoomed = isZoomed;
         isZoomed = !isZoomed;
         updateNavVisibility();
-        const SCALE = getZoomScale();
-
+        
         if (isZoomed) {
             // Zooming IN
+            if (!wasZoomed) {
+                // First time zooming, ensure dimensions are fresh
+                cacheDimensions();
+            }
+            
             translateX = 0;
             translateY = 0;
             targetX = 0;
@@ -183,104 +251,28 @@ document.addEventListener('DOMContentLoaded', function() {
             lightboxImage.classList.add('is-zoomed');
             lightboxImage.style.cursor = 'grab';
             lightboxZoom.querySelector('span').textContent = 'zoom_out';
-            cacheDimensions();
-
-            // Calculate the current scale before zooming
-            const currentScale = calculateFinalScale();
-
-            // Animate from current constrained scale to zoomed scale
-            animateZoom(currentScale, SCALE, 0, 0, 0, 0);
+            
+            // Remove fixed container dimensions when zoomed
+            lightboxContent.style.width = '';
+            lightboxContent.style.height = '';
+            
+            // Apply zoom transform
+            requestTransformUpdate();
         } else {
             // Zooming OUT
-            const currentTransX = translateX;
-            const currentTransY = translateY;
-
-            // Calculate what scale the image will be at when constrained
-            const finalScale = calculateFinalScale();
-
-            // State reset
-            translateX = 0;
-            translateY = 0;
-            targetX = 0;
-            targetY = 0;
-
             lightboxImage.style.cursor = 'zoom-in';
             lightboxZoom.querySelector('span').textContent = 'zoom_in';
-
-            // Animate to the constrained scale, then cleanup
-            animateZoom(SCALE, finalScale, currentTransX, currentTransY, 0, 0, () => {
-                lightboxImage.classList.remove('is-zoomed');
-                lightboxImage.style.transform = ''; // Clear inline transform
-            });
-        }
-    }
-
-    function calculateFinalScale() {
-        // Use NATURAL dimensions, not cached display dimensions
-        const naturalWidth = naturalImgWidth;
-        const naturalHeight = naturalImgHeight;
-        
-        // Temporarily remove is-zoomed to read unzoomed CSS values
-        const wasZoomed = lightboxImage.classList.contains('is-zoomed');
-        if (wasZoomed) {
+            
             lightboxImage.classList.remove('is-zoomed');
+            lightboxImage.style.transform = '';
+            
+            // Restore fixed container dimensions
+            setContainerSizeFromImage();
         }
-        
-        // Get the computed max-width and max-height from CSS
-        const computedStyle = window.getComputedStyle(lightboxImage);
-        const maxWidth = parseFloat(computedStyle.maxWidth);
-        const maxHeight = parseFloat(computedStyle.maxHeight);
-        
-        // Restore is-zoomed if it was there
-        if (wasZoomed) {
-            lightboxImage.classList.add('is-zoomed');
-        }
-        
-        // Calculate scale to fit within constraints
-        const scaleX = maxWidth / naturalWidth;
-        const scaleY = maxHeight / naturalHeight;
-        
-        return Math.min(scaleX, scaleY, 1);
-    }
-
-    function animateZoom(startScale, endScale, startX, startY, endX, endY, onComplete) {
-        const duration = 250; // ms
-        const startTime = performance.now();
-        
-        function animate(currentTime) {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            
-            // Easing function (ease-out)
-            const eased = 1 - Math.pow(1 - progress, 3);
-            
-            const currentScale = startScale + (endScale - startScale) * eased;
-            const currentX = startX + (endX - startX) * eased;
-            const currentY = startY + (endY - startY) * eased;
-            
-            lightboxImage.style.transform = 
-                `translate(${currentX}px, ${currentY}px) scale(${currentScale})`;
-            
-            if (progress < 1) {
-                requestAnimationFrame(animate);
-            } else if (onComplete) {
-                onComplete();
-            }
-        }
-        
-        requestAnimationFrame(animate);
     }
 
     function resetZoom() {
         if (!isZoomed) return;
-        const SCALE = getZoomScale();
-        
-        // Use the stored clamped values
-        const currentTransX = translateX;
-        const currentTransY = translateY;
-        
-        // Calculate final scale
-        const finalScale = calculateFinalScale();
         
         isZoomed = false;
         translateX = 0;
@@ -293,13 +285,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         lightboxImage.style.cursor = 'zoom-in';
         lightboxZoom.querySelector('span').textContent = 'zoom_in';
+        lightboxImage.classList.remove('is-zoomed');
+        lightboxImage.style.transform = '';
         
-        // Animate zoom out from actual position
-        animateZoom(SCALE, finalScale, currentTransX, currentTransY, 0, 0, () => {
-            lightboxImage.classList.remove('is-zoomed');
-            lightboxContent.classList.remove('is-zoomed');
-            lightboxImage.style.transform = '';
-        });
+        // Restore fixed container dimensions
+        setContainerSizeFromImage();
     }
 
     lightboxZoom.addEventListener('click', (e) => {
@@ -310,7 +300,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Image Click - Toggle zoom if not dragging
     lightboxImage.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (!hasDragged) {
+        if (!hasDragged && imageReady) {
             toggleZoom();
         }
     });
@@ -319,7 +309,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let initialTranslateX = 0, initialTranslateY = 0;
     
     lightboxImage.addEventListener('mousedown', (e) => {
-        if (!isZoomed) return;
+        if (!isZoomed || !imageReady) return;
         isDragging = true;
         hasDragged = false;
         startX = e.clientX;
@@ -355,7 +345,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Touch Drag
     lightboxImage.addEventListener('touchstart', (e) => {
-        if (!isZoomed) return;
+        if (!isZoomed || !imageReady) return;
         isDragging = true;
         hasDragged = false;
         startX = e.touches[0].clientX;
@@ -385,42 +375,80 @@ document.addEventListener('DOMContentLoaded', function() {
         isDragging = false;
     });
 
-    // Update displayed image with crossfade
-    function updateLightbox() {
-        // If zoomed, reset first and wait for animation
+    // Update displayed image with smooth transition
+    function updateLightbox(isOpen = false) {
+        // If zoomed, reset first
         if (isZoomed) {
             resetZoom();
-            setTimeout(() => performImageSwap(), 260);
-        } else {
-            performImageSwap();
         }
+        
+        performImageSwap(isOpen);
     }
 
-    function performImageSwap() {
+    function performImageSwap(isOpen = false) {
         const newSrc = currentImages[currentIndex].src;
         const newAlt = currentImages[currentIndex].alt;
         
-        // Preload image to avoid dimension race conditions
+        // Preload image to get dimensions
         const preload = new Image();
         preload.src = newSrc;
         
-        // Fade out current image
-        lightboxImage.style.opacity = '0';
-        
         preload.onload = () => {
-            // Wait for fade out to complete
-            setTimeout(() => {
+            // Get natural dimensions from preload
+            naturalImgWidth = preload.naturalWidth;
+            naturalImgHeight = preload.naturalHeight;
+            
+            // Set container size based on new image dimensions
+            setContainerSizeFromImage();
+            
+            // Now swap the image
+            if (isOpen) {
+                // First open - just show image
                 lightboxImage.src = newSrc;
                 lightboxImage.alt = newAlt;
                 
-                // Cache dimensions after image is set
                 requestAnimationFrame(() => {
                     cacheDimensions();
-                    // Fade in new image
-                    lightboxImage.style.opacity = '1';
-                    if (isZoomed) requestTransformUpdate();
+                    imageReady = true;
+                    isTransitioning = false;
+                    lightboxZoom.style.opacity = '1';
+                    lightboxZoom.style.pointerEvents = 'auto';
                 });
-            }, 50);
+            } else {
+                // Transition between images - fade out/in
+                lightboxImage.style.opacity = '0';
+                
+                const onFadeOutComplete = () => {
+                    lightboxImage.removeEventListener('transitionend', onFadeOutComplete);
+                    
+                    // Swap image
+                    lightboxImage.src = newSrc;
+                    lightboxImage.alt = newAlt;
+                    
+                    // Cache new dimensions and fade in
+                    requestAnimationFrame(() => {
+                        cacheDimensions();
+                        lightboxImage.style.opacity = '1';
+                        
+                        // Mark as ready after fade in completes
+                        setTimeout(() => {
+                            imageReady = true;
+                            isTransitioning = false;
+                            lightboxZoom.style.opacity = '1';
+                            lightboxZoom.style.pointerEvents = 'auto';
+                        }, 50);
+                    });
+                };
+                
+                lightboxImage.addEventListener('transitionend', onFadeOutComplete, { once: true });
+                
+                // Fallback in case transitionend doesn't fire
+                setTimeout(() => {
+                    if (!imageReady) {
+                        onFadeOutComplete();
+                    }
+                }, 300);
+            }
         };
         
         // If image is already cached, onload fires immediately
@@ -441,7 +469,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
         if (!lightbox.classList.contains('active')) return;
@@ -455,15 +482,23 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        if (isZoomed || !hasMultipleImages) return;
+        if (isZoomed || !hasMultipleImages || isTransitioning || !imageReady) return;
 
         switch (e.key) {
             case 'ArrowLeft':
                 currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+                imageReady = false;
+                isTransitioning = true;
+                lightboxZoom.style.opacity = '0.5';
+                lightboxZoom.style.pointerEvents = 'none';
                 updateLightbox();
                 break;
             case 'ArrowRight':
                 currentIndex = (currentIndex + 1) % currentImages.length;
+                imageReady = false;
+                isTransitioning = true;
+                lightboxZoom.style.opacity = '0.5';
+                lightboxZoom.style.pointerEvents = 'none';
                 updateLightbox();
                 break;
         }
@@ -474,12 +509,12 @@ document.addEventListener('DOMContentLoaded', function() {
     let touchEndX = 0;
 
     lightbox.addEventListener('touchstart', (e) => {
-        if (isZoomed || !hasMultipleImages) return;
+        if (isZoomed || !hasMultipleImages || isTransitioning || !imageReady) return;
         touchStartX = e.changedTouches[0].screenX;
     });
 
     lightbox.addEventListener('touchend', (e) => {
-        if (isZoomed || !hasMultipleImages) return;
+        if (isZoomed || !hasMultipleImages || isTransitioning || !imageReady) return;
         touchEndX = e.changedTouches[0].screenX;
         handleSwipe();
     });
@@ -493,17 +528,30 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             currentIndex = (currentIndex + 1) % currentImages.length;
         }
+        
+        imageReady = false;
+        isTransitioning = true;
+        lightboxZoom.style.opacity = '0.5';
+        lightboxZoom.style.pointerEvents = 'none';
         updateLightbox();
     }
 
     // Update bounds on window resize
     let resizeTimeout;
     window.addEventListener('resize', () => {
-        if (!isZoomed) return;
+        if (!lightbox.classList.contains('active')) return;
+        
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
-            cacheDimensions();
-            requestTransformUpdate();
+            if (imageReady) {
+                if (isZoomed) {
+                    cacheDimensions();
+                    requestTransformUpdate();
+                } else {
+                    // Recalculate container size for new window dimensions
+                    setContainerSizeFromImage();
+                }
+            }
         }, 100);
     });
 
@@ -515,8 +563,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function trapFocus(e) {
       if (!lightbox.classList.contains('active')) return;
-      if (!isZoomed) return; // Only trap focus when zoomed
-
+      
+      // Always trap focus when lightbox is open, regardless of zoom state
       const focusable = [...lightbox.querySelectorAll(FOCUSABLE_SELECTOR)];
       if (!focusable.length) return;
 
@@ -560,6 +608,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 });
+
+/* ====== ADD THESE CSS RULES ====== */
+/*
+Add to your existing CSS:
+
+.lightbox-content {
+    transition: width 0.2s ease, height 0.2s ease;
+}
+
+.lightbox-image {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.lightbox-image.is-zoomed {
+    transition: transform 0.2s ease;
+    max-width: none;
+    max-height: none;
+    object-fit: cover;
+}
+*/
 
 /* ---------- THUMBNAIL ASPECT RATIO FIX ---------- */
 document.addEventListener('DOMContentLoaded', function() {
