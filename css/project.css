@@ -1,0 +1,534 @@
+/* Title Card Section */
+.title-section {
+  padding: 0 2.75%;
+  padding-top: 2.5rem;
+}
+
+
+.title-card {
+  border-radius: 1.25rem;
+  height: 15rem;
+
+  /* vertical centering */
+  display: flex;
+  align-items: center;
+
+  /* fills height, crops width */
+  background-size: cover;     
+  /* crops evenly */   
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#calendar-banner {
+  background-color: #52a3d6;
+  background-image: url("../media/calendar-banner.png");
+}
+
+#wrco-banner {
+  background-color: #FAD54B;
+  background-image: url("../media/wrco-banner.png");
+}
+
+#translate-banner {
+  background-color: #525252;
+  background-image: url("../media/translate-banner.png");
+}
+
+@media (max-width: 42rem) {
+  .title-card {
+    height: 14.5rem;
+  }
+}
+
+@media (max-width: 38rem) {
+  .title-card {
+    height: 13rem;
+  }
+}
+
+@media (max-width: 30rem) {
+  .title-card {
+    height: 12.75rem;
+  }
+}
+
+@media (max-width: 25rem) {
+  .title-card {
+    height: 11.75rem;
+  }
+}
+
+@media (max-width: 22.5rem) {
+  .title-card {
+    height: 11rem;
+  }
+}
+
+@media (max-width: 21.5rem) {
+  .title-card {
+    height: 10.5rem;
+  }
+}
+
+@media (max-width: 20.75rem) {
+  .title-card {
+    height: 10rem;
+  }
+}
+
+/* @media (max-width: 27rem) {
+  .title-card {
+    height: 11.5rem;
+  }
+}
+
+@media (max-width: 25.75rem) {
+  .title-card {
+    height: 10rem;
+  }
+} */
+
+.title-card-content {
+  /* bounded container */
+  max-width: 30rem;
+  width: 100%;
+  margin: 0 auto;       
+  /* centers the container */
+  padding: 2rem;
+
+  /* left-aligned content */
+  text-align: left;
+}
+
+.title-card h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #eaeaea;
+  max-width: 15rem;
+}
+
+#wrco-banner h1 {
+  color: #353535;
+  font-size: 2.25rem;
+}
+
+@media (max-width: 38rem) {
+  .title-card h1 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 28rem) {
+  .title-card h1 {
+    font-size: 2rem;
+  }
+  #wrco-banner h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 25rem) {
+  .title-card h1 {
+    font-size: 1.5rem;
+  }
+  #wrco-banner h1 {
+    font-size: 1.5rem;
+  }
+}
+
+
+
+/* Article Section */
+/* Overview Section Layout */
+/* Overview Section Layout - Clean Flexbox */
+.overview-container {
+  display: flex;
+  /* gap: 2rem; */
+  /* margin-bottom: 1rem; */
+}
+
+@media (max-width: 42rem) {
+  .overview-container {
+    flex-direction: column;
+    /* gap: 1.5rem; */
+  }
+}
+
+.overview-container h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.overview-container ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* line-height: 1.6; */
+}
+
+.overview-container li {
+  line-height: 1.6;
+}
+
+@media (max-width: 32rem) {
+  .overview-container li {
+    line-height: 1.5;
+    font-size: 1.065rem;
+  }
+}
+
+@media (max-width: 28rem) {
+  .overview-container li {
+    line-height: 1.4;
+  }
+}
+
+#cal-tools {
+  /* margin-top: 3.5rem; */
+  margin-top: 1rem;
+}
+
+.overview-container p {
+  /* margin-bottom: 0; */
+}
+
+/* First column - fixed width on desktop */
+.overview-container > div:first-child {
+  flex: 0 0 27%;
+  min-width: 0;
+}
+
+/* Second column - takes remaining space on desktop */
+.overview-container > div:last-child {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Mobile: make first column a 2-column grid for Team & Tools */
+@media (max-width: 42rem) {
+  .overview-container > div:first-child {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    flex: none;
+  }
+  
+  .overview-container > div:last-child {
+    flex: none;
+    /* Context and Contributions will stack naturally as block elements */
+  }
+}
+
+@media (max-width: 24rem) {
+  .overview-container > div:first-child {
+    gap: 1rem;
+  }
+}
+
+/* On very small screens, stack Team & Tools too */
+@media (max-width: 21rem) {
+  .overview-container > div:first-child {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.doc-divider {
+  border: none;
+  height: 1px;
+  background-color: #C4C4C4;
+  margin-top: 2.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.content-section {
+  margin: 0 5%;
+}
+
+@media (max-width: 28rem) {
+  .content-section {
+    margin: 0 4%;
+  }
+}
+
+.article-max-width {
+  max-width: 54rem;
+  margin: 0 auto;  
+  padding-top: 0.75rem;
+  padding-bottom: 2rem;
+}
+
+.article-text-width {
+  max-width: 40rem;
+  margin: 0 auto;
+  /* width: 100%; */
+  /* padding: 0 6%; */
+
+  overflow: hidden;
+  /* safari fix */
+  /* contain: paint; */
+}
+
+.pad-bottom {
+  margin-bottom: 1.5rem;
+}
+
+.article-text-width h2 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  font-size: 1.125rem;
+}
+
+#intro p {
+  margin-bottom: 1.5rem;
+}
+
+#intro-opening {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+@media (max-width: 35rem) {
+  #intro-opening {
+    font-size: 1.35rem;
+    /* line-height: 1.3; */
+  }
+}
+
+@media (max-width: 28rem) {
+  #intro-opening {
+    line-height: 1.3;
+  }
+}
+
+#intro .underline-link {
+  display: block;
+  margin-bottom: 0.5rem; /* space between links */
+}
+
+.article-text-width h3 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+} 
+
+.article-text-width p {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 32rem) {
+  .article-text-width p {
+    font-size: 1.065rem;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.article-text-width ul {
+  list-style: none;
+  line-height: 1.6;
+  font-size: 1.125rem;
+}
+
+.para-section {
+  /* margin-bottom: 1.5rem; */
+  margin-bottom: 2rem;
+}
+
+/* insights box */
+.insight-card {
+  background-color: #e1dfdf;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 32rem) {
+  .insight-card {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 28rem) {
+  .insight-card {
+    padding: 1.25rem;
+  }
+}
+
+.insight-card h3 {
+  padding-left: 0.25rem;
+  padding-bottom: 0.6rem;
+}
+
+.insight-card p {
+  padding-left: 0.25rem;
+}
+
+@media (max-width: 28rem) {
+.insight-card h3,
+.insight-card p {
+  padding-left: 0.2rem;
+}
+
+}
+
+
+/* images */
+.article-img {
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 32rem) {
+  .article-img {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.slideshow-width {
+  --slideshow-width: 46.5rem;
+}
+
+.demo-img-height {
+  --thumb-max-height: 32rem;
+  --thumb-width-type: auto
+}
+
+/* .demo1-img-width {
+  --thumb-width: auto;
+} */
+
+.demo1-img-align {
+  --thumb-align: center;
+}
+
+.article-caption {
+  font-style: italic;
+  color: #666;
+  font-size: 1.065rem;
+  max-width: 40rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+@media (max-width: 32rem) {
+  .article-caption {
+    font-size: 1rem;
+  }
+}
+
+#wrco-adjustment {
+  padding-bottom: 1rem;
+}
+
+@media (max-width: 42rem) { 
+  #wrco-adjustment {
+    padding-bottom: 0;
+  }
+}
+
+#overview-last {
+  margin-bottom: 0;
+}
+
+@media (max-width: 28rem) {
+  .para-section {
+    margin-bottom: 1.5;
+  }
+}
+
+/* article navigation */
+#article-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 24rem) {
+  .right-article {
+    margin-right: 0rem;
+  }
+}
+
+@media (max-width: 21.5rem) {
+  #article-nav {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+  .right-article {
+    align-self: flex-end;
+  }
+}
+
+.left-article .article-link {
+  margin-left: 0.1rem;
+}
+
+.right-article .article-link {
+  margin-right: 0.1rem;
+}
+
+@media (max-width: 28rem) {
+  .left-article .article-link {
+    margin-left: 0;
+  }
+
+  .right-article .article-link {
+    margin-right: 0;
+  }
+
+}
+
+.right-article {
+  margin-right: 0.5rem;
+}
+
+#article-nav a {
+  text-decoration: none;
+  color: #353535;
+}
+
+.article-nav a:hover,
+.article-nav a:focus {
+  color: black;
+}
+
+.article-link {
+  color: #353535;
+  font-size: 1.2rem;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 0.25rem;
+}
+
+.article-link:hover,
+.article-link:focus {
+  color: black;
+}
+
+.article-link::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 0.1rem;
+  bottom: 0;
+  left: 0;
+  background-color: black;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 0.3s ease;
+}
+
+.article-link:hover::after,
+.article-link:focus::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}

@@ -1,0 +1,519 @@
+/* Intro section */
+/* .intro {
+  padding: 8rem 3%;
+  margin-bottom: 4rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  max-width: 68rem;
+  gap: 1rem;
+} */
+
+.intro {
+  padding: 1rem 3%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  max-width: 68rem;
+  gap: 1rem;
+
+  padding-top: 8rem;
+  padding-bottom: 10rem;
+}
+
+@media (max-width: 50rem) {
+  .intro {
+    padding-bottom: 8rem;
+  }
+}
+
+@media (max-width: 34.375rem) {
+  .intro {
+    padding-bottom: 6.5rem;
+  }
+}
+
+.intro-header {
+    max-width: 48rem;
+    line-height: 1.3;
+}
+
+.intro-heading {
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+
+@media (max-width: 27.25rem) {
+  .intro-heading {
+    font-size: 1.35rem;
+  }
+}
+
+.intro-para {
+  margin-top: 1.25rem;
+  font-size: 1.125rem;
+  max-width: 32.5rem;
+}
+
+@media (max-width: 37rem) {
+  .intro-para {
+    max-width: 24rem;
+  }
+}
+
+@media (max-width: 27.5rem) {
+  .intro-para {
+    font-size: 1rem;
+    max-width: 18rem;
+  }
+}
+
+@media (max-width: 20rem) {
+  .intro-para {
+    font-size: 0.9rem;
+  }
+}
+
+.curser-animation video {
+  width: 10rem;
+  height: auto;
+}
+
+@media (max-width: 72rem) {
+  .curser-animation {
+    display: none;
+  }
+  .intro {
+    margin-right: 0.5rem;
+  }
+}
+
+
+
+/* Project cards */
+.projects {
+  padding: 0 3%;
+  padding-bottom: 3.5rem;
+}
+
+.project-tabs {
+  margin-left: 0.2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1.1rem;
+  /* progressive enchancement: hid with no js */
+  display: none;
+}
+
+/* js on: turn tabs on */
+.js .project-tabs {
+  display: flex;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 0 0.45rem 0;
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #666;
+}
+
+@media (max-width: 27.5rem) {
+  .tab-button {
+    font-size: 1.125rem;
+  }
+}
+
+.tab-button:focus-visible {
+  outline: 2px solid #000;  
+}
+
+.tab-button[aria-selected="true"] {
+  border-bottom: 2px solid #000;
+  color: #000;
+}
+
+.tab-button[aria-selected="false"] {
+  border-bottom: 2px solid transparent;
+}
+
+.tab-content[hidden] {
+  display: none;
+}
+
+/* .projects-title {
+  display: block;
+  padding-bottom: 1rem;
+  padding-left: 0.2rem;
+  font-size: 1.25rem;
+  font-weight: 400;
+} */
+
+
+.project-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  padding-bottom: 1.5rem;
+
+  /* slide animations */
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.project-list.slide-out-left {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.project-list.slide-out-right {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.project-list.animating-in-right {
+  animation: slideInFromRight 0.3s ease forwards;
+}
+
+.project-list.animating-in-left {
+  animation: slideInFromLeft 0.3s ease forwards;
+}
+
+
+.project-card {
+  display: flex;
+  background: #d7d7d7;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  max-height: 16.2rem;
+
+  /* KNOWN BUG: mac gpu white line issue */
+  /* mitigations */
+  position: relative;
+  z-index: 1;
+  background-clip: padding-box;
+  outline: 1px solid transparent;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.project-card:hover,
+.project-card:focus-visible {
+  /* transform: translateY(-5px); */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+#wrco {
+  background-color: #fad54b;
+}
+
+#wrco:hover .card-title,
+#wrco:hover .card-description,
+#wrco:focus-visible .card-title,
+#wrco:focus-visible .card-description {
+  color: #0e0e0e;
+  transition: color 0.3s ease;
+}
+
+#calendar {
+  background-color: #52a3d6;
+}
+
+#calendar .card-title,
+#calendar .card-description {
+  color: #eaeaea;
+}
+
+#calendar:hover .card-title,
+#calendar:hover .card-description,
+#calendar:focus-visible .card-title,
+#calendar:focus-visible .card-description {
+  color: #f4f4f4;
+  transition: color 0.3s ease;
+}
+
+#finetune {
+  background-color: #525252;
+}
+
+#finetune .card-title,
+#finetune .card-description {
+  color: #eaeaea;
+}
+
+#finetune:hover .card-title,
+#finetune:hover .card-description,
+#finetune:focus-visible .card-title,
+#finetune:focus-visible .card-description {
+  color: #f4f4f4;
+  transition: color 0.3s ease;
+}
+
+@media (max-width: 25rem) {
+  #wrco .card-title {
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 20.75rem) {
+  #wrco .card-title {
+    margin-bottom: 0.25rem;
+  }
+}
+
+@media (max-width: 72rem) {
+  #calendar .card-title {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 55rem) {
+  #calendar .card-title {
+    margin-bottom: 1rem;
+  }
+}
+
+.card-content {
+  margin-left: 2rem;
+  padding: 3% 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 10rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 32.75rem) {
+  .card-content {
+    margin-left: 1.5rem;
+  }
+}
+
+@media (max-width: 27rem) {
+  .card-content {
+    margin-left: 1.3rem;
+  }
+}
+
+@media (max-width: 24rem) {
+  .card-content {
+    margin-left: 1.2rem;
+  }
+}
+
+@media (max-width: 22.25rem) {
+  .card-content {
+    margin-left: 1rem;
+  }
+}
+
+@media (max-width: 20.75rem) {
+  .card-content {
+    margin-left: 0.9rem;
+  }
+}
+
+.card-title-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #3f3f3f;
+  font-weight: 700;
+  max-width: 24rem;
+}
+
+@media (max-width: 27.25rem) {
+  .card-title {
+    font-size: 1.35rem;
+  }
+}
+
+@media (max-width: 24rem) {
+  .card-title {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 19.5rem) {
+  .card-title {
+    font-size: 1.25rem;
+  }
+}
+
+.card-description {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+@media (max-width: 27.25rem) {
+  .card-description {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 24rem) {
+  .card-description {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 32rem) {
+  .card-description {
+    margin-top: 0.5rem;
+  }
+}
+
+.card-image-container {
+  flex: 0 0 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  height: 17.2rem
+}
+
+@media (max-width: 64rem) {
+  .card-image-container {
+    height: 16.8rem;
+  }
+}
+
+@media (max-width: 32rem) {
+  .card-image-container {
+    height: 15.75rem;
+  }
+}
+
+@media (max-width: 27.25rem) {
+  .card-image-container {
+    height: 15.25rem;
+  }
+}
+
+@media (max-width: 25rem) {
+  .card-image-container {
+    height: 14rem;
+  }
+}
+
+
+@media (max-width: 22.5rem) {
+  .card-image-container {
+    height: 13.5rem;
+  }
+}
+
+@media (max-width: 20.75rem) {
+  .card-image-container {
+    height: 13rem;
+  }
+}
+
+@media (max-width: 20.25rem) {
+  .card-image-container {
+    height: 12rem;
+  }
+}
+
+/* Regular image (non-hover) */
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+/* Hover image */
+.image-hover {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+/* Hover effect */
+.project-card:hover .card-image:not(.image-hover),
+.project-card:focus-visible .card-image:not(.image-hover) {
+  opacity: 0;
+}
+
+.project-card:hover .image-hover,
+.project-card:focus-visible .image-hover {
+  opacity: 1;
+}
+
+@media (max-width: 55rem) {
+  .project-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* @media (max-width: 24rem) {
+  .card-image,
+  .image-hover {
+    object-fit: scale-down;
+  }
+  .card-image-container {
+    overflow: hidden;
+  }
+} */
+
+/* @media (max-width: 24rem) {
+  .card-image,
+  .image-hover {
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+  }
+  .card-image-container {
+    overflow: hidden;
+  }
+} */
