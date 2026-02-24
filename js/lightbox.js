@@ -50,8 +50,17 @@ document.addEventListener('DOMContentLoaded', function() {
     let naturalImgHeight = 0;
 
     function getZoomScale() {
-        const scale = window.innerWidth <= 834 ? 1.2 : 1.5;
-        return scale;
+        // Target: natural pixel size, clamped so image never exceeds 1.5x the viewport
+        const maxScaleX = (window.innerWidth * 1.5) / cachedImgWidth;
+        const maxScaleY = (window.innerHeight * 1.5) / cachedImgHeight;
+        const maxScale = Math.min(maxScaleX, maxScaleY);
+
+        // Scale needed to show image at natural size
+        const naturalScale = naturalImgWidth / cachedImgWidth;
+
+        // Use natural scale if it fits within 1.5x viewport, otherwise cap it
+        // Floor of 1.5 ensures we always zoom even if natural size is smaller
+        return Math.min(Math.max(naturalScale, 1.5), maxScale);
     }
 
     function cacheDimensions() {
