@@ -120,6 +120,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 enableFocusTrap();
                 document.body.style.overflow = 'hidden';
                 updateNavVisibility();
+                // Cache dimensions immediately so getZoomScale() is never working with stale zeroes
+                requestAnimationFrame(() => cacheDimensions());
             });
         });
     });
