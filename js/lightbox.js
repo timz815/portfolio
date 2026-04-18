@@ -13,8 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lightboxControls = document.querySelector('.lightbox-controls');
 
     let currentIndex = 0;
-    let currentImages = []; // Current set of images to cycle through
-    let hasMultipleImages = false; // Whether current group has multiple images
+    let currentImages = [];
     
     // Group images by their parent image-board
     const imageGroups = [];
@@ -28,8 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }));
             imageGroups.push({
                 board: board,
-                images: group,
-                hasMultiple: group.length > 1
+                images: group
             });
         }
     });
@@ -109,7 +107,6 @@ document.addEventListener('DOMContentLoaded', function() {
             img.element.addEventListener('click', () => {
                 currentImages = group.images;
                 currentIndex = indexInGroup;
-                hasMultipleImages = group.hasMultiple;
                 hasDragged = false;
                 updateLightbox();
                 lightbox.classList.add('active');
@@ -130,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (lightboxPrev) {
         lightboxPrev.addEventListener('click', (e) => {
             e.stopPropagation();
-            if (isZoomed || !hasMultipleImages) return;
+            if (isZoomed || currentImages.length <= 1) return;
             currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
             updateLightbox();
         });
@@ -139,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (lightboxNext) {
         lightboxNext.addEventListener('click', (e) => {
             e.stopPropagation();
-            if (isZoomed || !hasMultipleImages) return;
+            if (isZoomed || currentImages.length <= 1) return;
             currentIndex = (currentIndex + 1) % currentImages.length;
             updateLightbox();
         });
@@ -429,7 +426,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateNavVisibility() {
         // Hide arrows if zoomed OR if there's only one image in the group
-        const shouldHideNav = isZoomed || !hasMultipleImages;
+        const shouldHideNav = isZoomed || currentImages.length <= 1;
         
         if (lightboxPrevNav) {
             lightboxPrevNav.style.display = shouldHideNav ? 'none' : '';
@@ -453,7 +450,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        if (isZoomed || !hasMultipleImages) return;
+        if (isZoomed || currentImages.length <= 1) return;
 
         switch (e.key) {
             case 'ArrowLeft':
@@ -472,12 +469,12 @@ document.addEventListener('DOMContentLoaded', function() {
     let touchEndX = 0;
 
     lightbox.addEventListener('touchstart', (e) => {
-        if (isZoomed || !hasMultipleImages) return;
+        if (isZoomed || currentImages.length <= 1) return;
         touchStartX = e.changedTouches[0].screenX;
     });
 
     lightbox.addEventListener('touchend', (e) => {
-        if (isZoomed || !hasMultipleImages) return;
+        if (isZoomed || currentImages.length <= 1) return;
         touchEndX = e.changedTouches[0].screenX;
         handleSwipe();
     });
