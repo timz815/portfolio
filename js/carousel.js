@@ -46,9 +46,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getZoomScale() {
         if (!cachedImgWidth || !naturalImgWidth) {
-            return window.innerWidth <= 834 ? 1.2 : 1.5;
+            return window.innerWidth <= 834 ? 1.5 : 1.7;
         }
-        const factor = window.innerWidth <= 834 ? 1.2 : 1.5;
+        const factor = window.innerWidth <= 834 ? 1.5 : 1.7;
         return (cachedImgWidth * factor) / naturalImgWidth;
     }
 

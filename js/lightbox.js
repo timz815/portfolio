@@ -50,9 +50,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function getZoomScale() {
         if (!cachedImgWidth || !naturalImgWidth) {
-            return window.innerWidth <= 834 ? 1.2 : 1.5;
+            return window.innerWidth <= 834 ? 1.5 : 1.7;
         }
-        const factor = window.innerWidth <= 834 ? 1.2 : 1.5;
+        const factor = window.innerWidth <= 834 ? 1.5 : 1.7;
         // Scale relative to display size so zoom is consistent regardless of image resolution
         return (cachedImgWidth * factor) / naturalImgWidth;
     }
