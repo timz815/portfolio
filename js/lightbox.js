@@ -50,8 +50,12 @@ document.addEventListener('DOMContentLoaded', function() {
     let naturalImgHeight = 0;
 
     function getZoomScale() {
-        const scale = window.innerWidth <= 834 ? 1.2 : 1.5;
-        return scale;
+        if (!cachedImgWidth || !naturalImgWidth) {
+            return window.innerWidth <= 834 ? 1.2 : 1.5;
+        }
+        const factor = window.innerWidth <= 834 ? 1.2 : 1.5;
+        // Scale relative to display size so zoom is consistent regardless of image resolution
+        return (cachedImgWidth * factor) / naturalImgWidth;
     }
 
     function cacheDimensions() {
@@ -71,8 +75,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const SCALE = getZoomScale();
-        const imgWidth = cachedImgWidth * SCALE;
-        const imgHeight = cachedImgHeight * SCALE;
+        const imgWidth = naturalImgWidth * SCALE;
+        const imgHeight = naturalImgHeight * SCALE;
         const vpWidth = window.innerWidth;
         const vpHeight = window.innerHeight;
 
@@ -157,10 +161,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     function toggleZoom() {
-        const wasZoomed = isZoomed;
         isZoomed = !isZoomed;
         updateNavVisibility();
-        const SCALE = getZoomScale();
 
         if (isZoomed) {
             // Zooming IN
@@ -169,18 +171,22 @@ document.addEventListener('DOMContentLoaded', function() {
             targetX = 0;
             targetY = 0;
 
-            lightboxImage.classList.add('is-zoomed');
-            lightboxImage.style.cursor = 'grab';
-            lightboxZoom.querySelector('span').textContent = 'zoom_out';
+            // Cache display dimensions BEFORE is-zoomed removes CSS constraints
             cacheDimensions();
-
-            // Calculate the current scale before zooming
+            const SCALE = getZoomScale();
             const currentScale = calculateFinalScale();
 
-            // Animate from current constrained scale to zoomed scale
+            // Set starting transform synchronously with the class change so the
+            // browser batches both into one paint — prevents the jump cut
+            lightboxImage.classList.add('is-zoomed');
+            lightboxImage.style.transform = `translate(0px, 0px) scale(${currentScale})`;
+            lightboxImage.style.cursor = 'grab';
+            lightboxZoom.querySelector('span').textContent = 'zoom_out';
+
             animateZoom(currentScale, SCALE, 0, 0, 0, 0);
         } else {
-            // Zooming OUT
+            // Zooming OUT — SCALE uses cached dims from when we zoomed in
+            const SCALE = getZoomScale();
             const currentTransX = translateX;
             const currentTransY = translateY;
 
