@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const lightboxNext    = document.getElementById("lightbox-next");
     const lightboxPrevNav = document.getElementById("lightbox-prev-nav");
     const lightboxNextNav = document.getElementById("lightbox-next-nav");
+    const lightboxControls = document.querySelector(".lightbox-controls");
 
     // Tracks whichever carousel instance opened the lightbox
     let activeCarousel = null;
@@ -31,7 +32,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let naturalImgWidth = 0, naturalImgHeight = 0;
 
     function getZoomScale() {
-        return window.innerWidth <= 834 ? 1.2 : 1.5;
+        if (!cachedImgWidth || !naturalImgWidth) {
+            return window.innerWidth <= 834 ? 1.2 : 1.5;
+        }
+        const factor = window.innerWidth <= 834 ? 1.2 : 1.5;
+        return (cachedImgWidth * factor) / naturalImgWidth;
     }
 
     function cacheDimensions() {
@@ -49,8 +54,8 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
         const SCALE = getZoomScale();
-        const imgWidth  = cachedImgWidth  * SCALE;
-        const imgHeight = cachedImgHeight * SCALE;
+        const imgWidth  = naturalImgWidth  * SCALE;
+        const imgHeight = naturalImgHeight * SCALE;
         const maxX = Math.max((imgWidth  - window.innerWidth)  / 2, 0);
         const maxY = Math.max((imgHeight - window.innerHeight) / 2, 0);
         translateX = Math.min(maxX, Math.max(-maxX, targetX));
@@ -108,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 lightboxImage.alt = alt;
                 requestAnimationFrame(() => {
                     cacheDimensions();
+                    applyToolbarConstraint();
                     lightboxImage.style.opacity = '1';
                     if (isZoomed) requestTransformUpdate();
                 });
@@ -115,6 +121,34 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         preload.onload = doSwap;
         if (preload.complete) doSwap();
+    }
+
+    function applyToolbarConstraint() {
+        if (window.innerWidth <= 692) {
+            lightboxImage.style.maxWidth = '';
+            return;
+        }
+        const vpW = window.innerWidth;
+        const vpH = window.innerHeight;
+        const toolbarRect = lightboxControls.getBoundingClientRect();
+        const aspect = naturalImgWidth / naturalImgHeight;
+        const cssMaxW = vpW * 0.85;
+        const cssMaxH = vpH * 0.82;
+        let dispW, dispH;
+        if (aspect > cssMaxW / cssMaxH) {
+            dispW = Math.min(cssMaxW, naturalImgWidth);
+            dispH = dispW / aspect;
+        } else {
+            dispH = Math.min(cssMaxH, naturalImgHeight);
+            dispW = dispH * aspect;
+        }
+        const imgTop   = vpH / 2 - dispH / 2;
+        const imgRight = vpW / 2 + dispW / 2;
+        if (imgTop < toolbarRect.bottom && imgRight > toolbarRect.left) {
+            lightboxImage.style.maxWidth = `${2 * toolbarRect.left - vpW}px`;
+        } else {
+            lightboxImage.style.maxWidth = '';
+        }
     }
 
     function lightboxNavigate(index) {
@@ -135,15 +169,22 @@ document.addEventListener("DOMContentLoaded", () => {
     function toggleZoom() {
         isZoomed = !isZoomed;
         updateNavVisibility();
-        const SCALE = getZoomScale();
+
         if (isZoomed) {
             translateX = targetX = translateY = targetY = 0;
+
+            cacheDimensions();
+            const SCALE = getZoomScale();
+            const currentScale = calculateFinalScale();
+
             lightboxImage.classList.add('is-zoomed');
+            lightboxImage.style.transform = `translate(0px, 0px) scale(${currentScale})`;
             lightboxImage.style.cursor = 'grab';
             lightboxZoom.querySelector('span').textContent = 'zoom_out';
-            cacheDimensions();
-            animateZoom(calculateFinalScale(), SCALE, 0, 0, 0, 0);
+
+            animateZoom(currentScale, SCALE, 0, 0, 0, 0);
         } else {
+            const SCALE = getZoomScale();
             const curTransX = translateX, curTransY = translateY;
             const finalScale = calculateFinalScale();
             translateX = targetX = translateY = targetY = 0;
@@ -175,6 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function closeLightbox() {
         if (isZoomed) resetZoom();
+        lightboxImage.style.maxWidth = '';
         updateNavVisibility();
         lightbox.classList.remove("active");
         disableFocusTrap();
@@ -290,11 +332,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Resize
     let resizeTimeout;
     window.addEventListener("resize", () => {
-        if (!isZoomed) return;
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
-            cacheDimensions();
-            requestTransformUpdate();
+            if (!isZoomed) {
+                applyToolbarConstraint();
+            } else {
+                cacheDimensions();
+                requestTransformUpdate();
+            }
         }, 100);
     });
 
