@@ -155,6 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function closeLightbox() {
         if (isZoomed) resetZoom();
         lightboxImage.style.maxWidth = '';
+        currentImages = [];
         updateNavVisibility();
         lightbox.classList.remove('active');
         disableFocusTrap();
