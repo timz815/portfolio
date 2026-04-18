@@ -217,6 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function closeLightbox() {
         if (isZoomed) resetZoom();
         lightboxImage.style.maxWidth = '';
+        activeCarousel = null;
         updateNavVisibility();
         lightbox.classList.remove("active");
         disableFocusTrap();
@@ -230,11 +231,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     lightboxZoom.addEventListener("click", (e) => {
+        if (!activeCarousel) return;
         e.stopPropagation();
         toggleZoom();
     });
 
     lightboxImage.addEventListener("click", (e) => {
+        if (!activeCarousel) return;
         e.stopPropagation();
         if (!hasDragged) toggleZoom();
     });
