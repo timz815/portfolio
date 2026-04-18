@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lightboxNext = document.getElementById('lightbox-next');
     const lightboxPrevNav = document.getElementById('lightbox-prev-nav');
     const lightboxNextNav = document.getElementById('lightbox-next-nav');
+    const lightboxControls = document.querySelector('.lightbox-controls');
 
     let currentIndex = 0;
     let currentImages = []; // Current set of images to cycle through
@@ -153,6 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function closeLightbox() {
         if (isZoomed) resetZoom();
+        lightboxImage.style.maxWidth = '';
         updateNavVisibility();
         lightbox.classList.remove('active');
         disableFocusTrap();
@@ -411,6 +413,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Cache dimensions after image is set
                 requestAnimationFrame(() => {
                     cacheDimensions();
+                    applyToolbarConstraint();
                     // Fade in new image
                     lightboxImage.style.opacity = '1';
                     if (isZoomed) requestTransformUpdate();
@@ -491,14 +494,55 @@ document.addEventListener('DOMContentLoaded', function() {
         updateLightbox();
     }
 
+    function applyToolbarConstraint() {
+        // On mobile controls overlay content — no constraint needed
+        if (window.innerWidth <= 692) {
+            lightboxImage.style.maxWidth = '';
+            lightboxImage.style.maxHeight = '';
+            return;
+        }
+
+        const vpW = window.innerWidth;
+        const vpH = window.innerHeight;
+        const toolbarRect = lightboxControls.getBoundingClientRect();
+
+        // Compute the displayed image size given current CSS constraints (85vw × 82vh)
+        const aspect = naturalImgWidth / naturalImgHeight;
+        const cssMaxW = vpW * 0.85;
+        const cssMaxH = vpH * 0.82;
+        let dispW, dispH;
+        if (aspect > cssMaxW / cssMaxH) {
+            dispW = Math.min(cssMaxW, naturalImgWidth);
+            dispH = dispW / aspect;
+        } else {
+            dispH = Math.min(cssMaxH, naturalImgHeight);
+            dispW = dispH * aspect;
+        }
+
+        // Centered image bounds
+        const imgTop   = vpH / 2 - dispH / 2;
+        const imgRight = vpW / 2 + dispW / 2;
+
+        if (imgTop < toolbarRect.bottom && imgRight > toolbarRect.left) {
+            // Constrain width so right edge clears the toolbar (symmetric = stays centered)
+            const safeMaxW = 2 * toolbarRect.left - vpW;
+            lightboxImage.style.maxWidth = `${safeMaxW}px`;
+        } else {
+            lightboxImage.style.maxWidth = '';
+        }
+    }
+
     // Update bounds on window resize
     let resizeTimeout;
     window.addEventListener('resize', () => {
-        if (!isZoomed) return;
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
-            cacheDimensions();
-            requestTransformUpdate();
+            if (!isZoomed) {
+                applyToolbarConstraint();
+            } else {
+                cacheDimensions();
+                requestTransformUpdate();
+            }
         }, 100);
     });
 
