@@ -14,6 +14,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const lightboxNextNav = document.getElementById("lightbox-next-nav");
     const lightboxControls = document.querySelector(".lightbox-controls");
 
+    // Inject lightbox counter (top-left, carousel sessions only)
+    const lightboxCounter = document.createElement("div");
+    lightboxCounter.className = "lightbox-counter";
+    lightbox.appendChild(lightboxCounter);
+
+    function updateLightboxCounter() {
+        if (!activeCarousel || isZoomed) { lightboxCounter.style.display = 'none'; return; }
+        const total = activeCarousel.images.length;
+        if (total <= 1) { lightboxCounter.style.display = 'none'; return; }
+        lightboxCounter.textContent = `${activeCarousel.currentIndex + 1} / ${total}`;
+        lightboxCounter.style.display = 'block';
+    }
+
     // Tracks whichever carousel instance opened the lightbox
     let activeCarousel = null;
 
@@ -157,6 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
         activeCarousel.currentIndex = ((index % images.length) + images.length) % images.length;
         // Keep carousel thumbnails in sync
         activeCarousel.updateDisplay(activeCarousel.currentIndex, true);
+        updateLightboxCounter();
         const { src, alt } = images[activeCarousel.currentIndex];
         if (isZoomed) {
             resetZoom();
@@ -169,6 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function toggleZoom() {
         isZoomed = !isZoomed;
         updateNavVisibility();
+        updateLightboxCounter();
 
         if (isZoomed) {
             translateX = targetX = translateY = targetY = 0;
@@ -206,6 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
         translateX = targetX = translateY = targetY = 0;
         needsUpdate = false;
         updateNavVisibility();
+        updateLightboxCounter();
         lightboxImage.style.cursor = 'zoom-in';
         lightboxZoom.querySelector('span').textContent = 'zoom_in';
         animateZoom(SCALE, finalScale, curTransX, curTransY, 0, 0, () => {
@@ -219,6 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
         lightboxImage.style.maxWidth = '';
         activeCarousel = null;
         updateNavVisibility();
+        updateLightboxCounter();
         lightbox.classList.remove("active");
         disableFocusTrap();
         document.body.style.overflow = "";
@@ -472,6 +489,7 @@ document.addEventListener("DOMContentLoaded", () => {
             enableFocusTrap();
             document.body.style.overflow = "hidden";
             updateNavVisibility();
+            updateLightboxCounter();
         });
 
         // Swipe on main image
