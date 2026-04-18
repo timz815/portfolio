@@ -47,6 +47,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let cachedImgHeight = 0;
     let naturalImgWidth = 0;
     let naturalImgHeight = 0;
+    let preZoomScale = 1;
+    let animationId = null;
+    let liveScale = 1, liveTransX = 0, liveTransY = 0;
 
     function getZoomScale() {
         if (!cachedImgWidth || !naturalImgWidth) {
@@ -164,35 +167,37 @@ document.addEventListener('DOMContentLoaded', function() {
         updateNavVisibility();
 
         if (isZoomed) {
-            // Zooming IN
             translateX = 0;
             translateY = 0;
             targetX = 0;
             targetY = 0;
 
-            // Cache display dimensions BEFORE is-zoomed removes CSS constraints
-            cacheDimensions();
-            const SCALE = getZoomScale();
-            const currentScale = calculateFinalScale();
+            const alreadyZoomed = lightboxImage.classList.contains('is-zoomed');
+            if (!alreadyZoomed) {
+                cacheDimensions();
+                preZoomScale = cachedImgWidth / naturalImgWidth;
+            }
+            const factor = window.innerWidth <= 834 ? 1.5 : 1.7;
+            const SCALE = preZoomScale * factor;
+            const startScale = alreadyZoomed ? liveScale : preZoomScale;
+            const startX     = alreadyZoomed ? liveTransX : 0;
+            const startY     = alreadyZoomed ? liveTransY : 0;
 
-            // Set starting transform synchronously with the class change so the
-            // browser batches both into one paint — prevents the jump cut
+            lightboxImage.style.maxWidth = '';
             lightboxImage.classList.add('is-zoomed');
-            lightboxImage.style.transform = `translate(0px, 0px) scale(${currentScale})`;
+            lightboxImage.style.transform = `translate(${startX}px, ${startY}px) scale(${startScale})`;
             lightboxImage.style.cursor = 'grab';
             lightboxZoom.querySelector('span').textContent = 'zoom_out';
 
-            animateZoom(currentScale, SCALE, 0, 0, 0, 0);
+            animateZoom(startScale, SCALE, startX, startY, 0, 0);
         } else {
-            // Zooming OUT — SCALE uses cached dims from when we zoomed in
-            const SCALE = getZoomScale();
-            const currentTransX = translateX;
-            const currentTransY = translateY;
+            const factor = window.innerWidth <= 834 ? 1.5 : 1.7;
+            const SCALE = preZoomScale * factor;
+            const wasAnimating = animationId !== null;
+            const startScale = wasAnimating ? liveScale  : SCALE;
+            const startX     = wasAnimating ? liveTransX : translateX;
+            const startY     = wasAnimating ? liveTransY : translateY;
 
-            // Calculate what scale the image will be at when constrained
-            const finalScale = calculateFinalScale();
-
-            // State reset
             translateX = 0;
             translateY = 0;
             targetX = 0;
@@ -201,81 +206,41 @@ document.addEventListener('DOMContentLoaded', function() {
             lightboxImage.style.cursor = 'zoom-in';
             lightboxZoom.querySelector('span').textContent = 'zoom_in';
 
-            // Animate to the constrained scale, then cleanup
-            animateZoom(SCALE, finalScale, currentTransX, currentTransY, 0, 0, () => {
+            animateZoom(startScale, preZoomScale, startX, startY, 0, 0, () => {
                 lightboxImage.classList.remove('is-zoomed');
-                lightboxImage.style.transform = ''; // Clear inline transform
+                lightboxImage.style.transform = '';
+                if (lightbox.classList.contains('active')) applyToolbarConstraint();
             });
         }
     }
 
-    function calculateFinalScale() {
-        // Use NATURAL dimensions, not cached display dimensions
-        const naturalWidth = naturalImgWidth;
-        const naturalHeight = naturalImgHeight;
-        
-        // Temporarily remove is-zoomed to read unzoomed CSS values
-        const wasZoomed = lightboxImage.classList.contains('is-zoomed');
-        if (wasZoomed) {
-            lightboxImage.classList.remove('is-zoomed');
-        }
-        
-        // Get the computed max-width and max-height from CSS
-        const computedStyle = window.getComputedStyle(lightboxImage);
-        const maxWidth = parseFloat(computedStyle.maxWidth);
-        const maxHeight = parseFloat(computedStyle.maxHeight);
-        
-        // Restore is-zoomed if it was there
-        if (wasZoomed) {
-            lightboxImage.classList.add('is-zoomed');
-        }
-        
-        // Calculate scale to fit within constraints
-        const scaleX = maxWidth / naturalWidth;
-        const scaleY = maxHeight / naturalHeight;
-        
-        return Math.min(scaleX, scaleY, 1);
-    }
-
     function animateZoom(startScale, endScale, startX, startY, endX, endY, onComplete) {
-        const duration = 250; // ms
+        if (animationId !== null) { cancelAnimationFrame(animationId); animationId = null; }
+        const duration = 250;
         const startTime = performance.now();
-        
         function animate(currentTime) {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            
-            // Easing function (ease-out)
+            const progress = Math.min((currentTime - startTime) / duration, 1);
             const eased = 1 - Math.pow(1 - progress, 3);
-            
-            const currentScale = startScale + (endScale - startScale) * eased;
-            const currentX = startX + (endX - startX) * eased;
-            const currentY = startY + (endY - startY) * eased;
-            
-            lightboxImage.style.transform = 
-                `translate(${currentX}px, ${currentY}px) scale(${currentScale})`;
-            
-            if (progress < 1) {
-                requestAnimationFrame(animate);
-            } else if (onComplete) {
-                onComplete();
-            }
+            liveScale  = startScale + (endScale - startScale) * eased;
+            liveTransX = startX    + (endX    - startX)    * eased;
+            liveTransY = startY    + (endY    - startY)    * eased;
+            lightboxImage.style.transform =
+                `translate(${liveTransX}px, ${liveTransY}px) scale(${liveScale})`;
+            if (progress < 1) animationId = requestAnimationFrame(animate);
+            else { animationId = null; if (onComplete) onComplete(); }
         }
-        
-        requestAnimationFrame(animate);
+        animationId = requestAnimationFrame(animate);
     }
 
     function resetZoom() {
         if (!isZoomed) return;
-        const SCALE = getZoomScale();
-        
-        // Use the stored clamped values
-        const currentTransX = translateX;
-        const currentTransY = translateY;
-        
-        // Calculate final scale
-        const finalScale = calculateFinalScale();
-        
+        const factor = window.innerWidth <= 834 ? 1.5 : 1.7;
+        const SCALE = preZoomScale * factor;
+        const wasAnimating = animationId !== null;
+        const startScale = wasAnimating ? liveScale  : SCALE;
+        const startX     = wasAnimating ? liveTransX : translateX;
+        const startY     = wasAnimating ? liveTransY : translateY;
+
         isZoomed = false;
         translateX = 0;
         translateY = 0;
@@ -284,25 +249,27 @@ document.addEventListener('DOMContentLoaded', function() {
         needsUpdate = false;
 
         updateNavVisibility();
-        
+
         lightboxImage.style.cursor = 'zoom-in';
         lightboxZoom.querySelector('span').textContent = 'zoom_in';
-        
-        // Animate zoom out from actual position
-        animateZoom(SCALE, finalScale, currentTransX, currentTransY, 0, 0, () => {
+
+        animateZoom(startScale, preZoomScale, startX, startY, 0, 0, () => {
             lightboxImage.classList.remove('is-zoomed');
             lightboxContent.classList.remove('is-zoomed');
             lightboxImage.style.transform = '';
+            if (lightbox.classList.contains('active')) applyToolbarConstraint();
         });
     }
 
     lightboxZoom.addEventListener('click', (e) => {
+        if (currentImages.length === 0) return;
         e.stopPropagation();
         toggleZoom();
     });
 
     // Image Click - Toggle zoom if not dragging
     lightboxImage.addEventListener('click', (e) => {
+        if (currentImages.length === 0) return;
         e.stopPropagation();
         if (!hasDragged) {
             toggleZoom();
