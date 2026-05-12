@@ -31,6 +31,7 @@
     let scrollUpStartY = null;
     let scrollDownStartY = null;
     let scrollStopTimer = null;
+    let returningToTop = false;
 
     const UP_THRESHOLD = 700;
     const MIN_SCROLL_Y = 100;
@@ -62,6 +63,16 @@
         const currentScrollY = window.scrollY;
         const scrollingUp = currentScrollY < lastScrollY;
 
+        if (returningToTop) {
+            hide();
+            clearTimeout(hideTimer);
+            scrollUpStartY = null;
+            scrollDownStartY = null;
+            if (currentScrollY <= MIN_SCROLL_Y) returningToTop = false;
+            lastScrollY = currentScrollY;
+            return;
+        }
+
         if (!scrollingUp) {
             scrollUpStartY = null;
             if (scrollDownStartY === null) scrollDownStartY = lastScrollY;
@@ -91,6 +102,7 @@
     }, { passive: true });
 
     btn.addEventListener("click", () => {
+        returningToTop = true;
         window.scrollTo({ top: 0, behavior: "smooth" });
         hide();
         clearTimeout(hideTimer);
