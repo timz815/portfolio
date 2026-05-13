@@ -1,10 +1,16 @@
 .intro {
-  padding: 1rem 3%;
   display: grid;
   grid-template-columns: 1fr auto;
+  align-items: center;
   max-width: 68rem;
+  min-height: 69svh;
   gap: 1rem;
-  min-height: 69svh; /* padding-top:8rem; */ /* padding-bottom:10rem; */
+  padding: clamp(4rem, 9vh, 8rem) 3% clamp(3rem, 7vh, 7rem);
+}
+@media (max-height: 25rem) {
+  .intro {
+    min-height: auto;
+  }
 }
 @media (max-width: 50rem) {
   .intro {
