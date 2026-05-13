@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
-  max-width: 68rem;
+  max-width: 48rem;
   min-height: 69svh;
   gap: 1rem;
   padding: clamp(4rem, 9vh, 8rem) 3% clamp(3rem, 7vh, 7rem);
