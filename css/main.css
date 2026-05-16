@@ -17,17 +17,15 @@ main {
 .header-divider,
 .main-divider,
 .footer-divider {
-  max-width: 120rem;
+  max-width: 100rem;
   margin: 0 auto;
 }
 header {
   border-bottom: 1px solid #c4c4c4;
   background-color: #fdfbf7;
 }
-.header-divider {
-  padding: 0.95rem 3%;
-}
 .nav-bar {
+  padding: 0.95rem 3%;
   display: flex;
   justify-content: space-between;
   align-items: baseline;

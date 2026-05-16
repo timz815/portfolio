@@ -2,10 +2,10 @@
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
-  max-width: 48rem;
-  min-height: 69svh;
+  max-width: 64rem;
+  min-height: min(calc(100svh - 12rem), 40rem);
   gap: 1rem;
-  padding: clamp(4rem, 9vh, 8rem) 3% clamp(3rem, 7vh, 7rem);
+  padding: clamp(3rem, 8vh, 6rem) 3% clamp(2rem, 4vh, 4rem);
 }
 @media (max-height: 25rem) {
   .intro {
@@ -14,12 +14,12 @@
 }
 @media (max-width: 50rem) {
   .intro {
-    padding-bottom: 8rem;
+    min-height: min(calc(100svh - 10rem), 60rem);
   }
 }
 @media (max-width: 34.375rem) {
   .intro {
-    padding-bottom: 6.5rem;
+    min-height: min(calc(100svh - 8rem), 60rem);
   }
 }
 .intro-header {
