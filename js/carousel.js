@@ -49,9 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getZoomScale() {
         if (!cachedImgWidth || !naturalImgWidth) {
-            return window.innerWidth <= 834 ? 1.5 : 1.7;
+            return window.innerWidth <= 834 ? 1.75 : 1.7;
         }
-        const factor = window.innerWidth <= 834 ? 1.5 : 1.7;
+        const factor = window.innerWidth <= 834 ? 1.75 : 1.7;
         return (cachedImgWidth * factor) / naturalImgWidth;
     }
 
@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 cacheDimensions();
                 preZoomScale = cachedImgWidth / naturalImgWidth;
             }
-            const factor = window.innerWidth <= 834 ? 1.5 : 1.7;
+            const factor = window.innerWidth <= 834 ? 1.75 : 1.7;
             const SCALE = preZoomScale * factor;
             const startScale = alreadyZoomed ? liveScale : preZoomScale;
             const startX     = alreadyZoomed ? liveTransX : 0;
@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             animateZoom(startScale, SCALE, startX, startY, 0, 0);
         } else {
-            const factor = window.innerWidth <= 834 ? 1.5 : 1.7;
+            const factor = window.innerWidth <= 834 ? 1.75 : 1.7;
             const SCALE = preZoomScale * factor;
             const wasAnimating = animationId !== null;
             const startScale = wasAnimating ? liveScale  : SCALE;
@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function resetZoom() {
         if (!isZoomed) return;
-        const factor = window.innerWidth <= 834 ? 1.5 : 1.7;
+        const factor = window.innerWidth <= 834 ? 1.75 : 1.7;
         const SCALE = preZoomScale * factor;
         const wasAnimating = animationId !== null;
         const startScale = wasAnimating ? liveScale  : SCALE;
