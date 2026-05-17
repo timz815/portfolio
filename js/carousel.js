@@ -457,6 +457,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 : Math.max(thumbWrapper.scrollLeft - step, 0);
         }
 
+        function updateThumbArrowState() {
+            const maxScroll = thumbWrapper.scrollWidth - thumbWrapper.clientWidth;
+            const atStart = thumbWrapper.scrollLeft <= 1;
+            const atEnd = thumbWrapper.scrollLeft >= maxScroll - 1;
+
+            thumbPrev.disabled = atStart;
+            thumbNext.disabled = atEnd;
+        }
+
         thumbButtons.forEach((btn, index) => {
             btn.addEventListener("click", () => updateDisplay(index));
         });
@@ -483,9 +492,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const visible = window.innerWidth > 550 &&
                             thumbWrapper.scrollWidth > thumbWrapper.clientWidth;
             thumbnailMain.classList.toggle("arrows-visible", visible);
+            updateThumbArrowState();
         }
 
         updateThumbArrows();
+        thumbWrapper.addEventListener("scroll", updateThumbArrowState);
         window.addEventListener("resize", updateThumbArrows);
         window.addEventListener("load", updateThumbArrows);
 
