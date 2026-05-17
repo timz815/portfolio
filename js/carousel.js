@@ -116,18 +116,14 @@ document.addEventListener("DOMContentLoaded", () => {
     function performImageSwap(src, alt) {
         const preload = new Image();
         preload.src = src;
-        lightboxImage.style.opacity = '0';
         const doSwap = () => {
-            setTimeout(() => {
-                lightboxImage.src = src;
-                lightboxImage.alt = alt;
-                requestAnimationFrame(() => {
-                    cacheDimensions();
-                    applyToolbarConstraint();
-                    lightboxImage.style.opacity = '1';
-                    if (isZoomed) requestTransformUpdate();
-                });
-            }, 50);
+            lightboxImage.src = src;
+            lightboxImage.alt = alt;
+            requestAnimationFrame(() => {
+                cacheDimensions();
+                applyToolbarConstraint();
+                if (isZoomed) requestTransformUpdate();
+            });
         };
         preload.onload = doSwap;
         if (preload.complete) doSwap();
@@ -426,15 +422,16 @@ document.addEventListener("DOMContentLoaded", () => {
             updateDisplay,
         };
 
+        instance.images.forEach(({ src }) => {
+            const image = new Image();
+            image.src = src;
+        });
+
         function updateDisplay(index, skipScroll) {
             instance.currentIndex = index;
 
-            displayImg.style.opacity = 0;
-            setTimeout(() => {
-                displayImg.src = instance.images[index].src;
-                displayImg.alt = instance.images[index].alt;
-                displayImg.style.opacity = 1;
-            }, 120);
+            displayImg.src = instance.images[index].src;
+            displayImg.alt = instance.images[index].alt;
 
             thumbButtons.forEach((btn, i) => {
                 btn.setAttribute("aria-selected", i === index);
