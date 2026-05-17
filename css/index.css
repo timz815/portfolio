@@ -3,9 +3,10 @@
   grid-template-columns: 1fr auto;
   align-items: center;
   max-width: 64rem;
-  min-height: min(calc(100svh - 14.25rem), 37.5rem);
+  min-height: min(calc(100svh - 13.5rem), 37.5rem);
+  /* min-height: min(calc(100svh - 14.25rem), 37.5rem); */
   gap: 1rem;
-  padding: clamp(4rem, 9vh, 7rem) 3% clamp(2rem, 4vh, 4rem);
+  padding: clamp(4.75rem, 10vh, 7.5rem) 3% clamp(2rem, 4vh, 4rem);
 }
 @media (max-height: 25rem) {
   .intro {
@@ -14,12 +15,12 @@
 }
 @media (max-width: 50rem) {
   .intro {
-    min-height: min(calc(100svh - 12.5rem), 60rem);
+    min-height: min(calc(100svh - 12rem), 60rem);
   }
 }
 @media (max-width: 34.375rem) {
   .intro {
-    min-height: min(calc(100svh - 10.5rem), 60rem);
+    min-height: min(calc(100svh - 10rem), 60rem);
   }
 }
 .intro-header {
