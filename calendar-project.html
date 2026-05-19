@@ -103,8 +103,8 @@
                     <div class="para-section">
                       <h3 id="cal-team">Team</h3>
                       <ul>
-                        <li>Johann Ferrera</li>
-                        <li>Timothy Zhang</li>
+                        <li>Johann F.</li>
+                        <li>Timothy Z.</li>
                       </ul>
                     </div>
                     <div class="para-section">
@@ -134,7 +134,7 @@
                     <div class="para-section overview-last" id="overview-last">
                       <h3>Contributions</h3>
                       <p>
-                        I worked both across both design and front-end
+                        I worked across both design and front-end
                         implementation, from the problem framing and designing
                         the dual-calendar model to coding front-end features. My
                         teammate focused on back end architecture, system logic,
@@ -157,40 +157,26 @@
                     difficult to coordinate a time that works for everyone.
                   </p>
                   <p>
-                    Traditional tools like Google Calendar or Outlook focus on
-                    individual scheduling while providing little support for
-                    group planning. Conversely, group scheduling solutions such
-                    as Calendly are either geared towards individual appointment
-                    bookings or unintuitive and not optimized for group
-                    scheduling workflows. Together, these limitations leave
-                    users without an efficient way to coordinate group meetings.
+                    Existing tools only partially address this problem. Google Calendar and Outlook focus mainly on individual scheduling, while group scheduling solutions such as Calendly are either geared towards individual appointment bookings or unintuitive and not optimized for group scheduling workflows. As a result, students are left without an efficient way to coordinate group meetings.
                   </p>
                 </div>
                 <div class="para-section">
                   <h3>Opportunity</h3>
                   <p>
-                    Users could benefit from a tool that helps groups
-                    efficiently find meeting times and reduce scheduling
-                    friction.
+                    Students could benefit from a tool that helps groups efficiently find meeting times and reduce scheduling friction.
                   </p>
                 </div>
                 <div class="para-section">
                   <h3>Research + Insights</h3>
                   <p>
-                    To understand how students currently coordinate group
-                    meetings, we conducted informal interviews with classmates
-                    and friends on planning group meetings and thoughts on
-                    prototypes.
+                    To understand how students currently coordinate group meetings, we conducted informal interviews with classmates and friends and gathered feedback on early prototypes.
                   </p>
                   <p>Our main takeaways were:</p>
                   <section class="insight-list">
                     <div class="insight-card">
                       <h3>Users value social boundaries and privacy</h3>
                       <p>
-                        Participants want to keep calendar events and details
-                        separate for unrelated social circles (friends,
-                        classmates, family), because what they are comfortable
-                        and willing to share are different between groups.
+                        Participants wanted to keep calendar events and details separate across different social circles, such as friends, classmates, and family. What they were comfortable sharing depended on the group.
                       </p>
                     </div>
                     <div class="insight-card">
@@ -199,21 +185,14 @@
                         participation
                       </h3>
                       <p>
-                        Users understand availability most easily when everyone
-                        can respond simultaneously, but it isn't always
-                        feasible. When scheduling asynchronously, suggested
-                        times and availability become scattered as without a
-                        shared source of truth, coordination slows and planning
-                        can stall.
+                        Because large groups cannot realistically coordinate availability simultaneously, responses arrive asynchronously, causing members to develop different understandings of the group’s availability and making plans increasingly difficult to finalize.
                       </p>
                     </div>
                   </section>
                 </div>
                 <div class="para-section">
                   <p>
-                    Based on these findings, we created a current user journey
-                    to capture how students coordinate meetings and identify
-                    points where asynchronous delays create friction.
+                    Based on these findings, we created a current user journey to capture how students coordinate meetings and identify points of friction.
                   </p>
                 </div>
               </section>
@@ -243,16 +222,85 @@
                   </p>
                 </div>
               </section>
+              <section>
+                <div class="para-section">
+                  <h3>Iterations</h3>
+                  <p>
+                    We began by organizing group scheduling into dedicated group spaces, where members could view shared availability and confirm meeting times in one place. This helped consolidate scattered scheduling information into one shared context which reduced the number of coordination steps and allowed for faster decision making.
+                  </p>
+                  <p>
+                    In earlier versions, we displayed both group events and unavailable times as event blocks in a shared group calendar timetable. 
+                  </p>
+                </div>
+              </section>
+            </div>
+            <section class="article-img">
+              <div class="image-board">
+                <div class="image-item rounded-nm contain">
+                  <img
+                    src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//calendar-iterations.jpg"
+                    alt="timetable prototype iterations"
+                  />
+                </div>
+              </div>
+              <figcaption class="article-caption">
+                Timetable prototypes combining unavailable time slots and scheduled events.
+              </figcaption>
+            </section>
+            <div class="article-text-width">
+              <section>
+                <div class="para-section">
+                  <p>
+                    While this created a complete overview, internal usability evaluation showed that it also introduced excessive visual clutter and made both group events and unavailable time slots slower to scan and interpret.
+                  </p>
+                  <p>
+                    To reduce visual complexity, we separated these two needs: the group page prioritized scheduled events, since users mainly open a group to see what has already been scheduled within that group, while availability data appeared only when creating a new event, where it directly supports the task of comparing possible meeting times.
+                  </p>
+                </div>
+              </section>
+              <section>
+                <div class="para-section">
+                  <p>
+                    Another iteration focused on the week-to-month calendar transition. In reviewing existing calendar app plugins, we found many calendar interfaces handled this transition poorly.
+                  </p>
+                  <p>
+                    To make the interaction feel more continuous, we based the gesture model on physical calendars. Similar to flipping pages in a calendar, horizontal swiping moves users forward and backward in time, such as swiping right to check the next week. Vertical gestures adjusted the level of detail between week and month views. 
+                  </p>
+                </div>
+              </section>
+            </div>
+            <section class="article-img">
+              <div class="image-board">
+                <div class="image-item justify-center rounded-nm">
+                  <img
+                    src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//calendar-solution.png"
+                    alt="two app screens"
+                  />
+                </div>
+              </div>
+              <figcaption class="article-caption">
+                The push and pull method to adjust from current week to current
+                month.
+              </figcaption>
+            </section>
+            <div class="article-text-width">
+              <section>
+                <div class="para-section">
+                  <p>
+                    This consistent gesture direction keeps navigation predictable, aligns with user intent, and additionally accommodates months of varying length smoothly.
+                  </p>
+                </div>
+              </section>
               <hr class="doc-divider" id="solution" />
               <section id="briefing">
                 <h2>Solution Briefing</h2>
                 <div class="para-section">
                   <h3>Hangout Calendar App</h3>
                   <p>
-                    A design that organizes personal and group schedules into a
-                    clear, visual interface for students to coordinate meetings
-                    efficiently by acting directly on information surfaced from
-                    all available times.
+                    Building from these iterations, the final design focuses on two core patterns: group-based scheduling spaces and a synced personal calendar.
+                  </p>
+                  <p>
+                    Below are the core interface patterns of the final design:
                   </p>
                 </div>
                 <h3>Familiar Interaction Patterns</h3>
@@ -308,19 +356,10 @@
               <section>
                 <div class="para-section">
                   <p>
-                    Scheduling happens within group spaces, where users can add
-                    members, similar to how conversations are organized in
-                    messaging apps. Within each group, users can view and manage
-                    plans specific to that group, which makes commitments within
-                    the group clear and easy to understand.
+                    Scheduling happens within group spaces, where users can add members, similar to how conversations are organized in messaging apps. Within each group, users can view and manage plans specific to that group, which makes commitments within the group clear and easy to understand.
                   </p>
                   <p>
-                    When creating a new event, availability is presented as a
-                    timetable with unavailable timeslots greyed out (red). This
-                    is derived from each members' personal calendars, so shared
-                    free slots can be identified without revealing each
-                    individual commitment. Events then can be confirmed directly
-                    within the group.
+                    When creating a new event, availability is presented as a timetable with unavailable time slots marked in red. This is derived from each member’s personal calendar, so shared free slots can be identified without revealing each individual commitment. Events can then be confirmed directly within the group.
                   </p>
                 </div>
                 <h3>Synced Personal Calendar</h3>
@@ -346,63 +385,11 @@
               <section>
                 <div class="para-section">
                   <p>
-                    The personal calendar tab serves as a dashboard for users to
-                    view all their commitments and personal schedule in one
-                    place. Continuous syncing with group calendars keeps it up
-                    to date automatically.
+                    The personal calendar tab serves as a dashboard for users to view all their commitments and personal schedule in one place. Continuous syncing with group calendars keeps it up to date automatically.
                   </p>
                 </div>
               </section>
             </div>
-            <div class="article-text-width">
-              <section>
-                <div class="para-section">
-                  <h3>Interaction Design & Challenges</h3>
-                  <p>
-                    Most scheduling apps rely on a compact calendar header at
-                    the top of the screen to keep users oriented. Week view for
-                    quick scanning of the days in the current week, while month
-                    view provides structure for planning ahead. Because users
-                    move between these views frequently while scheduling,
-                    preserving spatial and temporal context during the
-                    week-to-month transition became a core interaction to get
-                    right in HangoutCalendar.
-                  </p>
-                  <p>
-                    In reviewing existing calendar app plugins, we found many
-                    handled this transition poorly. Some replaced the week view
-                    abruptly with a full month, while others used inconsistent
-                    gesture controls which resulted in interactions that felt
-                    non-continuous and disjointed.
-                  </p>
-                  <p>
-                    In the end, we anchored the interaction based on physical
-                    calendars. Horizontal swiping moves forward and backward in
-                    time, such as across weeks in week view or months in month
-                    view, similar to flipping calendar pages. Vertical gestures
-                    adjust the level of detail like transitioning between week
-                    and month views. This consistent gesture direction keeps
-                    navigation predictable, aligns with user intent, and also
-                    accommodates months of varying length smoothly (between 4 to
-                    6 rows).
-                  </p>
-                </div>
-              </section>
-            </div>
-            <section class="article-img">
-              <div class="image-board">
-                <div class="image-item justify-center rounded-nm">
-                  <img
-                    src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//calendar-solution.png"
-                    alt="two app screens"
-                  />
-                </div>
-              </div>
-              <figcaption class="article-caption">
-                The push and pull method to adjust from current week to current
-                month.
-              </figcaption>
-            </section>
             <div class="article-text-width">
               <hr class="doc-divider" />
               <section id="reflection">
