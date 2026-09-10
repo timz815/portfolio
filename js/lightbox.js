@@ -128,11 +128,14 @@ document.addEventListener('DOMContentLoaded', () => {
         onNavigate?.(index);
         showImage();
     }
+    function zoomScale() {
+        return box.clientWidth <= 834 ? 2 : 1.7;
+    }
     function toggleZoom() {
         if (!ready) return;
         endGesture();
         zoomed = !zoomed;
-        scale = zoomed ? (box.clientWidth <= 834 ? 2.25 : 1.7) : 1;
+        scale = zoomed ? zoomScale() : 1;
         x = y = 0;
         render();
     }
@@ -186,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const dx = event.clientX - gesture.startX, dy = event.clientY - gesture.startY;
         endGesture();
         if (zoomed) {
-            scale = box.clientWidth <= 834 ? 1.75 : 1.7;
+            scale = zoomScale();
             render();
         } else if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
             navigate(dx > 0 ? -1 : 1);
@@ -196,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!gesture) return;
         dragged = true;
         endGesture();
-        scale = zoomed ? (box.clientWidth <= 834 ? 2.25 : 1.7) : 1;
+        scale = zoomed ? zoomScale() : 1;
         render();
     }
     image.addEventListener('pointercancel', cancelGesture);
