@@ -6,7 +6,7 @@
     <title>Project - Tim</title>
     <link
       rel="icon"
-      href="https://media.githubusercontent.com/media/timz815/portfolio/main/icon/waving-hand.svg"
+      href="icon/waving-hand.svg"
       type="image/svg+xml"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -25,12 +25,15 @@
     />
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <script src="js/nav-underline.js" defer></script>
+    <script src="js/intro-motion.js" defer></script>
     <link rel="stylesheet" href="css/project.css" />
+    <script src="js/project-nav.js" defer></script>
     <link rel="stylesheet" href="css/lightbox.css" />
     <link
       rel="preload"
       as="image"
-      href="media/calendar-banner.png"
+      href="media/calendar-illustration-hero.png"
       fetchpriority="high"
     />
     <style>
@@ -60,31 +63,34 @@
         </nav>
       </div>
     </header>
-    <main role="main">
+    <main role="main" class="project-page calendar-project">
       <div class="main-divider">
-        <section class="title-section">
-          <div class="title-card title-card--calendar" id="calendar-banner">
-            <div class="title-card-content">
-              <div class="title-card-wrapper">
-                <h1 class="card-title">Hangout Calendar</h1>
-              </div>
-            </div>
-          </div>
-        </section>
+        <aside class="project-rail">
+          <nav class="project-chapters" aria-label="Case study navigation">
+            <a href="#intro">Intro</a>
+            <a href="#overview">Overview</a>
+            <a href="#process">Problem</a>
+            <a href="#research">Research</a>
+            <a href="#iterations">Iterations</a>
+            <a href="#solution">Solution</a>
+            <a href="#reflection">Reflection</a>
+          </nav>
+        </aside>
         <section class="content-section">
           <div class="article-max-width">
             <div class="article-text-width">
               <section class="intro" id="intro">
                 <div class="para-section">
+                  <h1 class="project-page-title">Reducing Group Scheduling Friction</h1>
                   <h2 class="intro-opening" id="intro-opening">
-                    HangoutCalendar is a cross-platform scheduling app that
-                    reduces the time and cognitive load students face when
-                    coordinating group meetings.
+                    HangoutCalendar is a cross-platform scheduling app designed
+                    to reduce the time and effort students spend coordinating
+                    group meetings.
                   </h2>
                   <p>
-                    It shows group members' overlapping free time and users'
-                    personal calendars, giving users an easy way to confirm
-                    meeting times with reminders.
+                    It combines shared group availability with a synced personal
+                    calendar to make finding and planning meeting times faster
+                    and more organized.
                   </p>
                   <a class="underline-link" href="#solution">Jump to Solution</a
                   ><a
@@ -95,6 +101,18 @@
                   >
                 </div>
               </section>
+            </div>
+            <figure class="project-hero" id="calendar-banner">
+              <img
+                src="media/calendar-illustration-hero.png"
+                width="1672"
+                height="941"
+                alt="Illustration of overlapping availability across five calendars"
+                fetchpriority="high"
+                decoding="async"
+              />
+            </figure>
+            <div class="article-text-width">
               <hr class="doc-divider" />
               <section id="overview">
                 <h2>Project Overview</h2>
@@ -110,9 +128,7 @@
                     <div class="para-section">
                       <h3 class="cal-tools" id="cal-tools">Tools</h3>
                       <ul>
-                        <li>Figma</li>
                         <li>Expo Go</li>
-                        <li>React Native</li>
                         <li>Firebase</li>
                       </ul>
                     </div>
@@ -121,24 +137,21 @@
                     <div class="para-section">
                       <h3>Context</h3>
                       <p>
-                        This was a seven-week team project (Oct - Dec 2024)
-                        completed as part of a
+                        A seven-week academic project completed from October to
+                        December 2024 for an
                         <a
-                          class="underline-link"
+                          class="underline-link context-link"
                           href="https://www.sfu.ca/outlines.html?2024/fall/iat/359/d100"
                           target="blank_"
-                          >app development course</a
+                          >app development class</a
                         >.
                       </p>
                     </div>
                     <div class="para-section overview-last" id="overview-last">
                       <h3>Contributions</h3>
                       <p>
-                        I worked across both design and front-end
-                        implementation, from the problem framing and designing
-                        the dual-calendar model to coding front-end features. My
-                        teammate focused on back end architecture, system logic,
-                        authentication and availability visualization.
+                        I primarily focused on product design, with additional
+                        contributions to front-end development.
                       </p>
                     </div>
                   </div>
@@ -146,91 +159,84 @@
               </section>
               <hr class="doc-divider" />
               <section id="process">
-                <h2>The Process</h2>
+                <h2>Problem Space</h2>
                 <div class="para-section">
-                  <h3>Problem Space</h3>
+                  <h3>Group scheduling often involves too much back-and-forth.</h3>
                   <p>
-                    Coordinating group meetings can be messy and frustrating,
-                    especially when participants have conflicting schedules. For
-                    instance, university students, whose schedules often vary
-                    due to different classes and commitments, can find it
-                    difficult to coordinate a time that works for everyone.
+                    Group scheduling can require users to compare separate
+                    calendars, reminders, and messages to find times that work.
                   </p>
                   <p>
-                    Existing tools only partially address this problem. Google Calendar and Outlook focus mainly on individual scheduling, while group scheduling solutions such as Calendly are either geared towards individual appointment bookings or unintuitive and not optimized for group scheduling workflows. As a result, students are left without an efficient way to coordinate group meetings.
-                  </p>
-                </div>
-                <div class="para-section">
-                  <h3>Opportunity</h3>
-                  <p>
-                    Students could benefit from a tool that helps groups efficiently find meeting times and reduce scheduling friction.
+                    Existing tools aren’t really designed to address this:
+                    Google Calendar and Outlook focus mainly on individual
+                    scheduling, while tools such as Calendly are better suited
+                    for one-off appointments.
                   </p>
                 </div>
                 <div class="para-section">
-                  <h3>Research + Insights</h3>
+                  <h2>Opportunity</h2>
+                  <h3>Reduce the effort required to coordinate group meetings.</h3>
                   <p>
-                    To understand how students currently coordinate group meetings, we conducted informal interviews with classmates and friends and gathered feedback on early prototypes.
+                    We saw an opportunity to bring group availability and
+                    planning into one place instead of relying on scattered
+                    tools and conversations.
+                  </p>
+                </div>
+                <hr class="doc-divider" />
+                <div class="para-section">
+                  <h2 id="research">Research + Insights</h2>
+                  <h3>Understanding where coordination breaks down.</h3>
+                  <p>
+                    We conducted informal interviews with underclassmen and
+                    gathered feedback on early prototypes to understand how
+                    they currently coordinate meetings.
                   </p>
                   <p>Our main takeaways were:</p>
                   <section class="insight-list">
                     <div class="insight-card">
-                      <h3>Users value social boundaries and privacy</h3>
+                      <h3>Users want control over what they share with different groups.</h3>
                       <p>
-                        Participants wanted to keep calendar events and details separate across different social circles, such as friends, classmates, and family. What they were comfortable sharing depended on the group.
+                        Participants wanted to keep some calendar details private
+                        depending on the group. What they shared with friends,
+                        classmates, and family was not always the same.
                       </p>
                     </div>
                     <div class="insight-card">
                       <h3>
-                        Users want real-time clarity without real-time
-                        participation
+                        Users rely on workarounds to share their availability.
                       </h3>
                       <p>
-                        Because large groups cannot realistically coordinate availability simultaneously, responses arrive asynchronously, causing members to develop different understandings of the group’s availability and making plans increasingly difficult to finalize.
+                        Participants often had to send screenshots, messages, or
+                        manually explain their availability because their calendars
+                        were not designed to be easily shared in a group context.
                       </p>
                     </div>
                   </section>
                 </div>
                 <div class="para-section">
                   <p>
-                    Based on these findings, we created a current user journey to capture how students coordinate meetings and identify points of friction.
+                    In larger groups, delayed responses could also make it harder
+                    to maintain a shared understanding of availability.
                   </p>
                 </div>
               </section>
             </div>
-            <section class="article-img">
-              <div class="image-board">
-                <div class="image-item rounded-nm contain">
-                  <img
-                    src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//calendar-journey.png"
-                    alt="calendar journey flow"
-                  />
-                </div>
-              </div>
-              <figcaption class="article-caption">
-                The current user journey based on our research.
-              </figcaption>
-            </section>
             <div class="article-text-width">
               <section>
                 <div class="para-section">
-                  <h3>Design Focus</h3>
+                  <h2>Design Focus</h2>
+                  <h3>This led us to ask:</h3>
                   <p>
-                    Thus, our driving question became: How might we help groups
-                    quickly identify and confirm shared availability without
-                    requiring real-time response, while preserving separation
-                    between social contexts in an intuitive way?
+                    How might we make shared availability easy to compare and
+                    confirm while giving users control over what they share?
                   </p>
                 </div>
               </section>
+              <hr class="doc-divider" />
               <section>
                 <div class="para-section">
-                  <h3>Iterations</h3>
-                  <p>
-                    We began by organizing group scheduling into dedicated group spaces, where members could view shared availability and confirm meeting times in one place. This helped consolidate scattered scheduling information into one shared context which reduced the number of coordination steps and allowed for faster decision making.
-                  </p>
-                  <p>
-                    In earlier versions, we displayed both group events and unavailable times as event blocks in a shared group calendar timetable. 
-                  </p>
+                  <h2 id="iterations">Iterations</h2>
+                  <h3>Organizing scheduling into dedicated group spaces.</h3>
                 </div>
               </section>
             </div>
@@ -251,21 +257,26 @@
               <section>
                 <div class="para-section">
                   <p>
-                    While this created a complete overview, internal usability evaluation showed that it also introduced excessive visual clutter and made both group events and unavailable time slots slower to scan and interpret.
+                    We organized planning around group spaces where members
+                    could view that specific group’s availability and confirmed
+                    events in one place
                   </p>
                   <p>
-                    To reduce visual complexity, we separated these two needs: the group page prioritized scheduled events, since users mainly open a group to see what has already been scheduled within that group, while availability data appeared only when creating a new event, where it directly supports the task of comparing possible meeting times.
+                    Early versions displayed scheduled events and all unavailable
+                    times together in one shared timetable. Testing showed that
+                    combining both created too much visual clutter which made
+                    the calendar harder to scan.
+                  </p>
+                  <p>
+                    Thus, we separated the two needs: the group main page focused
+                    on confirmed events, while availability appeared only when
+                    users were creating a new event.
                   </p>
                 </div>
               </section>
               <section>
                 <div class="para-section">
-                  <p>
-                    Another iteration focused on the week-to-month calendar transition. In reviewing existing calendar app plugins, we found many calendar interfaces handled this transition poorly.
-                  </p>
-                  <p>
-                    To make the interaction feel more continuous, we based the gesture model on physical calendars. Similar to flipping pages in a calendar, horizontal swiping moves users forward and backward in time, such as swiping right to check the next week. Vertical gestures adjusted the level of detail between week and month views. 
-                  </p>
+                  <h3>Making week-to-month navigation feel seamless.</h3>
                 </div>
               </section>
             </div>
@@ -287,7 +298,16 @@
               <section>
                 <div class="para-section">
                   <p>
-                    This consistent gesture direction keeps navigation predictable, aligns with user intent, and additionally accommodates months of varying length smoothly.
+                    We also explored how users could move between week and month
+                    views intuitively without relying on separate controls common
+                    in existing calendar interfaces.
+                  </p>
+                  <p>
+                    Horizontal swipes move forward and backward through time,
+                    while vertical gestures adjust the level of detail between
+                    week and month views. Keeping each direction tied to a
+                    consistent action helped make the transition between views
+                    feel more predictable and continuous.
                   </p>
                 </div>
               </section>
@@ -295,15 +315,13 @@
               <section id="briefing">
                 <h2>Solution Briefing</h2>
                 <div class="para-section">
-                  <h3>Hangout Calendar App</h3>
+                  <h3>HangoutCalendar</h3>
                   <p>
-                    Building from these iterations, the final design focuses on two core patterns: group-based scheduling spaces and a synced personal calendar.
-                  </p>
-                  <p>
-                    Below are the core interface patterns of the final design:
+                    The final design centers around two connected systems:
+                    dedicated group scheduling spaces and a synced personal calendar
                   </p>
                 </div>
-                <h3>Familiar Interaction Patterns</h3>
+                <h3>Familiar interaction patterns reduce onboarding friction.</h3>
               </section>
             </div>
             <section class="article-img">
@@ -325,16 +343,16 @@
               <section>
                 <div class="para-section">
                   <p>
-                    Although HangoutCalendar introduces a new approach to group
-                    scheduling, it is grounded in familiar interaction patterns
-                    to reduce onboarding friction. By borrowing conventions from
-                    messaging and social apps, such as profile-based identity,
-                    adding contacts, and bottom tab navigation, users can
-                    quickly move between personal calendars, group calendars,
-                    and their profile without learning a new mental model.
+                    HangoutCalendar uses familiar patterns from messaging and
+                    social apps, including profiles, contacts, groups, and bottom
+                    navigation.
+                  </p>
+                  <p>
+                    This gives users a recognizable structure for moving between
+                    personal calendars, group calendars, and account settings.
                   </p>
                 </div>
-                <h3>Group-based Seperation</h3>
+                <h3>Group spaces keep plans and availability in context.</h3>
               </section>
             </div>
             <section class="article-img">
@@ -356,13 +374,16 @@
               <section>
                 <div class="para-section">
                   <p>
-                    Scheduling happens within group spaces, where users can add members, similar to how conversations are organized in messaging apps. Within each group, users can view and manage plans specific to that group, which makes commitments within the group clear and easy to understand.
+                    Each group acts as its own scheduling space where users can
+                    view members, see group events and suggest new events.
                   </p>
                   <p>
-                    When creating a new event, availability is presented as a timetable with unavailable time slots marked in red. This is derived from each member’s personal calendar, so shared free slots can be identified without revealing each individual commitment. Events can then be confirmed directly within the group.
+                    When creating events, unavailable blocks are shown in a
+                    shared timetable based on each member's personal calendar
+                    to keep each member’s privacy.
                   </p>
                 </div>
-                <h3>Synced Personal Calendar</h3>
+                <h3>A synced personal calendar keeps commitments connected.</h3>
               </section>
             </div>
             <section class="article-img">
@@ -385,7 +406,13 @@
               <section>
                 <div class="para-section">
                   <p>
-                    The personal calendar tab serves as a dashboard for users to view all their commitments and personal schedule in one place. Continuous syncing with group calendars keeps it up to date automatically.
+                    The personal calendar brings group plans and personal
+                    commitments into one place.
+                  </p>
+                  <p>
+                    Confirmed group events sync automatically, while external
+                    calendars such as Google Calendar can also be imported to
+                    keep the schedule up to date.
                   </p>
                 </div>
               </section>
@@ -393,35 +420,23 @@
             <div class="article-text-width">
               <hr class="doc-divider" />
               <section id="reflection">
-                <h3>Locking Back...</h3>
+                <h2>Reflection</h2>
+                <h3>Prioritizing the core experience kept the project achievable.</h3>
                 <p>
-                  Working under a tight deadline requires our team to be
-                  deliberate about our prioritization and scope. Early on the
-                  project, we defined clear boundaries around what was essential
-                  to demo HangoutCalendar's core value from nice to have
-                  features. This gave us a framework for making tradeoffs and
-                  balancing our ambition with realistic execution as constraints
-                  emerged.
+                  With a seven-week timeline, we separated features essential to
+                  demonstrating HangoutCalendar's core value from features that
+                  could be deferred.
                 </p>
                 <p>
-                  As the project progressed, we set clear cutoffs for feature
-                  exploration and used the roadmap to decide when ideas should
-                  be simplified or deferred. We prioritized delivering a
-                  reliable, synced calendar with simplified block event entries
-                  over implementing a full hour-by-hour vertical timetable day
-                  view, which was unlikely to be completed on time and deferred
-                  features like a dedicated notifications tab or colour coded
-                  calendars when they risked pulling focus from smoothing out
-                  core feature interactions.
+                  We prioritized reliable group scheduling, shared availability,
+                  calendar syncing, and core navigation over secondary features
+                  such as dedicated notifications, colour coded calendars, and a
+                  more complex hour-by-hour day view.
                 </p>
                 <p>
-                  This approach allowed us to deliver a cohesive, fully
-                  functioning app within the timeframe and successfully
-                  demonstrate the intended user experience and core
-                  interactions. It reinforced for me the value of focusing on
-                  user-facing outcomes rather than feature completeness,
-                  especially when working in a team setting under tight
-                  deadlines.
+                  This helped us deliver a cohesive working app within the
+                  timeframe and reinforced the importance of prioritizing the
+                  core user experience over feature completeness.
                 </p>
               </section>
               <section class="article-nav" id="article-nav">
@@ -482,15 +497,15 @@
       <div class="footer-divider">
         <section class="footer-column">
           <h3>Github Pages</h3>
-          <p>Designed and coded by me :)</p>
           <p>
             <a
               class="footer-link"
               href="https://github.com/timz815/portfolio"
               target="_blank"
-              >Page updated: 05-17-2026</a
+              >View project code here!</a
             >
           </p>
+          <p>Updated: 05-17-2026</p>
         </section>
         <section class="footer-column">
           <h3>Contact</h3>
@@ -500,7 +515,7 @@
           <p>
             <a
               class="footer-link"
-              href="https://www.linkedin.com/in/timothy-zhang-65a479230/"
+              href="https://www.linkedin.com/in/timothy-z-65a479230/"
               target="_blank"
               >LinkedIn</a
             >
@@ -514,6 +529,7 @@
         </section>
       </div>
     </footer>
+    <script src="js/image-transparency.js"></script>
     <script src="js/lightbox.js"></script>
     <script src="js/backtotop.js"></script>
   </body>

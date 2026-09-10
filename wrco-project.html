@@ -6,7 +6,7 @@
     <title>Project - Tim</title>
     <link
       rel="icon"
-      href="https://media.githubusercontent.com/media/timz815/portfolio/main/icon/waving-hand.svg"
+      href="icon/waving-hand.svg"
       type="image/svg+xml"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -25,13 +25,16 @@
     />
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <script src="js/nav-underline.js" defer></script>
+    <script src="js/intro-motion.js" defer></script>
     <link rel="stylesheet" href="css/project.css" />
+    <script src="js/project-nav.js" defer></script>
     <link rel="stylesheet" href="css/carousel.css" />
     <link rel="stylesheet" href="css/lightbox.css" />
     <link
       rel="preload"
       as="image"
-      href="media/wrco-banner.png"
+      href="media/wrco-illustration-hero.png"
       fetchpriority="high"
     />
     <style>
@@ -61,39 +64,53 @@
         </nav>
       </div>
     </header>
-    <main role="main">
+    <main role="main" class="project-page wrco-project">
       <div class="main-divider">
-        <section class="title-section">
-          <div class="title-card title-card--wrco" id="wrco-banner">
-            <div class="title-card-content">
-              <div class="title-card-wrapper">
-                <h1 class="card-title" id="wrco-banner-title">
-                  White Rock City Orchestra
-                </h1>
-              </div>
-            </div>
-          </div>
-        </section>
+        <aside class="project-rail">
+          <nav class="project-chapters" aria-label="Case study navigation">
+            <a href="#intro">Intro</a>
+            <a href="#overview">Overview</a>
+            <a href="#process">Problem</a>
+            <a href="#research">Research</a>
+            <a href="#iterations">Iterations</a>
+            <a href="#solution">Solution</a>
+            <a href="#reflection">Reflection</a>
+          </nav>
+        </aside>
         <section class="content-section">
           <div class="article-max-width">
             <div class="article-text-width">
               <section class="intro" id="intro">
                 <div class="para-section">
+                  <h1 class="project-page-title" id="wrco-banner-title">
+                    Sustaining Orchestra Audience Engagement
+                  </h1>
                   <h2 class="intro-opening" id="intro-opening">
-                    This project proposes a low-maintenance communication system
-                    to help a community orchestra stabilize attendance beyond
-                    its peak holiday concert.
+                    A proposed communication system designed to help a community
+                    orchestra build attendance beyond its peak holiday concert.
                   </h2>
                   <p>
-                    By supporting earlier planning and reinforcing information
-                    across channels, the solution reduces planning friction and
-                    encourages sustained engagement throughout the season.
+                    By making future concerts easier to discover and plan for,
+                    the system can help increase audience engagement across the
+                    season without creating significant new work for the orchestra.
                   </p>
                   <a class="underline-link" href="#solution"
                     >Jump to Solution</a
                   >
                 </div>
               </section>
+            </div>
+            <figure class="project-hero" id="wrco-banner">
+              <img
+                src="media/wrco-illustration-hero.png"
+                width="1548"
+                height="1016"
+                alt="Illustration of an orchestra communication system with a megaphone, website, booklet, and email"
+                fetchpriority="high"
+                decoding="async"
+              />
+            </figure>
+            <div class="article-text-width">
               <hr class="doc-divider" />
               <section id="overview">
                 <h2>Project Overview</h2>
@@ -119,27 +136,22 @@
                   </div>
                   <div>
                     <div
-                      class="para-section wrco-adjustment"
+                      class="para-section"
                       id="wrco-adjustment"
                     >
                       <h3>Context</h3>
                       <p>
-                        The solution is a product proposal created within the
-                        bounds of a
+                        An academic project completed from September to December
+                        2025 for a
                         <a
                           class="underline-link"
                           href="https://www.sfu.ca/outlines.html?2025/fall/iat/333/d100"
                           target="_blank"
-                          >senior level experience design course</a
-                        >
-                        (Sep - Dec 2025) at Simon Fraser University, and is not
-                        affiliated with
-                        <a
-                          class="underline-link"
-                          href="https://www.wrco.ca/"
-                          target="_blank"
-                          >White Rock City Orchestra</a
+                          >UX research and design class</a
                         >.
+                      </p>
+                      <p>
+                        The project is not affiliated with White Rock City Orchestra.
                       </p>
                     </div>
                     <div class="para-section overview-last" id="overview-last">
@@ -155,100 +167,113 @@
               </section>
               <hr class="doc-divider" />
               <section id="process">
-                <h2>The Process</h2>
+                <h2>Problem Space</h2>
                 <div class="para-section">
-                  <h3>Problem Space</h3>
+                  <h3>Attendance drops outside WRCO's peak holiday concert.</h3>
                   <p>
-                    While the White Rock City Orchestra (WRCO) Christmas concert attracts large audiences, the spring and summer attendance can fluctuate, which can make planning and programming for the rest of the season more challenging.
-                  </p>
-                  <h3>Client Goals</h3>
-                  <p>
-                    The orchestra wants to reduce this uneven seasonal
-                    distribution to ease financial pressure earlier in the year.
+                    White Rock City Orchestra attracts large audiences for its
+                    Christmas concert, while attendance during the spring and
+                    summer can fluctuate.
                   </p>
                   <p>
-                    With limited operational capacity, the solution must be easy
-                    to roll out and low-maintenance.
+                    This imbalance can make planning and programming across the
+                    rest of the season more difficult.
                   </p>
                 </div>
                 <div class="para-section">
-                  <h3>Opportunity</h3>
+                  <h2>Client Goals</h2>
+                  <h3>Increase off-season attendance without increasing operational burden.</h3>
                   <p>
-                    Since people are already planning festive outings, the
-                    Christmas concert attracts large audiences during the
-                    holidays. This pattern creates an opportunity for WRCO to
-                    leverage into engagement across the rest of the season.
+                    WRCO wanted to reduce this uneven attendance while working
+                    within the limited capacity of a small community organization.
+                  </p>
+                  <p>
+                    Any proposed solution therefore needed to be simple to
+                    implement and easy to maintain.
                   </p>
                 </div>
                 <div class="para-section">
-                  <h3>Research + Insights</h3>
+                  <h2>Opportunity</h2>
+                  <h3>Use the Christmas concert to build momentum for the rest of the season.</h3>
                   <p>
-                    To understand what drives attendance, we ran co-creation
-                    workshops with concert-goers alongside creating user
-                    personas. Across two sessions with seven participants, we
-                    guided activities to uncover motivations, expectations, and
-                    barriers. These insights helped reveal patterns in audience
-                    behavior that informed strategies for increasing engagement
-                    throughout the season.
+                    The holiday concert already brings a large audience into
+                    contact with WRCO as they look for festive outings.
                   </p>
-                  <p>Our key findings were:</p>
+                  <p>
+                    We saw an opportunity to use that moment to make upcoming
+                    concerts more visible and encourage audiences to stay
+                    connected beyond December.
+                  </p>
+                </div>
+                <hr class="doc-divider" />
+                <div class="para-section">
+                  <h2 id="research">Research</h2>
+                  <h3>We looked at what influences people to commit to a concert.</h3>
+                  <p>
+                    We ran two co-creation workshops with seven concert-goers and
+                    developed user personas to explore what shapes attendance
+                    decisions and the broader concert experience.
+                  </p>
+                  <p>
+                    The research surfaced three patterns that shaped our direction:
+                  </p>
                   <section class="insight-list">
                     <div class="insight-card">
-                      <h3>
-                        Event planning is usually handled by a single organizer
-                      </h3>
+                      <h3>One person often plans for the whole group.</h3>
                       <p>
-                        Many attendance decisions are made by a single organizer coordinating for a larger group. These planners rely on early, consistent details like concert dates, ticket timing, and logistics. When that information is delayed or varies widely between seasons, attendance becomes harder to commit to.
+                        Many attendance decisions were coordinated by a single organizer.
+                      </p>
+                      <p>
+                        They depended on clear dates and ticket purchasing times
+                        to make plans with others. When those details were harder
+                        to find, committing to the event became harder.
                       </p>
                     </div>
                     <div class="insight-card">
-                      <h3>
-                        Event memorability is shaped by more than just the
-                        performance
-                      </h3>
+                      <h3>The experience starts before the music does.</h3>
                       <p>
-                        While the musical performance defines the core experience, the moments before the show and during intermission can play an outsized role in how attendees remember the event. Lightweight, optional engagement during these moments can make the concert feel more memorable and increase its perceived value.
+                        Participants' memories of an event were also shaped by
+                        moments before the show and during intermission.
+                      </p>
+                      <p>
+                        Lightweight, optional engagement during these moments can
+                        dramatically increase the perceived value of the experience itself.
+                      </p>
+                    </div>
+                    <div class="insight-card">
+                      <h3>Future concerts disappear from the experience too easily.</h3>
+                      <p>
+                        Mapping the audience journey showed that communication
+                        was concentrated around the current concert with few
+                        opportunities to keep upcoming events visible before
+                        attendees left the experience.
                       </p>
                     </div>
                   </section>
                 </div>
-                <p>
-                  To connect these findings to the existing experience, we mapped the current ticket-buying journey to find
-                  where uncertainty, friction, and missed engagement
-                  opportunities occur.
-                </p>
               </section>
             </div>
-            <section class="article-img">
-              <div class="image-board">
-                <div class="image-item rounded-nm contain">
-                  <img
-                    src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//wrco-website-journey.png"
-                    alt="wrco journey flow"
-                  />
-                </div>
-              </div>
-              <figcaption class="article-caption">
-                Website journey as of Sept 2025.
-              </figcaption>
-            </section>
             <div class="article-text-width">
               <section>
                 <div class="para-section">
-                  <h3>Design Focus</h3>
-                  <p>
-                    Thus, our driving question became: How might WRCO maintain
-                    momentum across the season by improving communication and
-                    staying connected with their audience through smarter use of
-                    existing touchpoints?
+                  <h2>Design Focus</h2>
+                  <h3>This led us to ask:</h3>
+                  <p class="design-question">
+                    How might WRCO maintain momentum across the season by
+                    improving communication and making better use of existing
+                    audience touchpoints?
                   </p>
                 </div>
               </section>
+              <hr class="doc-divider" />
               <section>
                 <div class="para-section">
-                  <h3>Iterations</h3>
+                  <h2 id="iterations">Iterations</h2>
+                  <h3>Improving individual touchpoints wasn't enough.</h3>
                   <p>
-                    We initially explored ways to improve attendance by targeting individual points in the concert journey.
+                    Our first concepts explored improving separate parts of the
+                    concert journey including the post-concert experience, the
+                    sponsorship page, and the website landing page.
                   </p>
                 </div>
               </section>
@@ -270,10 +295,13 @@
               <section>
                 <div class="para-section">
                   <p>
-                    While each direction improved a specific part of the experience, the impact felt limited because the concepts still treated engagement as a series of separate touchpoints.
+                    Each concept addressed a specific moment but each standalone
+                    improvement was not impactful enough.
                   </p>
                   <p>
-                    This shifted our direction toward a more continuous engagement system to help audiences stay connected to WRCO  before, during, and after each concert.
+                    This shifted our thinking to begin looking at how WRCO's
+                    existing touchpoints could work together and multiply each
+                    other’s impact across the season.
                   </p>
                 </div>
               </section>
@@ -283,29 +311,24 @@
                 <div class="para-section">
                   <h3>A Revamped Communication Package</h3>
                   <p>
-                    We proposed a lightweight, multi-channel communication
-                    system designed to increase audience exposure to upcoming
-                    concerts while remaining feasible for a small team to
-                    maintain. Rather than relying on a single promotional
-                    moment, the solution creates a set of reinforcing
-                    touchpoints across the season that support earlier planning,
-                    sustained awareness, and stronger audience engagement.
+                    We proposed a communication system built around channels WRCO
+                    already uses including its website, email, printed concert
+                    booklet, and in-person concert experience.
                   </p>
                   <p>
-                    The system brings together three primary communication
-                    channels: a printed seasonal concert booklet, a website
-                    revamp, and email promotions, supported by small
-                    enhancements to the in-concert experience. Together, these
-                    template-based touchpoints, grounded in WRCO's design
-                    language, form a continuous communication loop that keeps
-                    future concerts visible, reduces planning friction for
-                    attendees, and remains easy for the WRCO to update.
+                    Each touchpoint reinforces upcoming concerts at a different
+                    stage of the audience journey without requiring WRCO to
+                    maintain a new platform or take on significant operational overhead.
                   </p>
                 </div>
                 <div class="para-section">
-                  <h3>The Booklet</h3>
+                  <h2>Solution</h2>
+                  <h3>The booklet turns the current concert into a touchpoint for the next one.</h3>
                   <p>
-                    The concert booklet supports the live experience during natural downtime, such as before the show and during intermission. It keeps attendees engaged through program detail, WRCO's history, and member features, while intentionally signposting upcoming concerts and relevant offers, which encourages new attendees to consider the rest of the season while interest is still high. As a tangible, take-home artifact, the booklet also supports planning after the event, particularly for first-time attendees who did not purchase tickets themselves.
+                    The booklet makes use of natural downtime before the performance and during intermission to surface upcoming concerts and relevant offers.
+                  </p>
+                  <p>
+                    As a take-home artifact, it also supports planning after the event, especially for attendees who did not purchase the tickets themselves.
                   </p>
                 </div>
               </section>
@@ -391,7 +414,7 @@
                     <span class="material-icons">keyboard_arrow_right</span>
                   </button>
                 </div>
-                <div class="para-section">
+                <div>
                   <figcaption class="article-caption">
                     A mockup of the booklet.
                   </figcaption>
@@ -401,16 +424,12 @@
             <div class="article-text-width">
               <section>
                 <div class="para-section">
-                  <h3>The Website</h3>
+                  <h3>The website gives planners the information they need earlier.</h3>
                   <p>
-                    Since the website is the primary place concert-goers check
-                    dates, pricing, and ticket options, its structure plays a
-                    key role in drop off rates. Prioritizing key information
-                    will reduce cognitive effort and keep attention on what
-                    users are looking for. In addition, streamlining the
-                    purchase flow and surfacing key logistical details upfront
-                    can help the site better support planners in moving from
-                    intent to action.
+                    The website brings dates, pricing, and ticket options forward so organizers can evaluate an event without searching across the site.
+                  </p>
+                  <p>
+                    It also simplifies group purchases and surfaces practical details such as parking and entry information so concert-goers know what to expect after buying their tickets.
                   </p>
                 </div>
               </section>
@@ -425,17 +444,18 @@
                 </div>
               </div>
               <figcaption class="article-caption">
-                A reworked website concept that preserves the original design
-                language.
+                A reworked website concept that preserves WRCO's existing design language.
               </figcaption>
             </section>
             <div class="article-text-width">
               <section>
                 <div class="para-section">
-                  <h3>The Email</h3>
+                  <h3>The email keeps WRCO visible between concerts.</h3>
                   <p>
-                    The email promotion remains the orchestra's most direct
-                    communication channel, but the solution reframes it from standalone announcements into a structured sequence of teasers and reminders. Thus the emails serve to both help audiences plan ahead and stay interested between concerts.
+                    Rather than treating emails as standalone reminders, the sequence uses teasers and follow-ups to build anticipation around upcoming concerts.
+                  </p>
+                  <p>
+                    This keeps audiences engaged between performances while giving upcoming events more consistent visibility.
                   </p>
                 </div>
               </section>
@@ -450,21 +470,25 @@
                 </div>
               </div>
               <figcaption class="article-caption">
-                An email design concept that preserves the orginal design
-                language.
+                An email concept that preserves WRCO's existing design language.
               </figcaption>
             </section>
             <div class="article-text-width">
               <section>
                 <div class="para-section">
-                  <h3>In-Concert Enhancements</h3>
+                  <h2>In-Concert Enhancements</h2>
+                  <h3>Take advantage of the post-show high.</h3>
                   <p>
-                    Additional enhancements could include ticket giveaways,
-                    discount draws, and early bird ticket sales to the next
-                    concert to capitalize on post-show enthusiasm. These
-                    additions increase engagement and encourage future
-                    attendance at other concerts without adding significant
-                    operational complexity.
+                    Ticket giveaways, discount draws, or early-bird sales for an upcoming concert could give attendees another reason to return while enthusiasm from the current performance is still high.
+                  </p>
+                </div>
+              </section>
+              <section id="audience-journey">
+                <div class="para-section">
+                  <h2>Audience Journey</h2>
+                  <h3>Each touchpoint reinforces the next chance to attend.</h3>
+                  <p>
+                    Together, the website, email, booklet, and in-concert experience create repeated opportunities for audiences to encounter upcoming concerts.
                   </p>
                   <p>
                     The journey map below illustrates how the proposed system supports attendees across the full concert experience.
@@ -543,9 +567,9 @@
                     <span class="material-icons">keyboard_arrow_right</span>
                   </button>
                 </div>
-                <div class="para-section">
+                <div>
                   <figcaption class="article-caption">
-                    How the system supports attendees before, during, and after the concert.
+                    How the proposed system supports attendees before, during, and after the concert.
                   </figcaption>
                 </div>
               </div>
@@ -553,34 +577,22 @@
             <div class="article-text-width">
               <hr class="doc-divider" />
               <section id="reflection">
-                <h3>Looking Back...</h3>
-                <p>
-                  This project took place within the realities of a small,
-                  community-run organization operating on a highly seasonal
-                  schedule. As the semester progressed, WRCO's focus shifted
-                  toward preparing for a major upcoming concert, which reduced
-                  opportunities for ongoing collaboration and feedback.
-                </p>
-                <p>
-                  Rather than treating this as a blocker, we adjusted our
-                  approach to work within these constraints. We prioritized
-                  research methods that required minimal stakeholder involvement
-                  while still providing meaningful direction, including design
-                  ethnography and co-creation workshops with concert-goers as
-                  proxies for actual attendees. This allowed the work to
-                  continue moving forward without placing additional demands on
-                  the organization, while still grounding decisions in real user
-                  insight.
-                </p>
-                <p>
-                  Presenting our progress weekly further shaped how I approached
-                  the work. The need to clearly communicate evolving research
-                  and design decisions to our class reinforced the importance of
-                  clarity and narrative discipline. This practice helped
-                  strengthen my ability to distill complex ideas into concise,
-                  accessible stories; an approach that ensured that design
-                  rationale remained understandable, actionable, and grounded.
-                </p>
+                <h2>Reflection</h2>
+                <div class="para-section">
+                  <h3>Adapting our research approach kept the project moving.</h3>
+                  <p>
+                    As the semester progressed, WRCO shifted its attention toward preparing for a major upcoming concert, which reduced opportunities for continued collaboration and feedback.
+                  </p>
+                  <p>
+                    We adapted by using research methods that placed fewer demands on the organization, including design ethnography and co-creation workshops with concert-goers as proxies for attendees.
+                  </p>
+                </div>
+                <div class="para-section">
+                  <h3>Weekly presentations pushed me to make complex work easier to understand.</h3>
+                  <p>
+                    It honed my ability to communicate evolving research and design decisions more clearly and strengthened how I structure design rationale so the relationship between evidence, decisions, and the final proposal remained easy to follow.
+                  </p>
+                </div>
               </section>
               <section class="article-nav" id="article-nav">
                 <a class="left-article" href="translate-project.html"
@@ -640,15 +652,15 @@
       <div class="footer-divider">
         <section class="footer-column">
           <h3>Github Pages</h3>
-          <p>Designed and coded by me :)</p>
           <p>
             <a
               class="footer-link"
               href="https://github.com/timz815/portfolio"
               target="_blank"
-              >Page updated: 05-17-2026</a
+              >View project code here!</a
             >
           </p>
+          <p>Updated: 05-17-2026</p>
         </section>
         <section class="footer-column">
           <h3>Contact</h3>
@@ -658,7 +670,7 @@
           <p>
             <a
               class="footer-link"
-              href="https://www.linkedin.com/in/timothy-zhang-65a479230/"
+              href="https://www.linkedin.com/in/timothy-z-65a479230/"
               target="_blank"
               >LinkedIn</a
             >
@@ -672,6 +684,7 @@
         </section>
       </div>
     </footer>
+    <script src="js/image-transparency.js"></script>
     <script src="js/lightbox.js"></script>
     <script src="js/carousel.js"></script>
     <script src="js/backtotop.js"></script>

@@ -1,0 +1,60 @@
+/* Animation intent lives on inline phrases; JS resolves their visible line fragments.
+ * These presets can be assigned to any text without changing the animation code. */
+/* Preserve layout while the intro plays; hidden controls cannot receive focus. */
+#works.works-awaiting-intro {
+  visibility: hidden;
+}
+@media (prefers-reduced-motion: reduce) {
+  #works.works-awaiting-intro {
+    visibility: visible;
+  }
+}
+
+.intro[data-motion-root] {
+  --title-piece-entry-transform: none;
+  --title-piece-entry-duration: 1050ms;
+  --title-piece-entry-delay: 0ms;
+  --title-piece-transform-origin: left center;
+  --animated-word-entry-transform: scale(.12) rotate(-24deg);
+  --animated-word-transform-origin: center;
+}
+
+.intro [data-animation="greeting"] { --title-piece-entry-transform: translate3d(-5.75rem, .5rem, 18.75rem) rotateY(-82deg) rotateZ(26deg) scale(.7); --title-piece-entry-duration: 1160ms; --title-piece-entry-delay: 20ms; --animated-word-entry-transform: scale(.1) rotate(-35deg); }
+.intro [data-animation="introduce"] { --title-piece-entry-transform: translate3d(-5.75rem, -1.125rem, 6.25rem) rotateY(76deg) rotateX(-22deg) scaleX(.45); --title-piece-entry-duration: 1280ms; --title-piece-entry-delay: 65ms; --title-piece-transform-origin: left center; }
+/* Scale the role uniformly so letter counters do not squash during the bounce. */
+.intro [data-animation="role"] { --title-piece-entry-transform: translate3d(-15.625rem, 2.125rem, -1.875rem) rotateY(-88deg) rotateZ(-32deg) scale(.55); --title-piece-entry-duration: 1040ms; --title-piece-entry-delay: 0ms; --animated-word-entry-transform: scale(.12) rotate(28deg); }
+.intro [data-animation="navigate"] { --title-piece-entry-transform: translate3d(-21.875rem, -2.125rem, -10rem) rotateY(68deg) rotateX(40deg) scale(.6); --title-piece-entry-duration: 1210ms; --title-piece-entry-delay: 90ms; }
+.intro [data-animation="ambiguity"] { --title-piece-entry-transform: translate3d(-27.5rem, 1rem, -19.375rem) rotateY(-92deg) rotateZ(40deg) scale(.48); --title-piece-entry-duration: 1370ms; --title-piece-entry-delay: 40ms; --animated-word-entry-transform: scale(.08) rotate(-54deg); }
+.intro [data-animation="connect"] { --title-piece-entry-transform: translate3d(-5.75rem, -.75rem, 15.625rem) rotateY(84deg) rotateX(-38deg) scale(.66); --title-piece-entry-duration: 1220ms; --title-piece-entry-delay: 80ms; --animated-word-entry-transform: scale(.06) rotate(48deg); }
+.intro [data-animation="systems"] { --title-piece-entry-transform: translate3d(-10rem, 1.625rem, 4.375rem) rotateY(-80deg) rotateZ(-28deg) scale(.52); --title-piece-entry-duration: 1090ms; --title-piece-entry-delay: 15ms; --animated-word-entry-transform: scale(.22, .06) rotate(-30deg); }
+.intro [data-animation="create"] { --title-piece-entry-transform: translate3d(-14.375rem, -1.5625rem, -5.625rem) rotateY(87deg) rotateX(25deg) scaleX(.42); --title-piece-entry-duration: 1340ms; --title-piece-entry-delay: 55ms; }
+.intro [data-animation="clear"] { --title-piece-entry-transform: translate3d(-31.5625rem, 2.375rem, -14.375rem) rotateY(-76deg) rotateZ(52deg) scale(.5); --title-piece-entry-duration: 1130ms; --title-piece-entry-delay: 5ms; --animated-word-entry-transform: scale(.05) rotate(68deg); }
+.intro [data-animation="usable"] { --title-piece-entry-transform: translate3d(-36.5625rem, -2.25rem, -23.75rem) rotateY(94deg) rotateX(-30deg) scale(.42); --title-piece-entry-duration: 1420ms; --title-piece-entry-delay: 100ms; --animated-word-entry-transform: scale(.1, 1.6) rotate(-46deg); }
+.intro [data-animation="solutions"] { --title-piece-entry-transform: translate3d(-42.5rem, 1.5rem, -28.125rem) rotateY(-88deg) rotateZ(36deg) scale(.4); --title-piece-entry-duration: 1480ms; --title-piece-entry-delay: 130ms; --animated-word-entry-transform: scale(.08, 1.5) rotate(38deg); }
+
+
+/* Keep the portfolio's existing type, spacing and document flow. */
+.intro[data-motion-root],
+#top {
+  --supporting-content-easing: cubic-bezier(.62, .61, .02, 1);
+}
+.intro[data-motion-root] {
+  --title-piece-entry-easing: cubic-bezier(.15, 1.32, .3, 1);
+  --animated-word-entry-easing: cubic-bezier(.16, 1.5, .3, 1);
+  --intro-subtitle-entry-delay: 100ms;
+}
+.intro .motion-intro__title.has-motion-layout {
+  perspective: 62.5rem;
+  transform-origin: left center;
+}
+.intro .motion-intro__word,
+.intro .motion-intro__word-inner {
+  display: inline-block;
+  white-space: nowrap;
+}
+/* Keep text on the same rendering layers across the final animation frame. */
+.intro .has-motion-layout .motion-intro__word,
+.intro .has-motion-layout .motion-intro__word-inner {
+  transform: translateZ(0);
+  will-change: transform;
+}

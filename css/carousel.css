@@ -28,7 +28,7 @@
 }
 .gallery-frame {
   width: 100%;
-  background: #e8e8e8;
+  background: transparent;
   border-radius: 0.75rem;
   min-width: 0;
   min-height: 3rem;
@@ -50,6 +50,9 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+}
+.gallery-image img.has-transparency {
+  background-color: #f0f0f0;
 }
 .nav-arrow {
   cursor: pointer;

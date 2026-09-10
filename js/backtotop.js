@@ -2,6 +2,7 @@
 
 (function () {
     const btn = document.createElement("button");
+    btn.className = "floating-back-to-top";
     btn.textContent = "Back to top";
     btn.setAttribute("aria-label", "Back to top");
 

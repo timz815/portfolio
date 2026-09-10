@@ -6,7 +6,7 @@
     <title>Portfolio - Tim</title>
     <link
       rel="icon"
-      href="https://media.githubusercontent.com/media/timz815/portfolio/main/icon/waving-hand.svg"
+      href="icon/waving-hand.svg"
       type="image/svg+xml"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,7 +21,14 @@
     />
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <script src="js/nav-underline.js" defer></script>
     <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/intro-motion.css" />
+    <script src="js/intro-motion.js" defer></script>
+    <script src="js/preload-images.js" defer></script>
+    <link rel="preload" as="image" href="media/WRCOHero.webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="media/calendarHero.webp" fetchpriority="high" />
+    <link rel="preconnect" href="https://raw.githubusercontent.com" />
     <style>
       * {
         margin: 0;
@@ -51,17 +58,27 @@
     </header>
     <main role="main">
       <div class="main-divider">
-        <section class="intro">
+        <section class="intro" data-motion-root>
           <div class="intro-header">
-            <h1 class="intro-heading">
-              Hey! I'm Tim, a <strong>product designer</strong> in Vancouver,
-              BC. I frame ambiguous problems and explore systems to deliver
-              <strong>clear, usable solutions</strong>.
+            <h1 class="intro-heading motion-intro__title">
+              <span class="motion-intro__title-flow">
+                <span data-animation="greeting">Hey!</span>
+                <span data-animation="introduce">I'm Tim,</span>
+                <span data-animation="role">a <strong>product designer</strong></span>
+                <span data-animation="navigate">in Vancouver, BC.</span>
+                <span data-animation="ambiguity">I frame ambiguous problems</span>
+                <span data-animation="connect">and explore</span>
+                <span data-animation="systems">systems</span>
+                <span data-animation="create">to deliver</span>
+                <span data-animation="clear"><strong>clear,</strong></span>
+                <span data-animation="usable"><strong>usable</strong></span>
+                <span data-animation="solutions"><strong>solutions</strong>.</span>
+              </span>
             </h1>
-            <p class="intro-para">
+            <p class="intro-para motion-intro__subtitle">
               Currently studying BA in Interactive Arts and Technology @
               <a
-                class="underline-link"
+                class="sfu-link"
                 href="https://www.sfu.ca/siat/programs/undergraduate.html"
                 target="_blank"
                 >SFU</a
@@ -104,7 +121,7 @@
             <a class="card card--wrco" href="wrco-project.html"
               ><div class="card-content">
                 <div class="card-title-wrapper">
-                  <h3 class="card-title">White Rock City Orchestra</h3>
+                  <h3 class="card-title">Sustaining Orchestra Audience Engagement</h3>
                 </div>
                 <p class="card-description">
                   Designing a holistic communication strategy to increase repeat
@@ -114,18 +131,22 @@
               <div class="card-image-container">
                 <img
                   class="card-image"
-                  src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//WRCOHero.png"
+                  src="media/WRCOHero.webp"
+                  fetchpriority="high"
+                  decoding="async"
                   alt="Saxophone with a graphic behind"
                 /><img
                   class="card-image image-hover"
-                  src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//WRCOHero-hover.png"
+                  src="media/WRCOHero-hover.webp"
+                  fetchpriority="low"
+                  decoding="async"
                   alt="Alternate view of the White Rock City Orchestra project"
                   aria-hidden="true"
                 /></div></a
             ><a class="card card--calendar" href="calendar-project.html"
               ><div class="card-content">
                 <div class="card-title-wrapper">
-                  <h3 class="card-title">HangoutCalendar</h3>
+                  <h3 class="card-title">Reducing Group Scheduling Friction</h3>
                 </div>
                 <p class="card-description">
                   Discovering easier ways to find shared free time with people
@@ -135,11 +156,15 @@
               <div class="card-image-container">
                 <img
                   class="card-image"
-                  src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//calendarHero.png"
+                  src="media/calendarHero.webp"
+                  fetchpriority="high"
+                  decoding="async"
                   alt="Two smartphones sharing calendars"
                 /><img
                   class="card-image image-hover"
-                  src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//calendarHero-hover.png"
+                  src="media/calendarHero-hover.webp"
+                  fetchpriority="low"
+                  decoding="async"
                   alt="Alternate view of the HangoutCalendar interface"
                   aria-hidden="true"
                 /></div
@@ -164,11 +189,16 @@
               <div class="card-image-container">
                 <img
                   class="card-image"
-                  src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//finetune.png"
+                  src="media/finetune.webp"
+                  loading="eager"
+                  decoding="async"
                   alt="translate icon"
                 /><img
                   class="card-image image-hover"
-                  src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//finetune-hover.png"
+                  src="media/finetune-hover.webp"
+                  loading="eager"
+                  fetchpriority="low"
+                  decoding="async"
                   alt="Alternate view of translate icon"
                   aria-hidden="true"
                 /></div
@@ -181,15 +211,15 @@
       <div class="footer-divider">
         <section class="footer-column">
           <h3>Github Pages</h3>
-          <p>Designed &amp; developed by me :)</p>
           <p>
             <a
               class="footer-link"
               href="https://github.com/timz815/portfolio"
               target="_blank"
-              >Page updated: 05-17-2026</a
+              >View project code here!</a
             >
           </p>
+          <p>Updated: 05-17-2026</p>
         </section>
         <section class="footer-column">
           <h3>Contact</h3>
@@ -199,7 +229,7 @@
           <p>
             <a
               class="footer-link"
-              href="https://www.linkedin.com/in/timothy-zhang-65a479230/"
+              href="https://www.linkedin.com/in/timothy-z-65a479230/"
               target="_blank"
               >LinkedIn</a
             >
