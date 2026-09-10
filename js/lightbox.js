@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showImage();
     }
     function zoomScale() {
-        return box.clientWidth <= 834 ? 2 : 1.7;
+        return box.clientWidth <= 834 ? 1.9 : 1.7;
     }
     function toggleZoom() {
         if (!ready) return;
