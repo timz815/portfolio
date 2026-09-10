@@ -48,8 +48,9 @@
   max-width: 32.5rem;
   color: #666;
 }
-.intro-para .sfu-link {
-  color: inherit;
+.intro-para .sfu-link,
+.intro-para .sfu-link:visited {
+  color: #666;
   text-decoration: none;
 }
 .intro-para .sfu-link:hover,
