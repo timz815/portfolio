@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!ready) return;
         endGesture();
         zoomed = !zoomed;
-        scale = zoomed ? (box.clientWidth <= 834 ? 1.75 : 1.7) : 1;
+        scale = zoomed ? (box.clientWidth <= 834 ? 2.25 : 1.7) : 1;
         x = y = 0;
         render();
     }
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!gesture) return;
         dragged = true;
         endGesture();
-        scale = zoomed ? (box.clientWidth <= 834 ? 1.75 : 1.7) : 1;
+        scale = zoomed ? (box.clientWidth <= 834 ? 2.25 : 1.7) : 1;
         render();
     }
     image.addEventListener('pointercancel', cancelGesture);
