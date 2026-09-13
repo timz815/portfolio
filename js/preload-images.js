@@ -28,6 +28,6 @@
   const aboutImage = new Image();
   aboutImage.fetchPriority = 'low';
   aboutImage.decoding = 'async';
-  aboutImage.src = 'https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//duck.jpg';
+  aboutImage.src = 'media/about/duck.jpg';
   aboutImage.decode?.().catch(() => {});
 })();
