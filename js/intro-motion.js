@@ -1,15 +1,22 @@
 (() => {
+const entrance = window.homeIntroEntrance;
 const motionRoots = [...document.querySelectorAll('[data-motion-root]')];
 // Preserve refresh as a fresh entrance; internal navigation uses the session flag.
 const isReload = performance.getEntriesByType('navigation')[0]?.type === 'reload';
 try {
-  if (!isReload && sessionStorage.getItem('homeIntroSeen') === '1') return;
+  if (!isReload && sessionStorage.getItem('homeIntroSeen') === '1') {
+    entrance?.release();
+    return;
+  }
   // Every entry page consumes the intro opportunity for this session.
   sessionStorage.setItem('homeIntroSeen', '1');
 } catch {
   // Storage may be disabled; the page and its entrance still work normally.
 }
-if (!motionRoots.length) return;
+if (!motionRoots.length || (entrance && !entrance.pending)) {
+  entrance?.release();
+  return;
+}
 
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 const INTRO_START_DELAY = 300;
@@ -31,6 +38,7 @@ let hasLeftPage = false;
 const stopMotions = new Set();
 window.addEventListener('pagehide', () => {
   hasLeftPage = true;
+  entrance?.release();
   stopMotions.forEach(stop => stop());
   revealWorks(false);
   works?.getAnimations().forEach(animation => animation.cancel());
@@ -291,8 +299,21 @@ function initMotion(root) {
 
 const startMotion = () => {
   // A cached page must not start a delayed entrance when Back restores it.
-  if (hasLeftPage) return;
-  motionRoots.forEach(initMotion);
+  // Likewise, never replay after the loading fallback has revealed the text.
+  if (hasLeftPage || (entrance && !entrance.pending)) {
+    revealWorks(false);
+    return;
+  }
+  try {
+    motionRoots.forEach(initMotion);
+  } catch (error) {
+    stopMotions.forEach(stop => stop());
+    revealWorks(false);
+    console.warn('Intro animation skipped:', error);
+  } finally {
+    // Animation keyframes now own visibility, including their initial delay.
+    entrance?.release();
+  }
 };
 if (document.fonts?.ready) {
   document.fonts.ready.then(startMotion, startMotion);

@@ -1,10 +1,16 @@
 /* Animation intent lives on inline phrases; JS resolves their visible line fragments.
  * These presets can be assigned to any text without changing the animation code. */
 /* Preserve layout while the intro plays; hidden controls cannot receive focus. */
+html.home-intro-pending [data-motion-root],
+html.home-intro-pending #top,
+html.home-intro-pending #works,
 #works.works-awaiting-intro {
   visibility: hidden;
 }
 @media (prefers-reduced-motion: reduce) {
+  html.home-intro-pending [data-motion-root],
+  html.home-intro-pending #top,
+  html.home-intro-pending #works,
   #works.works-awaiting-intro {
     visibility: visible;
   }

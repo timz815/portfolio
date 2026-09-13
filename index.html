@@ -4,6 +4,33 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio - Tim</title>
+    <script>
+      (() => {
+        let timeout;
+        const entrance = window.homeIntroEntrance = {
+          pending: false,
+          release() {
+            clearTimeout(timeout);
+            entrance.pending = false;
+            document.documentElement.classList.remove('home-intro-pending');
+          }
+        };
+        if (!Element.prototype.animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const isReload = performance.getEntriesByType('navigation')[0]?.type === 'reload';
+        try {
+          if (!isReload && sessionStorage.getItem('homeIntroSeen') === '1') return;
+        } catch {
+          // Disabled storage should not prevent the entrance.
+        }
+        entrance.pending = true;
+        document.documentElement.classList.add('home-intro-pending');
+        // Keep the page readable if the animation script or fonts never load.
+        timeout = setTimeout(() => {
+          entrance.release();
+          document.querySelector('#works')?.classList.remove('works-awaiting-intro');
+        }, 3000);
+      })();
+    </script>
     <link
       rel="icon"
       href="icon/waving-hand.svg"
