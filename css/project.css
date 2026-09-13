@@ -346,6 +346,37 @@
   display: block;
   margin-bottom: 0.5rem;
 }
+.intro .project-action {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  width: fit-content;
+  text-decoration: none;
+}
+.project-action-label {
+  text-decoration: underline;
+}
+.project-action .material-symbols-outlined {
+  flex-shrink: 0;
+  width: 1em;
+  overflow: hidden;
+  color: #030303;
+  font-size: 1.1rem;
+}
+.project-action-arrow-down {
+  transform: rotate(90deg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .project-action .material-symbols-outlined {
+    transition: transform 0.2s ease-out;
+  }
+  .project-action:is(:hover, :focus-visible) .material-symbols-outlined {
+    transform: translateX(0.2rem);
+  }
+  .project-action:is(:hover, :focus-visible) .project-action-arrow-down {
+    transform: translateY(0.2rem) rotate(90deg);
+  }
+}
 .article-text-width h3 {
   margin-top: 1rem;
   margin-bottom: 0.5rem;
