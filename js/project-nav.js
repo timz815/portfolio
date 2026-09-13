@@ -20,16 +20,15 @@
 
   const rail = document.querySelector('.project-rail');
   const layout = document.querySelector('.project-page > .main-divider');
-  const content = layout.querySelector('.content-section');
-  const hero = document.querySelector('.project-hero');
   const desktop = window.matchMedia('(min-width: 75rem)');
   const opening = document.querySelector('.project-page .intro-opening');
   const navigation = rail.querySelector('.project-chapters');
   let railOffset = 0;
-  const firstTextTop = element => {
+  const firstTextCenter = element => {
     const range = document.createRange();
     range.selectNodeContents(element);
-    return range.getClientRects()[0].top;
+    const firstLine = range.getClientRects()[0];
+    return firstLine.top + firstLine.height / 2;
   };
   const alignRail = () => {
     if (!opening) return;
@@ -41,21 +40,14 @@
     // Measure the centered link at the page's starting position, independent
     // of both its current translation and the sticky rail's scroll position.
     const layoutTop = layout.getBoundingClientRect().top + window.scrollY;
-    const centeredTextTop = firstTextTop(chapters[0].link) - railOffset
+    const centeredTextCenter = firstTextCenter(chapters[0].link) - railOffset
       + layoutTop - rail.getBoundingClientRect().top;
-    const openingTop = firstTextTop(opening) + window.scrollY;
+    const openingCenter = firstTextCenter(opening) + window.scrollY;
     const progress = Math.min(1, Math.max(0, window.scrollY / 240));
     const eased = progress * progress * (3 - 2 * progress);
-    railOffset = (openingTop - centeredTextTop) * (1 - eased);
+    railOffset = (openingCenter - centeredTextCenter) * (1 - eased);
     navigation.style.transform = `translateY(${railOffset}px)`;
   };
-  const placeRail = () => {
-    if (desktop.matches) layout.insertBefore(rail, content);
-    else hero.before(rail);
-  };
-  placeRail();
-  desktop.addEventListener('change', placeRail);
-
   let scheduled = false;
   const update = () => {
     scheduled = false;
