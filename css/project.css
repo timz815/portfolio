@@ -128,6 +128,9 @@
   width: 100%;
   height: auto;
 }
+#translate-banner {
+  background-color: #181818;
+}
 .project-page .doc-divider {
   margin-top: var(--project-section-gap);
   margin-bottom: 2.5rem;
