@@ -547,8 +547,8 @@
   position: relative;
   padding-bottom: 0.25rem;
 }
-.article-link:hover,
-.article-link:focus {
+.article-nav a:hover .article-link,
+.article-nav a:focus-visible .article-link {
   color: black;
 }
 .article-link::after {
@@ -563,8 +563,8 @@
   transform-origin: right center;
   transition: transform 0.3s ease;
 }
-.article-link:hover::after,
-.article-link:focus::after {
+.article-nav a:hover .article-link::after,
+.article-nav a:focus-visible .article-link::after {
   transform: scaleX(1);
   transform-origin: left center;
 }

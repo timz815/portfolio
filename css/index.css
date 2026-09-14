@@ -226,9 +226,6 @@
 .card--sewing {
   background-color: #D66A1D;
 }
-.card--sewing:hover {
-  box-shadow: none;
-}
 .card--sewing .card-title,
 .card--sewing .card-description {
   color: #f4f4f4;
