@@ -1,3 +1,9 @@
+/* Shared document reset; page styles own component spacing. */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 html {
   background-color: #fdfbf7;
   scroll-behavior: smooth;

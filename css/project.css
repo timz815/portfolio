@@ -79,11 +79,6 @@
     display: none;
   }
 }
-@media (max-width: 74.9375rem) {
-  .project-page .content-section .article-max-width {
-    padding-top: 3rem;
-  }
-}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
@@ -100,6 +95,11 @@
   max-width: 54rem;
   padding-top: 9rem;
   padding-bottom: 4rem;
+}
+@media (max-width: 74.9375rem) {
+  .project-page .article-max-width {
+    padding-top: 3rem;
+  }
 }
 .project-page .article-text-width {
   max-width: 40rem;
@@ -186,7 +186,6 @@
     width: calc(100% - 2.25rem);
   }
   .project-page .article-max-width {
-    padding-top: 5rem;
     padding-bottom: 3rem;
   }
   .project-hero {
@@ -219,16 +218,13 @@
   font-weight: 600;
 }
 .overview-container ul {
+  color: var(--project-body-color);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 .overview-container li {
   line-height: 1.6;
-}
-#cal-team + ul,
-#cal-tools + ul {
-  color: var(--project-body-color);
 }
 @media (max-width: 32rem) {
   .overview-container li {
@@ -319,7 +315,7 @@
 .pad-bottom {
   margin-bottom: 1.5rem;
 }
-.article-text-width h2 {
+.article-text-width :where(h2) {
   margin-top: 1rem;
   margin-bottom: 1rem;
   font-weight: 500;
@@ -330,15 +326,10 @@
   color: #000;
 }
 .intro-opening {
-  font-size: 1.4rem;
+  font-size: 1.125rem;
   margin-bottom: 0.5rem;
   font-weight: 500;
   line-height: 1.4;
-}
-@media (max-width: 35rem) {
-  .intro-opening {
-    font-size: 1.35rem;
-  }
 }
 @media (max-width: 28rem) {
   .intro-opening {
@@ -492,7 +483,7 @@
 }
 @media (max-width: 28rem) {
   .para-section {
-    margin-bottom: 1.5;
+    margin-bottom: 1.5rem;
   }
 }
 .article-nav {
@@ -501,6 +492,9 @@
   align-items: center;
   margin-top: 3rem;
   margin-bottom: 3rem;
+}
+.right-article {
+  margin-right: 0.5rem;
 }
 @media (max-width: 24rem) {
   .right-article {
@@ -530,9 +524,6 @@
   .right-article .article-link {
     margin-right: 0;
   }
-}
-.right-article {
-  margin-right: 0.5rem;
 }
 .article-nav a {
   text-decoration: none;

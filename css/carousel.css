@@ -1,11 +1,10 @@
-:root {
-  --gap-width: 4rem;
-}
 .image-viewer {
   max-width: var(--slideshow-width);
   margin: auto;
 }
 .gallery-main {
+  /* Override --carousel-arrow-space per instance; breakpoints set its fallback. */
+  --carousel-arrow-space-default: 4rem;
   display: flex;
   flex-direction: column;
   margin: 0 4px;
@@ -66,31 +65,31 @@
   flex-shrink: 0;
 }
 .nav-arrow .material-icons {
-  font-size: var(--gap-width);
+  font-size: var(--carousel-arrow-space, var(--carousel-arrow-space-default, 4rem));
 }
 .nav-arrow:hover {
   color: #888;
 }
 .thumbnail-gap {
-  width: var(--gap-width);
+  width: var(--carousel-arrow-space, var(--carousel-arrow-space-default, 4rem));
   flex-shrink: 0;
 }
 @media (max-width: 53.125rem) {
-  :root {
-    --gap-width: 3rem;
+  .gallery-main {
+    --carousel-arrow-space-default: 3rem;
   }
 }
-@media (max-width: 746.875rem) {
-  :root {
-    --gap-width: 2.75rem;
+@media (max-width: 46.875rem) {
+  .gallery-main {
+    --carousel-arrow-space-default: 2.75rem;
   }
 }
 @media (max-width: 40.625rem) {
   .gallery-main .nav-arrow {
     display: none;
   }
-  :root {
-    --gap-width: 0;
+  .gallery-main {
+    --carousel-arrow-space-default: 0;
   }
 }
 .thumbnail-main {
@@ -188,14 +187,14 @@
   z-index: 10;
 }
 .thumb-nav-arrow.prev {
-  left: var(--gap-width);
+  left: var(--carousel-arrow-space, var(--carousel-arrow-space-default, 4rem));
   transform: translateX(-50%) translateY(-50%);
   box-shadow:
     0 2px 8px rgba(0, 0, 0, 0.12),
     18px 0 28px rgba(0, 0, 0, 0.14);
 }
 .thumb-nav-arrow.next {
-  right: var(--gap-width);
+  right: var(--carousel-arrow-space, var(--carousel-arrow-space-default, 4rem));
   transform: translateX(50%) translateY(-50%);
   box-shadow:
     0 2px 8px rgba(0, 0, 0, 0.12),
