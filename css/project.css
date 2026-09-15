@@ -135,7 +135,7 @@
   margin-top: var(--project-section-gap);
   margin-bottom: 2.5rem;
 }
-:is(.calendar-project, .wrco-project) .doc-divider,
+:is(.calendar-project, .wrco-project, .translate-project) .doc-divider,
 .sewing-project #overview + .doc-divider {
   margin-top: 5rem;
   margin-bottom: 2.5rem;
@@ -144,13 +144,13 @@
   height: 0;
   margin-bottom: 0;
 }
-:is(.calendar-project, .wrco-project, .sewing-project) .project-hero + .article-text-width > .doc-divider:first-child {
+:is(.calendar-project, .wrco-project, .sewing-project, .translate-project) .project-hero + .article-text-width > .doc-divider:first-child {
   height: 0;
   margin-top: 4rem;
   margin-bottom: 1.5rem;
 }
-:is(.calendar-project, .wrco-project, .sewing-project) .overview-container > div > .para-section:last-child,
-:is(.calendar-project, .wrco-project, .sewing-project) .overview-container > div > .para-section:last-child > :last-child,
+:is(.calendar-project, .wrco-project, .sewing-project, .translate-project) .overview-container > div > .para-section:last-child,
+:is(.calendar-project, .wrco-project, .sewing-project, .translate-project) .overview-container > div > .para-section:last-child > :last-child,
 :is(.calendar-project, .wrco-project) .article-text-width:has(+ .article-text-width > .doc-divider:first-child) > section:last-child > .para-section:last-child,
 :is(.calendar-project, .wrco-project) .article-text-width:has(+ .article-text-width > .doc-divider:first-child) > section:last-child > .para-section:last-child > :last-child {
   margin-bottom: 0;
@@ -194,12 +194,12 @@
   .project-page .doc-divider {
     margin-bottom: 1.75rem;
   }
-  :is(.calendar-project, .wrco-project) .doc-divider,
+  :is(.calendar-project, .wrco-project, .translate-project) .doc-divider,
   .sewing-project #overview + .doc-divider {
     margin-top: 4rem;
     margin-bottom: 2rem;
   }
-  :is(.calendar-project, .wrco-project, .sewing-project) .project-hero + .article-text-width > .doc-divider:first-child {
+  :is(.calendar-project, .wrco-project, .sewing-project, .translate-project) .project-hero + .article-text-width > .doc-divider:first-child {
     margin-top: 3rem;
     margin-bottom: 1rem;
   }
