@@ -3,3 +3,9 @@
 
 # Local skill instructions
 [Ss][Kk][Ii][Ll][Ll].md
+
+# Keep only web fonts and their license from the Lato download.
+/media/fonts/lato/**
+!/media/fonts/lato/**/
+!/media/fonts/lato/**/*.woff2
+!/media/fonts/lato/OFL.txt
