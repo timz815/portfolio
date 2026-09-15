@@ -28,15 +28,33 @@
     <script src="js/nav-underline.js" defer></script>
     <script src="js/intro-motion.js" defer></script>
     <link rel="stylesheet" href="css/project.css" />
+    <link rel="stylesheet" href="css/popup.css" />
+    <script src="js/popup.js" defer></script>
     <script src="js/project-nav.js" defer></script>
+    <!-- Hero image preload temporarily disabled.
     <link
       rel="preload"
       as="image"
       href="media/sewing/sewingHero.webp"
       fetchpriority="high"
     />
+    -->
   </head>
   <body>
+    <dialog
+      class="project-popup"
+      data-popup-key="sewing-finishing-touches-seen"
+      aria-labelledby="popup-title"
+      aria-describedby="popup-description"
+    >
+      <h2 id="popup-title">Still getting picture-ready 👀</h2>
+      <p id="popup-description">
+        The write-up is ready but the visuals need a little more time! Feel free to poke around in the meantime.
+      </p>
+      <form method="dialog">
+        <button type="submit" autofocus>Take a peek</button>
+      </form>
+    </dialog>
     <header id="top" role="banner">
       <div class="header-divider">
         <nav class="nav-bar" aria-label="Primary navigation">
@@ -72,7 +90,7 @@
                   <h1 class="project-page-title">Turning Upcycling Ideas into Achievable Sewing Projects</h1>
                   <h2 class="intro-opening" id="intro-opening">Upstitch Studio is an app and workshop ecosystem designed for Brother Sewing Machines to support Gen Z beginners interested in sewing and upcycling.</h2>
                   <p>
-                    It combines project-specific digital guidance with low-pressure in- person workshops so beginners can explore their own ideas with support throughout the process.
+                    It combines project-specific digital guidance with low-pressure in-person workshops so beginners can explore their own ideas with support throughout the process.
                   </p>
                   <a class="underline-link project-action" href="#solution">
                     <span class="project-action-label">Jump to Solution</span>
@@ -81,6 +99,7 @@
                 </div>
               </section>
             </div>
+            <!-- Hero image temporarily hidden.
             <figure class="project-hero" id="sewing-banner">
               <img
                 src="media/sewing/sewingHero.webp"
@@ -91,6 +110,7 @@
                 decoding="async"
               />
             </figure>
+            -->
             <div class="article-text-width">
               <hr class="doc-divider" />
               <section id="overview">
@@ -151,7 +171,7 @@
                     Upcycling clothing is attracting more Gen Z interest, but sewing can have a steep learning curve.
                   </h3>
                   <p>
-                    Interest in clothing repair and customization has grown among Gen Z, with 42% saying they want to repair their own clothes. At the same time, 41% report lacking basic repair skills. [1][2]
+                    Interest in clothing repair and customization has grown among Gen Z, with 42% saying they want to repair their own clothes<a class="citation-ref" href="#source-1" aria-label="Source 1"><sup>1</sup></a>. At the same time, 41% report lacking basic repair skills<a class="citation-ref" href="#source-2" aria-label="Source 2"><sup>2</sup></a>, with the projected global value of the upcycled apparel market to double to $13.48B by 2034<a class="citation-ref" href="#source-3" aria-label="Source 3"><sup>3</sup></a>.
                   </p>
                   <p>
                     For someone interested in transforming an existing garment, that skill gap can make sewing difficult to approach without substantial sewing knowledge.
@@ -172,6 +192,12 @@
                     This gives Brother an opportunity to support a growing audience earlier in their sewing journey and introduce them to the brand before they choose a machine.
                   </p>
                 </div>
+                <div class="section-sources" role="note" aria-label="Sources">
+                  <p id="source-1"><span class="source-number">1.</span> Industry Research Biz. (2025). <a class="underline-link" href="https://www.industryresearch.biz/market-reports/home-sewing-machines-market-102131" target="_blank" rel="noopener noreferrer">Home sewing machines market size, share, growth, and industry analysis, by type (mechanical machines, electronic machines), by application (household, commercial, others), regional insights and forecast to 2035</a>.</p>
+                  <p id="source-2"><span class="source-number">2.</span> Levi Strauss &amp; Co. (2026). <a class="underline-link" href="https://www.levistrauss.com/wp-content/uploads/2026/01/wearlongerrepairsurvey.pdf" target="_blank" rel="noopener noreferrer">The Wear Longer Repair Survey</a>.</p>
+                  <p id="source-3"><span class="source-number">3.</span> Fortune Business Insights. (2026). <a class="underline-link" href="https://www.fortunebusinessinsights.com/upcycled-apparel-market-113510" target="_blank" rel="noopener noreferrer">Upcycled apparel market size, share &amp; industry analysis, by type (upper wear, bottom wear, and others), by end user (women, men, unisex, and kids), by distribution channel (online and offline), and regional forecast, 2026–2034</a>.</p>
+                </div>
+              
               </section>
               <hr class="doc-divider" />
               <section id="research">
@@ -196,7 +222,7 @@
                       For many beginners, the appeal of upcycling comes from the possibilities. They may know what they want a garment to become without yet understanding the techniques needed to realize them.
                     </p>
                     <p>
-                      Research found that dissatisfaction with final results and unmet expectations could lead beginners to abandon sewing altogether. [3]
+                      Research found that dissatisfaction with final results and unmet expectations could lead beginners to abandon sewing altogether<a class="citation-ref" href="#source-4" aria-label="Source 4"><sup>4</sup></a>.
                     </p>
                   </div>
                   <div class="insight-card">
@@ -215,16 +241,21 @@
                       Beginners benefit from learning with someone there to help.
                     </h3>
                     <p>
-                      Beginner sewing communities frequently recommend lessons because they make it easier to learn unfamiliar techniques and become comfortable using a machine. [4]
+                      Beginner sewing communities frequently recommend lessons because they make it easier to learn unfamiliar techniques and become comfortable using a machine<a class="citation-ref" href="#source-5" aria-label="Source 5"><sup>5</sup></a>.
                     </p>
                     <p>
-                      This also aligned with broader interest among young people in in- person communities built around shared interests. [5]
+                      This also aligned with broader interest among young people in in-person communities built around shared interests<a class="citation-ref" href="#source-6" aria-label="Source 6"><sup>6</sup></a>.
                     </p>
                     <p>
                       For Brother, these settings also give beginners a chance to try its machines firsthand and become more familiar with how they work.
                     </p>
                   </div>
                 </section>
+                <div class="section-sources" role="note" aria-label="Sources">
+                  <p id="source-4"><span class="source-number">4.</span> Kaipainen, M., &amp; Pöllänen, S. (2025). <a class="underline-link" href="https://doi.org/10.1002/casp.70172" target="_blank" rel="noopener noreferrer">Why don’t they sew anymore?—Exploring the decline of home garment sewing</a>. <em>Journal of Community &amp; Applied Social Psychology, 35</em>(5), Article e70172.</p>
+                  <p id="source-5"><span class="source-number">5.</span> Routine_Wrangler_753. (2026). <a class="underline-link" href="https://www.reddit.com/r/SewingForBeginners/comments/1rkrr0v/do_you_think_an_inperson_course_is_worth_it/" target="_blank" rel="noopener noreferrer">Do you think an in-person course is worth it?</a> [Online forum thread]. Reddit, r/SewingForBeginners.</p>
+                  <p id="source-6"><span class="source-number">6.</span> YMCA Canada. (2025, September 15). <a class="underline-link" href="https://ymca.ca/en/news-stories/press-release/young-canadians-report-low-levels-of-social-connection-ymca-report-finds" target="_blank" rel="noopener noreferrer">Young Canadians report low levels of social connection, YMCA report finds</a>.</p>
+                </div>
               </section>
               <hr class="doc-divider" />
               <section id="design-focus">

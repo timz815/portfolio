@@ -87,6 +87,9 @@
   --project-section-gap: 6rem;
   --project-media-gap: 4rem;
 }
+.sewing-project {
+  --project-section-gap: 5rem;
+}
 .project-page .content-section {
   margin: 0 auto;
   width: min(54rem, calc(100% - 4rem));
@@ -396,6 +399,48 @@
 }
 .article-text-width .design-question {
   font-weight: 500;
+}
+.sewing-project .section-sources {
+  margin-top: var(--project-section-gap);
+}
+.sewing-project .section-sources + .section-sources {
+  margin-top: 2rem;
+}
+.sewing-project section:has(> .section-sources:last-child) + .doc-divider {
+  margin-top: 1rem;
+}
+.sewing-project .section-sources h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.sewing-project .section-sources p {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.sewing-project .citation-ref {
+  color: #767676;
+  text-decoration: underline;
+  white-space: nowrap;
+}
+.sewing-project .citation-ref sup {
+  font-size: 0.7em;
+  margin-left: 0.1em;
+}
+.sewing-project .citation-ref:hover,
+.sewing-project .citation-ref:focus-visible {
+  color: #353535;
+  text-decoration: underline;
+}
+.sewing-project .section-sources p {
+  padding-left: 1.5rem;
+  text-indent: -1.5rem;
+}
+.sewing-project .source-number {
+  display: inline-block;
+  width: 1.25rem;
+  color: #767676;
+  text-indent: 0;
 }
 @media (max-width: 32rem) {
   .article-text-width p {
