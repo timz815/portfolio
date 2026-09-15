@@ -233,7 +233,14 @@
 }
 .card--sewing .card-title,
 .card--sewing .card-description {
+  color: #eaeaea;
+}
+.card--sewing:hover .card-title,
+.card--sewing:hover .card-description,
+.card--sewing:focus-visible .card-title,
+.card--sewing:focus-visible .card-description {
   color: #f4f4f4;
+  transition: color 0.3s ease;
 }
 .card--finetune .card-title,
 .card--finetune .card-description {
