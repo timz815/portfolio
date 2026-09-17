@@ -407,7 +407,7 @@
   margin-top: 2rem;
 }
 .sewing-project section:has(> .section-sources:last-child) + .doc-divider {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 }
 .sewing-project .section-sources h3 {
   font-weight: 600;
