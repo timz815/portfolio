@@ -33,6 +33,7 @@
     let scrollDownStartY = null;
     let scrollStopTimer = null;
     let returningToTop = false;
+    let navigatingChapters = false;
 
     const UP_THRESHOLD = 700;
     const MIN_SCROLL_Y = 100;
@@ -55,14 +56,39 @@
         hideTimer = setTimeout(hide, 4000);
     }
 
-    window.addEventListener("scroll", () => {
+    function resetScrollStopTimer() {
         clearTimeout(scrollStopTimer);
         scrollStopTimer = setTimeout(() => {
             scrollUpStartY = null;
+            scrollDownStartY = null;
+            navigatingChapters = false;
         }, 150);
+    }
+
+    document.addEventListener("click", event => {
+        if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        const link = event.target.closest('.project-chapters a[href^="#"]');
+        if (!link || !document.getElementById(link.hash.slice(1))) return;
+
+        // Keep chapter jumps from counting as manual upward scrolling.
+        navigatingChapters = true;
+        hide();
+        clearTimeout(hideTimer);
+        scrollUpStartY = null;
+        scrollDownStartY = null;
+        resetScrollStopTimer();
+    }, true);
+
+    window.addEventListener("scroll", () => {
+        resetScrollStopTimer();
 
         const currentScrollY = window.scrollY;
         const scrollingUp = currentScrollY < lastScrollY;
+
+        if (navigatingChapters) {
+            lastScrollY = currentScrollY;
+            return;
+        }
 
         if (returningToTop) {
             hide();
