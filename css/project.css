@@ -418,17 +418,17 @@
 }
 .sewing-project .citation-ref {
   color: #767676;
-  text-decoration: underline;
+  text-decoration: none;
   white-space: nowrap;
 }
 .sewing-project .citation-ref sup {
   font-size: 0.7em;
   margin-left: 0.1em;
+  text-decoration: underline;
 }
 .sewing-project .citation-ref:hover,
 .sewing-project .citation-ref:focus-visible {
   color: #353535;
-  text-decoration: underline;
 }
 .sewing-project .section-sources p {
   padding-left: 1.5rem;
