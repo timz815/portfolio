@@ -1,4 +1,3 @@
-/* Case-study layout: tza92 structure with spacious Axis-style pacing. */
 .project-rail {
   display: none;
   align-self: start;
@@ -132,7 +131,7 @@
   height: auto;
 }
 .project-video-block {
-  margin: 1rem 0 var(--project-media-gap);
+  margin: 1rem 0 2.5rem;
 }
 .project-video {
   display: block;
