@@ -53,6 +53,9 @@ html.home-intro-pending #works,
   perspective: 62.5rem;
   transform-origin: left center;
 }
+.intro .motion-intro__subtitle.is-animating {
+  will-change: transform, opacity;
+}
 .intro .motion-intro__word,
 .intro .motion-intro__word-inner {
   display: inline-block;

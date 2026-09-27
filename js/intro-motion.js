@@ -151,6 +151,7 @@ function groupOrigin(origin, group, rect) {
 
 function initMotion(root) {
   const title = root.querySelector('.motion-intro__title');
+  const subtitle = root.querySelector('.motion-intro__subtitle');
   const flow = title?.querySelector('.motion-intro__title-flow');
   const reducedMotion = window.matchMedia(REDUCED_MOTION_QUERY);
   if (!flow || !Element.prototype.animate || reducedMotion.matches) {
@@ -178,6 +179,7 @@ function initMotion(root) {
       title.classList.remove('has-motion-layout');
     }
     supportingAnimations.forEach(animation => animation.cancel());
+    subtitle?.classList.remove('is-animating');
     resizeObserver?.disconnect();
     mutationObserver?.disconnect();
     window.removeEventListener('resize', refresh);
@@ -273,13 +275,16 @@ function initMotion(root) {
     if (reducedMotion.matches) finish(false);
   }
 
+  // Composite wrapped text and its inline link together before revealing the
+  // intro. Keep the same transform type through the final frame.
+  subtitle?.classList.add('is-animating');
   for (const [element, delay, duration, offset] of [
     [document.querySelector('#top'), 0, 450, '0rem'],
-    [root.querySelector('.motion-intro__subtitle'), INTRO_START_DELAY + 860 + parseFloat(getComputedStyle(title).getPropertyValue('--intro-subtitle-entry-delay')), 700, '.625rem']
+    [subtitle, INTRO_START_DELAY + 860 + parseFloat(getComputedStyle(title).getPropertyValue('--intro-subtitle-entry-delay')), 700, '.625rem']
   ]) {
     if (element) supportingAnimations.push(element.animate(
-      [{ opacity: 0, transform: `translateX(${offset})` }, { opacity: 1, transform: 'none' }],
-      { duration, delay, easing: getComputedStyle(element).getPropertyValue('--supporting-content-easing').trim(), fill: 'backwards' }
+      [{ opacity: 0, transform: `translate3d(${offset}, 0, 0)` }, { opacity: 1, transform: 'translate3d(0, 0, 0)' }],
+      { duration, delay, easing: getComputedStyle(element).getPropertyValue('--supporting-content-easing').trim(), fill: 'both' }
     ));
   }
   render();
