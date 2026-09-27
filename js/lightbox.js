@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let autoZoomLevel = null;
     const pointers = new Map();
     const MAX_ZOOM = 4;
-    const ZOOM_STOP_RESISTANCE = 0.14;
+    const ZOOM_STOP_RESISTANCE = 0.1;
     let previousFocus, previousOverflow, background = [];
     box.setAttribute('role', 'dialog');
     box.setAttribute('aria-modal', 'true');
@@ -183,6 +183,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 type: 'pinch', scale,
                 stopEnabled: autoZoomLevel !== null && scale > autoZoomLevel + 0.02,
                 stopPassed: false,
+                resisting: false,
+                midpointX, midpointY,
                 distance: Math.max(1, Math.hypot(second.x - first.x, second.y - first.y)),
                 centerX: bounds.left + bounds.width / 2 - x,
                 centerY: bounds.top + bounds.height / 2 - y,
@@ -197,22 +199,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function pinchScale(distance) {
         let next = gesture.scale * distance / gesture.distance;
+        gesture.resisting = false;
         if (autoZoomLevel !== null && !gesture.stopPassed) {
             if (next > autoZoomLevel + 0.02) gesture.stopEnabled = true;
             if (gesture.stopEnabled && next <= autoZoomLevel) {
                 const releaseScale = autoZoomLevel * (1 - ZOOM_STOP_RESISTANCE);
-                if (next >= releaseScale) return autoZoomLevel;
+                const band = autoZoomLevel - releaseScale;
+                if (next >= releaseScale) {
+                    const progress = (autoZoomLevel - next) / band;
+                    gesture.resisting = true;
+                    return autoZoomLevel - band * (0.2 * progress + 0.4 * progress * progress);
+                }
                 // Rebase at the end of the resistance so continuing or reversing
                 // the pinch is continuous, without another stop this gesture.
                 gesture.distance *= releaseScale / gesture.scale;
-                gesture.scale = autoZoomLevel;
+                gesture.scale = autoZoomLevel - band * 0.6;
                 gesture.stopPassed = true;
                 next = gesture.scale * distance / gesture.distance;
             }
         }
         return Math.max(1, Math.min(MAX_ZOOM, next));
     }
-    // One pointer pans; two pointers scale around the point between the fingers.
+    // One pointer pans; two pointers zoom around their initial midpoint.
     image.addEventListener('pointerdown', event => {
         if (!ready || event.button !== 0 || pointers.size >= 2 ||
             (event.pointerType !== 'touch' && !event.isPrimary)) return;
@@ -236,8 +244,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const [first, second] = pointers.values();
             const distance = Math.hypot(second.x - first.x, second.y - first.y);
             scale = pinchScale(distance);
-            x = (first.x + second.x) / 2 - gesture.centerX - gesture.anchorX * scale;
-            y = (first.y + second.y) / 2 - gesture.centerY - gesture.anchorY * scale;
+            x = gesture.midpointX - gesture.centerX - gesture.anchorX * scale;
+            y = gesture.midpointY - gesture.centerY - gesture.anchorY * scale;
             zoomed = scale > 1;
             if (!zoomed) autoZoomLevel = null;
             render();
@@ -251,6 +259,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     function releasePointer(event, cancelled = false) {
         if (!gesture || !pointers.has(event.pointerId)) return;
+        if (gesture.type === 'pinch' && gesture.resisting && autoZoomLevel !== null) {
+            scale = autoZoomLevel;
+            x = gesture.midpointX - gesture.centerX - gesture.anchorX * scale;
+            y = gesture.midpointY - gesture.centerY - gesture.anchorY * scale;
+            render();
+        }
         const canSwipe = !cancelled && gesture.type === 'pan' && gesture.canSwipe;
         const dx = event.clientX - gesture.startX, dy = event.clientY - gesture.startY;
         if (cancelled) dragged = true;
