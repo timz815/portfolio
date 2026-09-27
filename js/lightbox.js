@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let images = [], index = 0, request = 0, ready = false;
     let zoomed = false, scale = 1, x = 0, y = 0;
     let gesture = null, dragged = false;
+    const pointers = new Map();
+    const MAX_ZOOM = 4;
     let previousFocus, previousOverflow, background = [];
     box.setAttribute('role', 'dialog');
     box.setAttribute('aria-modal', 'true');
@@ -36,9 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
         counter.style.display = onNavigate && !zoomed && images.length > 1 ? 'block' : 'none';
     }
     function endGesture() {
-        const active = gesture;
         gesture = null;
-        if (active && image.hasPointerCapture(active.id)) image.releasePointerCapture(active.id);
+        const ids = [...pointers.keys()];
+        pointers.clear();
+        ids.forEach(id => {
+            if (image.hasPointerCapture(id)) image.releasePointerCapture(id);
+        });
         image.classList.remove('is-dragging');
     }
     function reset() {
@@ -160,50 +165,86 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target === box || event.target.classList.contains('lightbox-content')) dismiss();
     });
     image.addEventListener('click', () => {
+        if (pointers.size) return;
         if (!dragged) toggleZoom();
         dragged = false;
     });
-    // One pointer implementation handles mouse, pen, and touch.
-    image.addEventListener('pointerdown', event => {
-        if (!ready || !event.isPrimary || event.button !== 0) return;
-        dragged = false;
-        if (zoomed) {
-            const live = new DOMMatrixReadOnly(getComputedStyle(image).transform);
-            scale = live.a; x = live.e; y = live.f;
+    function startGesture(canSwipe = false) {
+        const [first, second] = pointers.values();
+        if (second) {
+            const bounds = image.getBoundingClientRect();
+            const midpointX = (first.x + second.x) / 2;
+            const midpointY = (first.y + second.y) / 2;
+            gesture = {
+                type: 'pinch', scale,
+                distance: Math.max(1, Math.hypot(second.x - first.x, second.y - first.y)),
+                centerX: bounds.left + bounds.width / 2 - x,
+                centerY: bounds.top + bounds.height / 2 - y,
+                anchorX: (midpointX - bounds.left - bounds.width / 2) / scale,
+                anchorY: (midpointY - bounds.top - bounds.height / 2) / scale,
+            };
+            dragged = true;
             image.classList.add('is-dragging');
-            render();
+        } else if (first) {
+            gesture = { type: 'pan', startX: first.x, startY: first.y, x, y, canSwipe };
         }
-        gesture = { id: event.pointerId, startX: event.clientX, startY: event.clientY, x, y };
+    }
+    // One pointer pans; two pointers scale around the point between the fingers.
+    image.addEventListener('pointerdown', event => {
+        if (!ready || event.button !== 0 || pointers.size >= 2 ||
+            (event.pointerType !== 'touch' && !event.isPrimary)) return;
+        if (!pointers.size) {
+            dragged = false;
+            if (zoomed) {
+                const live = new DOMMatrixReadOnly(getComputedStyle(image).transform);
+                scale = live.a; x = live.e; y = live.f;
+                image.classList.add('is-dragging');
+                render();
+            }
+        }
+        pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
         image.setPointerCapture(event.pointerId);
+        startGesture(!zoomed && pointers.size === 1);
     });
     image.addEventListener('pointermove', event => {
-        if (!gesture || event.pointerId !== gesture.id) return;
+        if (!gesture || !pointers.has(event.pointerId)) return;
+        pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+        if (gesture.type === 'pinch') {
+            const [first, second] = pointers.values();
+            const distance = Math.hypot(second.x - first.x, second.y - first.y);
+            scale = Math.max(1, Math.min(MAX_ZOOM, gesture.scale * distance / gesture.distance));
+            x = (first.x + second.x) / 2 - gesture.centerX - gesture.anchorX * scale;
+            y = (first.y + second.y) / 2 - gesture.centerY - gesture.anchorY * scale;
+            zoomed = scale > 1;
+            render();
+            return;
+        }
         const dx = event.clientX - gesture.startX, dy = event.clientY - gesture.startY;
         if (Math.hypot(dx, dy) > 5) dragged = true;
         if (!zoomed || !dragged) return;
         x = gesture.x + dx; y = gesture.y + dy;
         render();
     });
-    image.addEventListener('pointerup', event => {
-        if (!gesture || event.pointerId !== gesture.id) return;
+    function releasePointer(event, cancelled = false) {
+        if (!gesture || !pointers.has(event.pointerId)) return;
+        const canSwipe = !cancelled && gesture.type === 'pan' && gesture.canSwipe;
         const dx = event.clientX - gesture.startX, dy = event.clientY - gesture.startY;
+        if (cancelled) dragged = true;
+        pointers.delete(event.pointerId);
+        if (image.hasPointerCapture(event.pointerId)) image.releasePointerCapture(event.pointerId);
+        if (pointers.size) {
+            startGesture();
+            return;
+        }
         endGesture();
-        if (zoomed) {
-            scale = zoomScale();
-            render();
-        } else if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+        render();
+        if (canSwipe && Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
             navigate(dx > 0 ? -1 : 1);
         }
-    });
-    function cancelGesture() {
-        if (!gesture) return;
-        dragged = true;
-        endGesture();
-        scale = zoomed ? zoomScale() : 1;
-        render();
     }
-    image.addEventListener('pointercancel', cancelGesture);
-    image.addEventListener('lostpointercapture', cancelGesture);
+    image.addEventListener('pointerup', event => releasePointer(event));
+    image.addEventListener('pointercancel', event => releasePointer(event, true));
+    image.addEventListener('lostpointercapture', event => releasePointer(event, true));
     document.addEventListener('keydown', event => {
         if (box.hidden) return;
         if (event.key === 'Escape') {
