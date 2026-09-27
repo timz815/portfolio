@@ -131,6 +131,14 @@
   width: 100%;
   height: auto;
 }
+.project-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  margin-bottom: var(--project-media-gap);
+}
 #translate-banner {
   background-color: #181818;
 }
