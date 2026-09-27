@@ -307,6 +307,67 @@
   font-size: clamp(1.05rem, calc(0.85rem + 1.2cqw), 1.35rem);
   line-height: 1.2;
 }
+@media (max-width: 35rem) {
+  .card--sewing .card-title {
+    font-size: 1.15rem;
+  }
+}
+/* 1115–1292px */
+@media (min-width: 69.6875rem) and (max-width: 80.75rem) {
+  .card--sewing .card-title {
+    font-size: 1.075rem;
+  }
+}
+/* 881–1008px */
+@media (min-width: 55.0625rem) and (max-width: 63rem) {
+  .card--sewing .card-title {
+    font-size: 1rem;
+  }
+}
+/* 545–633px */
+@media (min-width: 34.0625rem) and (max-width: 39.5625rem) {
+  .card--sewing .card-title {
+    font-size: 1.075rem;
+  }
+}
+/* 460px and below */
+@media (max-width: 28.75rem) {
+  .card--sewing .card-title {
+    font-size: 1rem;
+  }
+}
+/* 1180–1292px */
+@media (min-width: 73.75rem) and (max-width: 80.75rem),
+       /* 985–1008px */
+       (min-width: 61.5625rem) and (max-width: 63rem),
+       /* 585–633px */
+       (min-width: 36.5625rem) and (max-width: 39.5625rem) {
+  .card--sewing .card-title {
+    font-size: 1.15rem;
+  }
+}
+/* 1260–1292px */
+@media (min-width: 78.75rem) and (max-width: 80.75rem),
+       /* 620–633px */
+       (min-width: 38.75rem) and (max-width: 39.5625rem) {
+  .card--sewing .card-title {
+    font-size: 1.25rem;
+  }
+}
+/* 930–984px */
+@media (min-width: 58.125rem) and (max-width: 61.5rem),
+       /* 440–460px */
+       (min-width: 27.5rem) and (max-width: 28.75rem) {
+  .card--sewing .card-title {
+    font-size: 1.075rem;
+  }
+}
+/* 420–439px */
+@media (min-width: 26.25rem) and (max-width: 27.4375rem) {
+  .card--sewing .card-title {
+    font-size: 1.025rem;
+  }
+}
 .card-details {
   flex: 1;
   display: grid;
@@ -342,7 +403,7 @@
   font-size: 0.8rem;
   line-height: 1.35;
 }
-@media (min-width: 495px) {
+@media (min-width: 500px) {
   .card:focus-visible .card-description {
     opacity: 0;
     transform: translateY(-4px);
@@ -354,7 +415,7 @@
     transition: opacity 180ms ease 60ms, transform 180ms ease 60ms;
   }
 }
-@media (min-width: 495px) and (hover: hover) and (pointer: fine) {
+@media (min-width: 500px) and (hover: hover) and (pointer: fine) {
   .card:hover .card-description {
     opacity: 0;
     transform: translateY(-4px);
@@ -390,6 +451,23 @@
 @media (max-width: 32rem) {
   .card-details {
     margin-top: 0.5rem;
+  }
+}
+@media (width < 500px) {
+  .card-content {
+    justify-content: center;
+    gap: 1.25rem;
+  }
+  .card-title-wrapper,
+  .card-details {
+    flex: none;
+  }
+  .card .card-title,
+  .card-details {
+    margin: 0;
+  }
+  .card-pills {
+    display: none;
   }
 }
 .card-image-container {
