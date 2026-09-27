@@ -131,13 +131,22 @@
   width: 100%;
   height: auto;
 }
+.project-video-block {
+  margin: 1rem 0 var(--project-media-gap);
+}
 .project-video {
   display: block;
   width: 100%;
   height: auto;
   aspect-ratio: 16 / 9;
   border: 0;
-  margin-bottom: var(--project-media-gap);
+}
+.project-video-block .article-caption {
+  margin-top: 0.75rem;
+  line-height: 1.5;
+}
+.project-video-credit {
+  display: block;
 }
 #translate-banner {
   background-color: #181818;
