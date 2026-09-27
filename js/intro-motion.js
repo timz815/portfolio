@@ -310,13 +310,21 @@ const startMotion = () => {
     return;
   }
   try {
-    motionRoots.forEach(initMotion);
+    // Resolve inherited visibility before creating composited text animations.
+    // WebKit otherwise leaves the subtitle's bare text unpainted while its
+    // inline link animates. This all runs in one task, before the next paint;
+    // the new keyframes still hide the content throughout the entrance delay.
+    entrance?.release();
+    motionRoots.forEach(root => {
+      root.getBoundingClientRect();
+      initMotion(root);
+    });
   } catch (error) {
     stopMotions.forEach(stop => stop());
     revealWorks(false);
     console.warn('Intro animation skipped:', error);
   } finally {
-    // Animation keyframes now own visibility, including their initial delay.
+    // Also release the loading guard if initialization fails.
     entrance?.release();
   }
 };
