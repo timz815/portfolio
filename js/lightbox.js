@@ -13,8 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let images = [], index = 0, request = 0, ready = false;
     let zoomed = false, scale = 1, x = 0, y = 0;
     let gesture = null, dragged = false;
+    let autoZoomLevel = null;
     const pointers = new Map();
     const MAX_ZOOM = 4;
+    const ZOOM_STOP_RESISTANCE = 0.14;
     let previousFocus, previousOverflow, background = [];
     box.setAttribute('role', 'dialog');
     box.setAttribute('aria-modal', 'true');
@@ -50,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         endGesture();
         zoomed = false;
         scale = 1;
+        autoZoomLevel = null;
         x = y = 0;
         render();
     }
@@ -141,6 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
         endGesture();
         zoomed = !zoomed;
         scale = zoomed ? zoomScale() : 1;
+        autoZoomLevel = zoomed ? scale : null;
         x = y = 0;
         render();
     }
@@ -177,6 +181,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const midpointY = (first.y + second.y) / 2;
             gesture = {
                 type: 'pinch', scale,
+                stopEnabled: autoZoomLevel !== null && scale > autoZoomLevel + 0.02,
+                stopPassed: false,
                 distance: Math.max(1, Math.hypot(second.x - first.x, second.y - first.y)),
                 centerX: bounds.left + bounds.width / 2 - x,
                 centerY: bounds.top + bounds.height / 2 - y,
@@ -188,6 +194,23 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (first) {
             gesture = { type: 'pan', startX: first.x, startY: first.y, x, y, canSwipe };
         }
+    }
+    function pinchScale(distance) {
+        let next = gesture.scale * distance / gesture.distance;
+        if (autoZoomLevel !== null && !gesture.stopPassed) {
+            if (next > autoZoomLevel + 0.02) gesture.stopEnabled = true;
+            if (gesture.stopEnabled && next <= autoZoomLevel) {
+                const releaseScale = autoZoomLevel * (1 - ZOOM_STOP_RESISTANCE);
+                if (next >= releaseScale) return autoZoomLevel;
+                // Rebase at the end of the resistance so continuing or reversing
+                // the pinch is continuous, without another stop this gesture.
+                gesture.distance *= releaseScale / gesture.scale;
+                gesture.scale = autoZoomLevel;
+                gesture.stopPassed = true;
+                next = gesture.scale * distance / gesture.distance;
+            }
+        }
+        return Math.max(1, Math.min(MAX_ZOOM, next));
     }
     // One pointer pans; two pointers scale around the point between the fingers.
     image.addEventListener('pointerdown', event => {
@@ -212,10 +235,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (gesture.type === 'pinch') {
             const [first, second] = pointers.values();
             const distance = Math.hypot(second.x - first.x, second.y - first.y);
-            scale = Math.max(1, Math.min(MAX_ZOOM, gesture.scale * distance / gesture.distance));
+            scale = pinchScale(distance);
             x = (first.x + second.x) / 2 - gesture.centerX - gesture.anchorX * scale;
             y = (first.y + second.y) / 2 - gesture.centerY - gesture.anchorY * scale;
             zoomed = scale > 1;
+            if (!zoomed) autoZoomLevel = null;
             render();
             return;
         }
