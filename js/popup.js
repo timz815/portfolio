@@ -14,5 +14,13 @@
   }
 
   popup.showModal();
+  popup.addEventListener('click', event => {
+    if (event.target !== popup) return;
+    const bounds = popup.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right ||
+        event.clientY < bounds.top || event.clientY > bounds.bottom) {
+      popup.close();
+    }
+  });
   window.addEventListener('pagehide', () => popup.close());
 })();

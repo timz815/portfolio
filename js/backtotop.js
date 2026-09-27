@@ -67,6 +67,14 @@
 
     document.addEventListener("click", event => {
         if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        if (event.target.closest('.back-to-top[href="#top"]')) {
+            returningToTop = true;
+            hide();
+            clearTimeout(hideTimer);
+            scrollUpStartY = null;
+            scrollDownStartY = null;
+            return;
+        }
         const link = event.target.closest('.project-chapters a[href^="#"]');
         if (!link || !document.getElementById(link.hash.slice(1))) return;
 

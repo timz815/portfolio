@@ -122,7 +122,7 @@
   margin-bottom: 1rem;
 }
 .project-hero {
-  margin: 5rem 0 0;
+  margin: 3.25rem 0 0;
   overflow: hidden;
   border-radius: 0.75rem;
 }
@@ -195,7 +195,7 @@
     padding-bottom: 3rem;
   }
   .project-hero {
-    margin-top: 3.25rem;
+    margin-top: 2rem;
   }
   .project-page .doc-divider {
     margin-bottom: 1.75rem;
@@ -384,10 +384,10 @@
     transition: transform 0.2s ease-out;
   }
   .project-action:is(:hover, :focus-visible) .material-symbols-outlined {
-    transform: translateX(0.2rem);
+    transform: translateX(0.1rem);
   }
   .project-action:is(:hover, :focus-visible) .project-action-arrow-down {
-    transform: translateY(0.2rem) rotate(90deg);
+    transform: translateY(0.1rem) rotate(90deg);
   }
 }
 .article-text-width h3 {
