@@ -404,6 +404,7 @@
   font-weight: 500;
 }
 .sewing-project .section-sources {
+  --project-body-color: #666666;
   margin-top: var(--project-section-gap);
 }
 .sewing-project .section-sources + .section-sources {
@@ -416,6 +417,7 @@
   font-weight: 600;
 }
 .sewing-project .section-sources p {
+  font-size: 1rem;
   line-height: 1.6;
   overflow-wrap: anywhere;
 }
@@ -448,6 +450,9 @@
     font-size: 1.065rem;
     line-height: 1.5;
     margin-bottom: 0.5rem;
+  }
+  .sewing-project .section-sources p {
+    font-size: 0.9rem;
   }
 }
 .article-text-width ul {
