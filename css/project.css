@@ -134,6 +134,9 @@
 #translate-banner {
   background-color: #181818;
 }
+#sewing-banner {
+  background-color: #f0f0f0;
+}
 .project-page .doc-divider {
   margin-top: var(--project-section-gap);
   margin-bottom: 2.5rem;
