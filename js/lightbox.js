@@ -71,6 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const token = ++request, selected = images[index];
         ready = false;
         image.style.visibility = 'hidden';
+        if (selected.background) {
+            image.style.setProperty('--thumb-background', selected.background);
+        } else {
+            image.style.removeProperty('--thumb-background');
+        }
         image.classList.remove('has-transparency');
         image.classList.add('is-loading');
         reset();
@@ -153,7 +158,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const items = [...board.querySelectorAll('.image-item')].filter(item => item.querySelector('img'));
         const group = items.map(item => {
             const img = item.querySelector('img');
-            return { src: img.currentSrc || img.src, alt: img.alt };
+            return {
+                src: img.currentSrc || img.src,
+                alt: img.alt,
+                background: getComputedStyle(item).getPropertyValue('--thumb-background').trim(),
+            };
         });
         items.forEach((item, i) => item.addEventListener('click', () => open(group, i)));
     });
@@ -276,6 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.image-item').forEach(container => {
         const img = container.querySelector('img');
         if (!img) return;
+        if (container.classList.contains('bg-full-width')) return;
         const maxHeight = getComputedStyle(container).getPropertyValue('--thumb-max-height').trim();
         if (!maxHeight) return;
         const fit = () => {

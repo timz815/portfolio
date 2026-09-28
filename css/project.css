@@ -422,7 +422,7 @@
   font-weight: 500;
 }
 .sewing-project .section-sources {
-  --project-body-color: #666666;
+  --project-body-color: #767676;
   margin-top: var(--project-section-gap);
 }
 .sewing-project .section-sources + .section-sources {
@@ -502,7 +502,11 @@
   padding-bottom: 0.6rem;
 }
 .insight-card p {
+  color: #404040;
   padding-left: 0.25rem;
+}
+.project-page .insight-card figure:has(> figcaption) {
+  margin-bottom: 1.25rem;
 }
 @media (max-width: 28rem) {
   .insight-card h3,
@@ -530,7 +534,7 @@
 }
 .article-caption {
   font-style: italic;
-  color: #666;
+  color: #767676;
   font-size: 1.065rem;
   max-width: 40rem;
   margin: 0 auto;

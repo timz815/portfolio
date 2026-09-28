@@ -28,8 +28,9 @@
     <link rel="stylesheet" href="css/main.css" />
     <script src="js/nav-underline.js" defer></script>
     <script src="js/intro-motion.js" defer></script>
-    <link rel="stylesheet" href="css/project.css?v=20260927-sewing-hero" />
+    <link rel="stylesheet" href="css/project.css?v=20260928-sewing-lightbox" />
     <link rel="stylesheet" href="css/popup.css" />
+    <link rel="stylesheet" href="css/lightbox.css" />
     <script src="js/popup.js" defer></script>
     <script src="js/project-nav.js" defer></script>
     <link
@@ -179,6 +180,21 @@
                   <h3>
                     Brother already has the machines and support ecosystem to make sewing more approachable for beginners.
                   </h3>
+                  <figure class="article-img">
+                    <div class="image-board">
+                      <div class="image-item justify-center rounded-nm contain thumb-max-h-24">
+                        <img
+                          src="media/sewing/brand-value-pillars.png"
+                          width="1102"
+                          height="903"
+                          alt="Brother’s At your side promise with four pillars: guided support, practical productivity, creativity and making, and sustainability commitment."
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
+                    </div>
+                    <figcaption class="article-caption">Brother’s brand positioning.</figcaption>
+                  </figure>
                   <p>
                     Brother has built its brand around making sewing accessible and supporting users through its “At your side” promise.
                   </p>
@@ -232,6 +248,21 @@
                     <p>
                       However, because the guidance does not take into account what the user is creating, users need to know what techniques or information to look for before they can find the right support.
                     </p>
+                    <figure class="article-img">
+                      <div class="image-board">
+                        <div class="image-item justify-center rounded-nm contain h-20">
+                          <img
+                            src="media/sewing/artspira-examples.png"
+                            width="1488"
+                            height="939"
+                            alt="Artspira screens showing sublimation and embroidery designs alongside community projects."
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </div>
+                      </div>
+                      <figcaption class="article-caption">Artspira’s embroidery support and customization are closely tied to what users want to make, which helps explain its prominence across content and engagement.</figcaption>
+                    </figure>
                   </div>
                   <div class="insight-card">
                     <h3>
@@ -279,6 +310,21 @@
                   <p>
                     On the other hand, too much freedom can make it harder for beginners to know where to start. They may have an ambitious idea but not enough experience to break it down into the steps needed to make it.
                   </p>
+                  <figure class="article-img">
+                    <div class="image-board">
+                      <div class="image-item justify-center rounded-nm contain h-28 bg-light-gray bg-full-width">
+                        <img
+                          src="media/sewing/sewing-app-profile.png"
+                          width="1155"
+                          height="1311"
+                          alt="Upstitch Studio profile showing a Maker Passport, workshop stamps, an unlockable patch, and progress on a denim tote bag project."
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
+                    </div>
+                    <figcaption class="article-caption">The refined profile brings together skill progression, user projects and materials.</figcaption>
+                  </figure>
                   <p>
                     Gamification helped us bridge that larger creative goal with smaller steps along the way. Like progression in a game, beginners still have something bigger they are working toward, but they also have quicker, achievable goals that give them a reason to push forward.
                   </p>
@@ -411,6 +457,44 @@
         </section>
       </div>
     </main>
+    <div class="lightbox" id="lightbox" hidden>
+      <div class="lightbox-controls">
+        <button
+          class="lightbox-btn lightbox-zoom"
+          id="lightbox-zoom"
+          aria-label="Zoom"
+        >
+          <span class="material-symbols-outlined">zoom_in</span></button
+        ><button
+          class="lightbox-btn lightbox-close"
+          id="lightbox-close"
+          aria-label="Close"
+        >
+          &times;
+        </button>
+      </div>
+      <nav
+        class="lightbox-nav"
+        id="lightbox-prev-nav"
+        aria-label="Previous image"
+      >
+        <button id="lightbox-prev" class="lightbox-btn">
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >chevron_left</span
+          >
+        </button>
+      </nav>
+      <nav class="lightbox-nav" id="lightbox-next-nav" aria-label="Next image">
+        <button id="lightbox-next" class="lightbox-btn">
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >chevron_right</span
+          >
+        </button>
+      </nav>
+      <div class="lightbox-content">
+        <img id="lightbox-image" src="" alt="" />
+      </div>
+    </div>
     <footer role="contentinfo">
       <div class="footer-divider">
         <section class="footer-column">
@@ -443,6 +527,8 @@
         </section>
       </div>
     </footer>
+    <script src="js/image-transparency.js"></script>
+    <script src="js/lightbox.js"></script>
     <script src="js/backtotop.js"></script>
   </body>
 </html>

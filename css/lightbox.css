@@ -136,7 +136,7 @@ body:has(.lightbox.active) .floating-back-to-top {
   object-fit: contain;
   border-radius: 0.5rem;
   box-shadow: 0 0 1.25rem rgba(0, 0, 0, 0.5);
-  background-color: transparent;
+  background-color: var(--thumb-background, transparent);
   cursor: zoom-in;
   user-select: none;
   -webkit-user-drag: none;
@@ -147,7 +147,7 @@ body:has(.lightbox.active) .floating-back-to-top {
   border-radius: 0;
 }
 #lightbox-image.has-transparency {
-  background-color: #f0f0f0;
+  background-color: var(--thumb-background, #f0f0f0);
 }
 #lightbox-image.is-dragging {
   cursor: grabbing;
@@ -182,6 +182,7 @@ body:has(.lightbox.active) .floating-back-to-top {
   }
 }
 .image-item img {
+  background-color: var(--thumb-background, transparent);
   transform-origin: center center;
   display: block;
   max-width: 100%;
@@ -205,6 +206,22 @@ body:has(.lightbox.active) .floating-back-to-top {
   height: 100%;
   object-fit: contain;
 }
+.bg-light-gray {
+  --thumb-background: #f0f0f0;
+}
+.bg-white {
+  --thumb-background: #ffffff;
+}
+.image-item.bg-full-width {
+  width: 100%;
+  justify-content: center;
+  background-color: var(--thumb-background, transparent);
+}
+.image-item.bg-full-width img {
+  width: auto;
+  height: var(--thumb-height, auto);
+  object-fit: contain;
+}
 .justify-left {
   --thumb-justify: flex-start;
 }
@@ -225,6 +242,13 @@ body:has(.lightbox.active) .floating-back-to-top {
 }
 .h-24 {
   --thumb-height: 24rem;
+}
+.h-20 {
+  --thumb-height: 20rem;
+}
+.thumb-max-h-24 {
+  --thumb-max-height: 24rem;
+  --thumb-width-type: auto;
 }
 .h-28 {
   --thumb-height: 28rem;
