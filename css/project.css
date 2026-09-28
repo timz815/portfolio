@@ -139,6 +139,8 @@
   height: auto;
   aspect-ratio: 16 / 9;
   border: 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
 }
 .project-video-block .article-caption {
   margin-top: 0.75rem;
