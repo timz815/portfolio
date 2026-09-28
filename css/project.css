@@ -506,7 +506,7 @@
   padding-left: 0.25rem;
 }
 .project-page .insight-card figure:has(> figcaption) {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 @media (max-width: 28rem) {
   .insight-card h3,
