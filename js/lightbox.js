@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let gesture = null, dragged = false;
     const pointers = new Map();
     const MAX_ZOOM = 4;
-    let previousFocus, previousOverflow, background = [];
+    let previousFocus, previousBodyStyles, previousScroll, background = [];
+    const lockedBodyProperties = ['overflow', 'position', 'top', 'left', 'width'];
     box.setAttribute('role', 'dialog');
     box.setAttribute('aria-modal', 'true');
     box.setAttribute('aria-label', 'Image viewer');
@@ -105,21 +106,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     function open(group, selectedIndex, syncSelection = null) {
+        if (!box.hidden) return;
         images = group;
         index = selectedIndex;
         onNavigate = syncSelection;
         dragged = false;
         previousFocus = document.activeElement;
-        previousOverflow = document.body.style.overflow;
+        previousScroll = { x: window.scrollX, y: window.scrollY };
+        previousBodyStyles = lockedBodyProperties.map(property => ({
+            property,
+            value: document.body.style.getPropertyValue(property),
+            priority: document.body.style.getPropertyPriority(property),
+        }));
         background = [...document.body.children].filter(el => el !== box && !el.contains(box) && !el.inert);
         background.forEach(el => { el.inert = true; });
         document.body.style.overflow = 'hidden';
+        // Fix the page in place as overflow alone does not lock iOS scrolling.
+        document.body.style.position = 'fixed';
+        document.body.style.top = `${-previousScroll.y}px`;
+        document.body.style.left = `${-previousScroll.x}px`;
+        document.body.style.width = '100%';
         box.hidden = false;
         box.classList.add('active');
-        close.focus();
+        close.focus({ preventScroll: true });
         showImage();
     }
     function dismiss() {
+        if (box.hidden) return;
         ++request;
         ready = false;
         images = [];
@@ -128,8 +141,18 @@ document.addEventListener('DOMContentLoaded', () => {
         box.classList.remove('active');
         box.hidden = true;
         background.forEach(el => { el.inert = false; });
-        document.body.style.overflow = previousOverflow;
-        previousFocus?.focus();
+        previousBodyStyles.forEach(({ property, value, priority }) => {
+            if (value) document.body.style.setProperty(property, value, priority);
+            else document.body.style.removeProperty(property);
+        });
+        const rootStyle = document.documentElement.style;
+        const scrollBehavior = rootStyle.getPropertyValue('scroll-behavior');
+        const scrollPriority = rootStyle.getPropertyPriority('scroll-behavior');
+        rootStyle.setProperty('scroll-behavior', 'auto', 'important');
+        window.scrollTo(previousScroll.x, previousScroll.y);
+        if (scrollBehavior) rootStyle.setProperty('scroll-behavior', scrollBehavior, scrollPriority);
+        else rootStyle.removeProperty('scroll-behavior');
+        previousFocus?.focus({ preventScroll: true });
     }
     function navigate(direction) {
         if (zoomed || images.length < 2) return;
