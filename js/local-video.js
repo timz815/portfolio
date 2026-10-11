@@ -120,7 +120,7 @@ document.querySelectorAll('[data-local-video]').forEach((figure) => {
     scheduleHide();
   };
 
-  toggle.addEventListener('click', async () => {
+  const togglePlayback = async () => {
     if (!video.paused) {
       video.pause();
       return;
@@ -133,7 +133,9 @@ document.querySelectorAll('[data-local-video]').forEach((figure) => {
       status.hidden = false;
       sync();
     }
-  });
+  };
+  toggle.addEventListener('click', togglePlayback);
+  video.addEventListener('click', togglePlayback);
   video.addEventListener('play', sync);
   video.addEventListener('pause', sync);
   video.addEventListener('ended', sync);

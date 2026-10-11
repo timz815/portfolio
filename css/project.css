@@ -161,6 +161,7 @@
 }
 .local-video {
   display: block;
+  cursor: pointer;
   width: auto;
   height: auto;
   max-height: 32rem;
@@ -235,7 +236,8 @@
   cursor: pointer;
   touch-action: none;
 }
-.local-video-progress:is(.progress-visible, .is-seeking) .local-video-seek { opacity: 1; }
+.local-video-progress:is(:hover, .is-seeking) .local-video-seek,
+.local-video-seek:focus-visible { opacity: 1; }
 .local-video-seek::-webkit-slider-runnable-track { height: 4px; background: transparent; }
 .local-video-seek::-moz-range-track { height: 4px; background: transparent; }
 .local-video-seek::-webkit-slider-thumb {
