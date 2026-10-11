@@ -57,6 +57,7 @@ document.querySelectorAll('[data-local-video]').forEach((figure) => {
     seek.setAttribute('aria-valuetext', `${Math.round(video.currentTime)} seconds`);
   };
   seek.addEventListener('pointerdown', (event) => {
+    if (event.pointerType === 'touch' || event.pointerType === 'pen') return;
     seeking = true;
     showProgress();
     showControls();
@@ -71,6 +72,37 @@ document.querySelectorAll('[data-local-video]').forEach((figure) => {
     updateProgress();
     scheduleHide();
   };
+  let touchSeekPointer = null;
+  const seekFromPointer = (event) => {
+    const bounds = progress.getBoundingClientRect();
+    seek.value = Math.max(0, Math.min(1, (event.clientX - bounds.left) / bounds.width)) * 100;
+    seek.dispatchEvent(new Event('input'));
+  };
+  progress.addEventListener('pointerdown', (event) => {
+    if (event.pointerType !== 'touch' && event.pointerType !== 'pen') return;
+    event.preventDefault();
+    touchSeekPointer = event.pointerId;
+    seeking = true;
+    showProgress();
+    showControls();
+    progress.classList.add('is-seeking');
+    progress.setPointerCapture(event.pointerId);
+    if (video.readyState === 0) video.load();
+    seekFromPointer(event);
+  });
+  progress.addEventListener('pointermove', (event) => {
+    if (event.pointerId !== touchSeekPointer) return;
+    event.preventDefault();
+    seekFromPointer(event);
+  });
+  const finishTouchSeeking = (event) => {
+    if (event.pointerId !== touchSeekPointer) return;
+    touchSeekPointer = null;
+    finishSeeking();
+  };
+  progress.addEventListener('pointerup', finishTouchSeeking);
+  progress.addEventListener('pointercancel', finishTouchSeeking);
+  progress.addEventListener('lostpointercapture', finishTouchSeeking);
   seek.addEventListener('pointerup', finishSeeking);
   seek.addEventListener('pointercancel', finishSeeking);
   seek.addEventListener('lostpointercapture', finishSeeking);

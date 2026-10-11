@@ -179,6 +179,7 @@
   right: 0;
   height: 2rem;
   background: transparent;
+  touch-action: none;
 }
 .local-video-progress[hidden] { display: none; }
 .local-video-progress-track {
