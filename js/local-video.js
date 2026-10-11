@@ -29,13 +29,39 @@ document.querySelectorAll('[data-local-video]').forEach((figure) => {
   seek.addEventListener('focusout', scheduleProgressHide);
   const stage = figure.querySelector('.local-video-stage');
   const mouseControls = window.matchMedia('(hover: hover) and (pointer: fine)');
+  let toggleHideTimer;
+  let inToggleCorner = false;
+  const updateToggleVisibility = () => {
+    clearTimeout(toggleHideTimer);
+    figure.classList.remove('toggle-hidden');
+    if (!mouseControls.matches || inToggleCorner || toggle.matches(':focus-visible')) return;
+    toggleHideTimer = setTimeout(() => {
+      if (!inToggleCorner && !toggle.matches(':focus-visible')) figure.classList.add('toggle-hidden');
+    }, 2000);
+  };
+  stage.addEventListener('pointermove', (event) => {
+    if (event.pointerType !== 'mouse') return;
+    const bounds = stage.getBoundingClientRect();
+    const nearCorner = event.clientX >= bounds.right - 80 && event.clientY <= bounds.top + 80;
+    if (nearCorner !== inToggleCorner) {
+      inToggleCorner = nearCorner;
+      updateToggleVisibility();
+    }
+  });
+  stage.addEventListener('pointerenter', updateToggleVisibility);
+  stage.addEventListener('pointerleave', () => {
+    inToggleCorner = false;
+    if (!figure.classList.contains('toggle-hidden')) updateToggleVisibility();
+  });
+  toggle.addEventListener('focusin', updateToggleVisibility);
+  toggle.addEventListener('focusout', updateToggleVisibility);
   let hideTimer;
   const showControls = () => {
     clearTimeout(hideTimer);
     figure.classList.remove('controls-hidden');
   };
   const scheduleHide = () => {
-    showControls();
+    clearTimeout(hideTimer);
     if (!mouseControls.matches || video.paused || seeking || stage.matches(':hover') || stage.querySelector(':focus-visible')) return;
     hideTimer = setTimeout(() => {
       if (!video.paused && !seeking && !stage.matches(':hover') && !stage.querySelector(':focus-visible')) {
@@ -71,6 +97,7 @@ document.querySelectorAll('[data-local-video]').forEach((figure) => {
     progress.classList.remove('is-seeking');
     updateProgress();
     scheduleHide();
+    updateToggleVisibility();
   };
   let touchSeekPointer = null;
   const seekFromPointer = (event) => {
@@ -150,6 +177,7 @@ document.querySelectorAll('[data-local-video]').forEach((figure) => {
     pauseIcon.toggleAttribute('hidden', paused);
     toggle.setAttribute('aria-label', `${paused ? 'Play' : 'Pause'} advanced customization video`);
     scheduleHide();
+    updateToggleVisibility();
   };
 
   const togglePlayback = async () => {
@@ -167,7 +195,10 @@ document.querySelectorAll('[data-local-video]').forEach((figure) => {
     }
   };
   toggle.addEventListener('click', togglePlayback);
-  video.addEventListener('click', togglePlayback);
+  stage.addEventListener('click', (event) => {
+    if (event.target.closest('.local-video-toggle, .local-video-progress')) return;
+    togglePlayback();
+  });
   video.addEventListener('play', sync);
   video.addEventListener('pause', sync);
   video.addEventListener('ended', sync);

@@ -150,6 +150,7 @@
   display: block;
 }
 .local-video-stage {
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -289,6 +290,7 @@
 .local-video-toggle .local-video-play-icon { transform: translateX(-0.5px); }
 .local-video-toggle svg[hidden] { display: none; }
 @media (hover: hover) and (pointer: fine) {
+  .local-video-block.toggle-hidden .local-video-toggle:not(:focus-visible),
   .local-video-block.controls-hidden .local-video-toggle,
   .local-video-block.controls-hidden .local-video-progress {
     opacity: 0;
