@@ -163,7 +163,7 @@
 .local-video {
   display: block;
   cursor: pointer;
-  border-radius: 1rem;
+  border-radius: 2rem;
   width: auto;
   height: auto;
   max-height: 32rem;
