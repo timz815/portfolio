@@ -290,8 +290,8 @@
 .local-video-toggle .local-video-play-icon { transform: translateX(-0.5px); }
 .local-video-toggle svg[hidden] { display: none; }
 @media (hover: hover) and (pointer: fine) {
-  .local-video-block.toggle-hidden .local-video-toggle:not(:focus-visible),
-  .local-video-block.controls-hidden .local-video-toggle,
+  .local-video-block.is-playing.toggle-hidden .local-video-toggle:not(:focus-visible),
+  .local-video-block.is-playing.controls-hidden .local-video-toggle,
   .local-video-block.controls-hidden .local-video-progress {
     opacity: 0;
     pointer-events: none;
@@ -336,7 +336,8 @@
 :is(.calendar-project, .wrco-project) .article-text-width:has(+ .article-text-width > .doc-divider:first-child) > section:last-child > .para-section:last-child > :last-child {
   margin-bottom: 0;
 }
-.project-page .article-img {
+.project-page .article-img,
+.project-page .local-video-block {
   margin: 1rem 0 var(--project-media-gap);
 }
 .project-page .image-viewer {

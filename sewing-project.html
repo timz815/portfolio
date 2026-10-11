@@ -28,12 +28,12 @@
     <link rel="stylesheet" href="css/main.css" />
     <script src="js/nav-underline.js" defer></script>
     <script src="js/intro-motion.js" defer></script>
-    <link rel="stylesheet" href="css/project.css?v=20261011-frame-click" />
+    <link rel="stylesheet" href="css/project.css?v=20261011-persistent-play-button" />
     <link rel="stylesheet" href="css/popup.css" />
     <link rel="stylesheet" href="css/lightbox.css" />
     <script src="js/popup.js" defer></script>
     <script src="js/project-nav.js" defer></script>
-    <script src="js/local-video.js?v=20261011-leave-hidden" defer></script>
+    <script src="js/local-video.js?v=20261011-persistent-play-button" defer></script>
     <link
       rel="preload"
       as="image"
@@ -425,6 +425,28 @@
                   <p>
                     Each project teaches a manageable set of sewing skills while giving users control over parts of the outcome.
                   </p>
+                  <figure class="project-video-block local-video-block" data-local-video>
+                    <div class="local-video-stage">
+                      <button class="local-video-toggle" type="button" aria-label="Play beginner project video" aria-controls="beginner-project-video" hidden>
+                        <svg class="local-video-play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+                        <svg class="local-video-pause-icon" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="M6 5h4v14H6zM14 5h4v14h-4z" /></svg>
+                      </button>
+                      <div class="local-video-frame">
+                      <video id="beginner-project-video" class="local-video" width="720" height="1452" poster="media/sewing/beginner_project-poster.jpg" controls playsinline muted loop preload="metadata" aria-label="Beginner project walkthrough">
+                        <source src="media/sewing/beginner_project.mp4" type="video/mp4" />
+                        <a href="media/sewing/beginner_project.mp4">Watch the beginner project video</a>.
+                      </video>
+                      </div>
+                      <div class="local-video-progress" hidden>
+                        <div class="local-video-progress-track">
+                        <div class="local-video-progress-fill"></div>
+                        </div>
+                        <input class="local-video-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Video playback position" disabled />
+                      </div>
+                    </div>
+                    <figcaption class="article-caption">Customizing a beginner sewing project.</figcaption>
+                    <p class="local-video-status" role="status" hidden></p>
+                  </figure>
                   <p>
                     A project might let someone choose the shape of a coaster or choose a character for an animal bookmark. These choices let users personalize the result while staying within what the app can turn into a working guide.
                   </p>
@@ -436,6 +458,28 @@
                   <h3>
                     Support stays connected to the project the user is actually making.
                   </h3>
+                  <figure class="project-video-block local-video-block" data-local-video>
+                    <div class="local-video-stage">
+                      <button class="local-video-toggle" type="button" aria-label="Play targeted help video" aria-controls="targeted-help-video" hidden>
+                        <svg class="local-video-play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+                        <svg class="local-video-pause-icon" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="M6 5h4v14H6zM14 5h4v14h-4z" /></svg>
+                      </button>
+                      <div class="local-video-frame">
+                      <video id="targeted-help-video" class="local-video" width="720" height="1484" poster="media/sewing/targeted_help-poster.jpg" controls playsinline muted loop preload="metadata" aria-label="Targeted help walkthrough">
+                        <source src="media/sewing/targeted_help.mp4" type="video/mp4" />
+                        <a href="media/sewing/targeted_help.mp4">Watch the targeted help video</a>.
+                      </video>
+                      </div>
+                      <div class="local-video-progress" hidden>
+                        <div class="local-video-progress-track">
+                        <div class="local-video-progress-fill"></div>
+                        </div>
+                        <input class="local-video-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Video playback position" disabled />
+                      </div>
+                    </div>
+                    <figcaption class="article-caption">Targeted help within the sewing project guide.</figcaption>
+                    <p class="local-video-status" role="status" hidden></p>
+                  </figure>
                   <p>
                     Once users decide what they want to make, Upstitch Studio adapts the rest of the guide around those choices.
                   </p>

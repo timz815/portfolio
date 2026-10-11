@@ -1,5 +1,6 @@
 document.querySelectorAll('[data-local-video]').forEach((figure) => {
   const video = figure.querySelector('video');
+  const videoLabel = video.getAttribute('aria-label') || 'video';
   const toggle = figure.querySelector('.local-video-toggle');
   const playIcon = toggle.querySelector('.local-video-play-icon');
   const pauseIcon = toggle.querySelector('.local-video-pause-icon');
@@ -34,9 +35,9 @@ document.querySelectorAll('[data-local-video]').forEach((figure) => {
   const updateToggleVisibility = () => {
     clearTimeout(toggleHideTimer);
     figure.classList.remove('toggle-hidden');
-    if (!mouseControls.matches || inToggleCorner || toggle.matches(':focus-visible')) return;
+    if (video.paused || !mouseControls.matches || inToggleCorner || toggle.matches(':focus-visible')) return;
     toggleHideTimer = setTimeout(() => {
-      if (!inToggleCorner && !toggle.matches(':focus-visible')) figure.classList.add('toggle-hidden');
+      if (!video.paused && !inToggleCorner && !toggle.matches(':focus-visible')) figure.classList.add('toggle-hidden');
     }, 2000);
   };
   stage.addEventListener('pointermove', (event) => {
@@ -175,7 +176,7 @@ document.querySelectorAll('[data-local-video]').forEach((figure) => {
     figure.classList.toggle('is-playing', !paused);
     playIcon.toggleAttribute('hidden', !paused);
     pauseIcon.toggleAttribute('hidden', paused);
-    toggle.setAttribute('aria-label', `${paused ? 'Play' : 'Pause'} advanced customization video`);
+    toggle.setAttribute('aria-label', `${paused ? 'Play' : 'Pause'} ${videoLabel}`);
     scheduleHide();
     updateToggleVisibility();
   };
@@ -198,6 +199,13 @@ document.querySelectorAll('[data-local-video]').forEach((figure) => {
   stage.addEventListener('click', (event) => {
     if (event.target.closest('.local-video-toggle, .local-video-progress')) return;
     togglePlayback();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.code !== 'Space' || !stage.matches(':hover')) return;
+    const target = event.target;
+    if (target.closest('input, textarea, select, button, a, [contenteditable="true"]')) return;
+    event.preventDefault();
+    if (!event.repeat) togglePlayback();
   });
   video.addEventListener('play', sync);
   video.addEventListener('pause', sync);
