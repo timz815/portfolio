@@ -28,11 +28,12 @@
     <link rel="stylesheet" href="css/main.css" />
     <script src="js/nav-underline.js" defer></script>
     <script src="js/intro-motion.js" defer></script>
-    <link rel="stylesheet" href="css/project.css?v=20260928-sewing-lightbox" />
+    <link rel="stylesheet" href="css/project.css?v=20261011-video-button-radius" />
     <link rel="stylesheet" href="css/popup.css" />
     <link rel="stylesheet" href="css/lightbox.css" />
     <script src="js/popup.js" defer></script>
     <script src="js/project-nav.js" defer></script>
+    <script src="js/local-video.js?v=20261011-all-controls-500ms" defer></script>
     <link
       rel="preload"
       as="image"
@@ -379,6 +380,28 @@
                   <p>
                     Early projects provide more structure while still leaving room for creative choices. As users build their skills, they unlock projects that introduce more advanced techniques and customization tools that give them more control over the outcome.
                   </p>
+                  <figure class="project-video-block local-video-block" data-local-video>
+                    <div class="local-video-stage">
+                      <button class="local-video-toggle" type="button" aria-label="Play advanced customization video" aria-controls="advanced-customization-video" hidden>
+                        <svg class="local-video-play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+                        <svg class="local-video-pause-icon" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="M6 5h4v14H6zM14 5h4v14h-4z" /></svg>
+                      </button>
+                      <div class="local-video-frame">
+                      <video id="advanced-customization-video" class="local-video" width="520" height="1080" poster="media/sewing/advance_customization-poster.jpg" controls playsinline muted loop preload="none" aria-label="Advanced customization walkthrough">
+                        <source src="media/sewing/advance_customization.mp4" type="video/mp4" />
+                        <a href="media/sewing/advance_customization.mp4">Watch the advanced customization video</a>.
+                      </video>
+                      </div>
+                      <div class="local-video-progress" hidden>
+                        <div class="local-video-progress-track">
+                        <div class="local-video-progress-fill"></div>
+                        </div>
+                        <input class="local-video-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Video playback position" disabled />
+                      </div>
+                    </div>
+                    <figcaption class="article-caption">More advanced customization options.</figcaption>
+                    <p class="local-video-status" role="status" hidden></p>
+                  </figure>
                 </div>
                 <h2>Solution Walkthrough</h2>
                 <div class="para-section">
