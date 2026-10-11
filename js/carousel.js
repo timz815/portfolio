@@ -36,11 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             displayImg.src = instance.images[index].src;
             displayImg.alt = instance.images[index].alt;
-            displayImg.classList.remove('has-transparency');
-            const src = displayImg.src;
-            window.imageHasTransparency(src).then(transparent => {
-                if (displayImg.src === src) displayImg.classList.toggle('has-transparency', transparent);
-            });
+            displayImg.classList.toggle('has-transparency', window.imageHasTransparency(displayImg.src));
 
             thumbButtons.forEach((btn, i) => {
                 btn.setAttribute("aria-selected", i === index);

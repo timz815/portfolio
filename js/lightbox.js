@@ -82,9 +82,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const preload = new Image();
         preload.src = selected.src;
         try {
-            const [, transparent] = await Promise.all([
-                preload.decode(), window.imageHasTransparency(selected.src),
-            ]);
+            const transparent = window.imageHasTransparency(selected.src);
+            await preload.decode();
             if (token !== request) return;
             image.classList.toggle('has-transparency', transparent);
             image.src = selected.src;

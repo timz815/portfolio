@@ -4,6 +4,10 @@
 # Local skill instructions
 [Ss][Kk][Ii][Ll][Ll].md
 
+# Local image transparency generator
+/scripts/update-image-transparency.py
+/run.txt
+
 # Keep only web fonts and their license from the Lato download.
 /media/fonts/lato/**
 !/media/fonts/lato/**/
