@@ -155,6 +155,11 @@ html {
 }
 /* Give mobile Safari a dark canvas around the page and status area. */
 @media (max-width: 767px) {
+  html,
+  body {
+    overflow-x: clip;
+    overscroll-behavior-x: none;
+  }
   html {
     background-color: #1e1e1e;
   }
