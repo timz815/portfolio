@@ -17,9 +17,9 @@ document.querySelectorAll('[data-local-video]').forEach((figure) => {
   };
   const scheduleProgressHide = () => {
     clearTimeout(progressHideTimer);
-    if (seeking || progress.matches(':hover') || seek.matches(':focus-visible')) return;
+    if (seeking || progress.matches(':hover') || seek.matches(':focus-visible:not(.pointer-focused)')) return;
     progressHideTimer = setTimeout(() => {
-      if (!seeking && !progress.matches(':hover') && !seek.matches(':focus-visible')) {
+      if (!seeking && !progress.matches(':hover') && !seek.matches(':focus-visible:not(.pointer-focused)')) {
         progress.classList.remove('progress-visible');
       }
     }, 500);
@@ -63,9 +63,9 @@ document.querySelectorAll('[data-local-video]').forEach((figure) => {
   };
   const scheduleHide = () => {
     clearTimeout(hideTimer);
-    if (!mouseControls.matches || video.paused || seeking || stage.matches(':hover') || stage.querySelector(':focus-visible')) return;
+    if (!mouseControls.matches || video.paused || seeking || stage.matches(':hover') || stage.querySelector(':focus-visible:not(.pointer-focused)')) return;
     hideTimer = setTimeout(() => {
-      if (!video.paused && !seeking && !stage.matches(':hover') && !stage.querySelector(':focus-visible')) {
+      if (!video.paused && !seeking && !stage.matches(':hover') && !stage.querySelector(':focus-visible:not(.pointer-focused)')) {
         figure.classList.add('controls-hidden');
       }
     }, 500);
@@ -75,98 +75,125 @@ document.querySelectorAll('[data-local-video]').forEach((figure) => {
   stage.addEventListener('focusin', showControls);
   stage.addEventListener('focusout', () => setTimeout(scheduleHide, 0));
   let progressFrame;
-  const updateProgress = () => {
+  let displayedTime = video.currentTime;
+  const hasVideoFrames = typeof video.requestVideoFrameCallback === 'function';
+  const updateProgress = (playbackTime = displayedTime) => {
+    displayedTime = playbackTime;
     const fraction = Number.isFinite(video.duration) && video.duration > 0
-      ? Math.min(1, Math.max(0, video.currentTime / video.duration)) : 0;
+      ? Math.min(1, Math.max(0, playbackTime / video.duration)) : 0;
     progressFill.style.transform = `scaleX(${fraction})`;
     progress.classList.toggle('is-near-start', fraction < 0.02);
     if (!seeking && pendingSeek === null) seek.value = fraction * 100;
-    seek.setAttribute('aria-valuetext', `${Math.round(video.currentTime)} seconds`);
+    seek.setAttribute('aria-valuetext', `${Math.round(playbackTime)} seconds`);
   };
-  seek.addEventListener('pointerdown', (event) => {
-    if (event.pointerType === 'touch' || event.pointerType === 'pen') return;
-    seeking = true;
-    showProgress();
-    showControls();
-    progress.classList.add('is-seeking');
-    seek.setPointerCapture(event.pointerId);
-    if (video.readyState === 0) video.load();
-  });
-  const finishSeeking = () => {
-    seeking = false;
-    scheduleProgressHide();
-    progress.classList.remove('is-seeking');
-    updateProgress();
-    scheduleHide();
-    updateToggleVisibility();
-  };
-  let touchSeekPointer = null;
-  const seekFromPointer = (event) => {
-    const bounds = progress.getBoundingClientRect();
-    seek.value = Math.max(0, Math.min(1, (event.clientX - bounds.left) / bounds.width)) * 100;
-    seek.dispatchEvent(new Event('input'));
-  };
-  progress.addEventListener('pointerdown', (event) => {
-    if (event.pointerType !== 'touch' && event.pointerType !== 'pen') return;
-    event.preventDefault();
-    touchSeekPointer = event.pointerId;
-    seeking = true;
-    showProgress();
-    showControls();
-    progress.classList.add('is-seeking');
-    progress.setPointerCapture(event.pointerId);
-    if (video.readyState === 0) video.load();
-    seekFromPointer(event);
-  });
-  progress.addEventListener('pointermove', (event) => {
-    if (event.pointerId !== touchSeekPointer) return;
-    event.preventDefault();
-    seekFromPointer(event);
-  });
-  const finishTouchSeeking = (event) => {
-    if (event.pointerId !== touchSeekPointer) return;
-    touchSeekPointer = null;
-    finishSeeking();
-  };
-  progress.addEventListener('pointerup', finishTouchSeeking);
-  progress.addEventListener('pointercancel', finishTouchSeeking);
-  progress.addEventListener('lostpointercapture', finishTouchSeeking);
-  seek.addEventListener('pointerup', finishSeeking);
-  seek.addEventListener('pointercancel', finishSeeking);
-  seek.addEventListener('lostpointercapture', finishSeeking);
-  seek.addEventListener('input', () => {
+  const requestSeek = () => {
     const fraction = Number(seek.value) / 100;
     if (Number.isFinite(video.duration) && video.duration > 0) {
+      pendingSeek = null;
+      updateProgress(fraction * video.duration);
       video.currentTime = fraction * video.duration;
-      updateProgress();
     } else {
       pendingSeek = fraction;
       progressFill.style.transform = `scaleX(${fraction})`;
       progress.classList.toggle('is-near-start', fraction < 0.02);
       if (video.networkState === video.NETWORK_EMPTY) video.load();
     }
+  };
+  let seekPointer = null;
+  let lastPointerValue = null;
+  const seekFromPointer = (event) => {
+    const bounds = progress.getBoundingClientRect();
+    if (!bounds.width) return;
+    seek.value = Math.max(0, Math.min(1, (event.clientX - bounds.left) / bounds.width)) * 100;
+    const value = Number(seek.value);
+    if (value === lastPointerValue) return;
+    lastPointerValue = value;
+    requestSeek();
+  };
+  // Own mouse, touch and pen dragging consistently, without the native range
+  // drag competing with pointer capture on WebKit.
+  progress.addEventListener('pointerdown', (event) => {
+    if (seekPointer !== null || (event.pointerType === 'mouse' && event.button !== 0)) return;
+    event.preventDefault();
+    seekPointer = event.pointerId;
+    lastPointerValue = null;
+    seeking = true;
+    seek.classList.add('pointer-focused');
+    seek.focus({ preventScroll: true });
+    showProgress();
+    showControls();
+    progress.classList.add('is-seeking');
+    progress.setPointerCapture(event.pointerId);
+    seekFromPointer(event);
   });
+  progress.addEventListener('pointermove', (event) => {
+    if (event.pointerId !== seekPointer) return;
+    event.preventDefault();
+    seekFromPointer(event);
+  });
+  const finishSeeking = (event) => {
+    if (event.pointerId !== seekPointer) return;
+    if (event.type === 'pointerup') seekFromPointer(event);
+    seekPointer = null;
+    seeking = false;
+    if (progress.hasPointerCapture(event.pointerId)) progress.releasePointerCapture(event.pointerId);
+    scheduleProgressHide();
+    progress.classList.remove('is-seeking');
+    updateProgress();
+    scheduleHide();
+    updateToggleVisibility();
+  };
+  progress.addEventListener('pointerup', finishSeeking);
+  progress.addEventListener('pointercancel', finishSeeking);
+  progress.addEventListener('lostpointercapture', finishSeeking);
+  // Native range input remains available for keyboard and assistive technology.
+  seek.addEventListener('input', requestSeek);
+  seek.addEventListener('keydown', () => seek.classList.remove('pointer-focused'));
+  seek.addEventListener('blur', () => seek.classList.remove('pointer-focused'));
   video.addEventListener('loadedmetadata', () => {
     if (pendingSeek !== null && Number.isFinite(video.duration)) {
-      video.currentTime = pendingSeek * video.duration;
+      const target = pendingSeek * video.duration;
       pendingSeek = null;
-      updateProgress();
+      updateProgress(target);
+      video.currentTime = target;
     }
   });
-  const animateProgress = () => {
-    updateProgress();
-    if (!video.paused) progressFrame = requestAnimationFrame(animateProgress);
+  // Follow presented frames so Safari's currentTime updates cannot freeze the
+  // bar while the video itself keeps moving. Older browsers use the original loop.
+  const animateProgress = (now, frame) => {
+    if (!video.seeking && !seeking && (frame || !hasVideoFrames)) {
+      updateProgress(frame ? frame.mediaTime : video.currentTime);
+    }
+    if (!video.paused) {
+      progressFrame = hasVideoFrames
+        ? video.requestVideoFrameCallback(animateProgress)
+        : requestAnimationFrame(animateProgress);
+    }
+  };
+  const stopProgress = () => {
+    if (hasVideoFrames) video.cancelVideoFrameCallback(progressFrame);
+    else cancelAnimationFrame(progressFrame);
   };
   video.addEventListener('play', () => {
-    cancelAnimationFrame(progressFrame);
+    stopProgress();
     animateProgress();
   });
   video.addEventListener('pause', () => {
-    cancelAnimationFrame(progressFrame);
+    stopProgress();
     updateProgress();
   });
-  video.addEventListener('timeupdate', updateProgress);
-  video.addEventListener('loadedmetadata', updateProgress);
+  video.addEventListener('timeupdate', () => {
+    if ((!hasVideoFrames || video.paused) && !video.seeking && !seeking) updateProgress(video.currentTime);
+  });
+  // Discard callbacks queued before a seek. Keep the requested position on
+  // release until a frame from the completed seek supplies the new media time.
+  video.addEventListener('seeking', stopProgress);
+  video.addEventListener('seeked', () => {
+    stopProgress();
+    if (video.paused) updateProgress(video.currentTime);
+    else animateProgress();
+  });
+  video.addEventListener('loadedmetadata', () => updateProgress());
   progress.hidden = false;
   seek.disabled = false;
   updateProgress();
