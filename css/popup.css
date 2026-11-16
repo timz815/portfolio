@@ -1,0 +1,59 @@
+.project-popup {
+  box-sizing: border-box;
+  width: min(29rem, calc(100% - 2rem));
+  max-height: calc(100% - 2rem);
+  margin: auto;
+  padding: clamp(1.5rem, 5vw, 2rem);
+  border: 1px solid #e1dfdf;
+  border-radius: 1rem;
+  background: #fff;
+  color: #353535;
+  box-shadow: 0 1rem 4rem rgb(0 0 0 / 15%);
+}
+
+.project-popup::backdrop {
+  background: rgb(0 0 0 / 35%);
+}
+
+.project-popup h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.project-popup p {
+  margin: 0 0 1.5rem;
+  color: #505050;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+.project-popup form {
+  display: flex;
+}
+
+.project-popup button {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.625rem 1.25rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: #353535;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.project-popup button:hover {
+  background: #000;
+}
+
+.project-popup button:focus-visible {
+  outline: 2px solid #353535;
+  outline-offset: 3px;
+}
+
+html:has(.project-popup[open]) {
+  overflow: hidden;
+}

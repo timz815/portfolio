@@ -3,10 +3,38 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1e1e1e" media="(max-width: 767px)" />
     <title>Portfolio - Tim</title>
+    <script>
+      (() => {
+        let timeout;
+        const entrance = window.homeIntroEntrance = {
+          pending: false,
+          release() {
+            clearTimeout(timeout);
+            entrance.pending = false;
+            document.documentElement.classList.remove('home-intro-pending');
+          }
+        };
+        if (!Element.prototype.animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const isReload = performance.getEntriesByType('navigation')[0]?.type === 'reload';
+        try {
+          if (!isReload && sessionStorage.getItem('homeIntroSeen') === '1') return;
+        } catch {
+          // Disabled storage should not prevent the entrance.
+        }
+        entrance.pending = true;
+        document.documentElement.classList.add('home-intro-pending');
+        // Keep the page readable if the animation script or fonts never load.
+        timeout = setTimeout(() => {
+          entrance.release();
+          document.querySelector('#works')?.classList.remove('works-awaiting-intro');
+        }, 3000);
+      })();
+    </script>
     <link
       rel="icon"
-      href="https://media.githubusercontent.com/media/timz815/portfolio/main/icon/waving-hand.svg"
+      href="media/icons/waving-hand.svg"
       type="image/svg+xml"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,7 +49,15 @@
     />
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/main.css" />
-    <link rel="stylesheet" href="css/index.css" />
+    <script src="js/nav-underline.js" defer></script>
+    <link rel="stylesheet" href="css/index.css?v=20260910" />
+    <link rel="stylesheet" href="css/intro-motion.css" />
+    <script src="js/intro-motion.js" defer></script>
+    <script src="js/preload-images.js" defer></script>
+    <link rel="preload" as="image" href="media/sewing/sewingHero.webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="media/wrco/WRCOHero.webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="media/calendar/calendarHero.webp" fetchpriority="high" />
+    <link rel="preconnect" href="https://raw.githubusercontent.com" />
     <style>
       * {
         margin: 0;
@@ -31,7 +67,7 @@
       body {
         background-color: #fdfbf7;
         margin: 0 auto;
-        font-family: "Lato", sans-serif;
+        font-family: "Lato", "Lato Local", sans-serif;
       }
     </style>
   </head>
@@ -51,17 +87,27 @@
     </header>
     <main role="main">
       <div class="main-divider">
-        <section class="intro">
+        <section class="intro" data-motion-root>
           <div class="intro-header">
-            <h1 class="intro-heading">
-              Hey! I'm Tim, a <strong>product designer</strong> in Vancouver,
-              BC. I frame ambiguous problems and explore systems to deliver
-              <strong>clear, usable solutions</strong>.
+            <h1 class="intro-heading motion-intro__title">
+              <span class="motion-intro__title-flow">
+                <span data-animation="greeting">Hey!</span>
+                <span data-animation="introduce">I'm Tim,</span>
+                <span data-animation="role">a <strong>product designer</strong></span>
+                <span data-animation="navigate">who navigates</span>
+                <span data-animation="ambiguity">ambiguity</span>
+                <span data-animation="connect">and</span>
+                <span data-animation="systems">complex systems</span>
+                <span data-animation="create">to deliver</span>
+                <span data-animation="clear"><strong>clear,</strong></span>
+                <span data-animation="usable"><strong>usable</strong></span>
+                <span data-animation="solutions"><strong>solutions</strong>.</span>
+              </span>
             </h1>
-            <p class="intro-para">
+            <p class="intro-para motion-intro__subtitle">
               Currently studying BA in Interactive Arts and Technology @
               <a
-                class="underline-link"
+                class="sfu-link"
                 href="https://www.sfu.ca/siat/programs/undergraduate.html"
                 target="_blank"
                 >SFU</a
@@ -101,45 +147,102 @@
             role="tabpanel"
             aria-labelledby="tab-design"
           >
-            <a class="card card--wrco" href="wrco-project.html"
-              ><div class="card-content">
+            <a class="card card--sewing" href="sewing-project.html">
+              <div class="card-content">
                 <div class="card-title-wrapper">
-                  <h3 class="card-title">White Rock City Orchestra</h3>
+                  <h3 class="card-title">Turning Upcycling Ideas into Achievable Sewing Projects</h3>
                 </div>
-                <p class="card-description">
-                  Designing a holistic communication strategy to increase repeat
-                  concert attendance.
-                </p>
+                <div class="card-details">
+                  <p class="card-description">
+                    Designing a guided sewing ecosystem that helps beginners build
+                    skills without losing creative freedom.
+                  </p>
+                  <ul class="card-pills" aria-label="Project methods">
+                    <li class="card-pill">Experience Design</li>
+                    <li class="card-pill">Product Design</li>
+                    <li class="card-pill">Secondary Research</li>
+                    <li class="card-pill">Expressive</li>
+                  </ul>
+                </div>
               </div>
               <div class="card-image-container">
                 <img
                   class="card-image"
-                  src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//WRCOHero.png"
+                  src="media/sewing/sewingHero.webp"
+                  fetchpriority="high"
+                  decoding="async"
+                  alt="Beginner sewing project illustration"
+                /><img
+                  class="card-image image-hover"
+                  src="media/sewing/sewingHero-hover.webp"
+                  fetchpriority="low"
+                  decoding="async"
+                  alt="Alternate view of the sewing project"
+                  aria-hidden="true"
+                />
+              </div>
+            </a>
+            <a class="card card--wrco" href="wrco-project.html"
+              ><div class="card-content">
+                <div class="card-title-wrapper">
+                  <h3 class="card-title">Sustaining Orchestra Audience Engagement</h3>
+                </div>
+                <div class="card-details">
+                  <p class="card-description">
+                    Designing a holistic communication strategy to increase repeat
+                    concert attendance.
+                  </p>
+                  <ul class="card-pills" aria-label="Project methods">
+                    <li class="card-pill">Experience Design</li>
+                    <li class="card-pill">Primary Research</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="card-image-container">
+                <img
+                  class="card-image"
+                  src="media/wrco/WRCOHero.webp"
+                  fetchpriority="high"
+                  decoding="async"
                   alt="Saxophone with a graphic behind"
                 /><img
                   class="card-image image-hover"
-                  src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//WRCOHero-hover.png"
+                  src="media/wrco/WRCOHero-hover.webp"
+                  fetchpriority="low"
+                  decoding="async"
                   alt="Alternate view of the White Rock City Orchestra project"
                   aria-hidden="true"
                 /></div></a
             ><a class="card card--calendar" href="calendar-project.html"
               ><div class="card-content">
                 <div class="card-title-wrapper">
-                  <h3 class="card-title">HangoutCalendar</h3>
+                  <h3 class="card-title">Reducing Group Scheduling Friction</h3>
                 </div>
-                <p class="card-description">
-                  Discovering easier ways to find shared free time with people
-                  you know.
-                </p>
+                <div class="card-details">
+                  <p class="card-description">
+                    Discovering easier ways to find shared free time with people
+                    you know.
+                  </p>
+                  <ul class="card-pills" aria-label="Project methods">
+                    <li class="card-pill">Product Design</li>
+                    <li class="card-pill">Interaction Design</li>
+                    <li class="card-pill">Development</li>
+                    <li class="card-pill">Functional</li>
+                  </ul>
+                </div>
               </div>
               <div class="card-image-container">
                 <img
                   class="card-image"
-                  src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//calendarHero.png"
+                  src="media/calendar/calendarHero.webp"
+                  fetchpriority="high"
+                  decoding="async"
                   alt="Two smartphones sharing calendars"
                 /><img
                   class="card-image image-hover"
-                  src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//calendarHero-hover.png"
+                  src="media/calendar/calendarHero-hover.webp"
+                  fetchpriority="low"
+                  decoding="async"
                   alt="Alternate view of the HangoutCalendar interface"
                   aria-hidden="true"
                 /></div
@@ -156,19 +259,32 @@
                 <div class="card-title-wrapper">
                   <h3 class="card-title">AI Movie Translator</h3>
                 </div>
-                <p class="card-description">
-                  Finetuning Large Language Models for natural dialogue
-                  translations.
-                </p>
+                <div class="card-details">
+                  <p class="card-description">
+                    Finetuning Large Language Models for natural dialogue
+                    translations.
+                  </p>
+                  <ul class="card-pills" aria-label="Project methods">
+                    <li class="card-pill">Data preparation</li>
+                    <li class="card-pill">Fine-tuning</li>
+                    <li class="card-pill">Model evaluation</li>
+                    <li class="card-pill">Local AI</li>
+                  </ul>
+                </div>
               </div>
               <div class="card-image-container">
                 <img
                   class="card-image"
-                  src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//finetune.png"
+                  src="media/translate/finetune.webp"
+                  loading="eager"
+                  decoding="async"
                   alt="translate icon"
                 /><img
                   class="card-image image-hover"
-                  src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//finetune-hover.png"
+                  src="media/translate/finetune-hover.webp"
+                  loading="eager"
+                  fetchpriority="low"
+                  decoding="async"
                   alt="Alternate view of translate icon"
                   aria-hidden="true"
                 /></div
@@ -181,15 +297,15 @@
       <div class="footer-divider">
         <section class="footer-column">
           <h3>Github Pages</h3>
-          <p>Designed &amp; developed by me :)</p>
           <p>
             <a
               class="footer-link"
               href="https://github.com/timz815/portfolio"
               target="_blank"
-              >Page updated: 05-17-2026</a
+              >View project code here!</a
             >
           </p>
+          <p>Updated: 09-19-2026</p>
         </section>
         <section class="footer-column">
           <h3>Contact</h3>
@@ -199,7 +315,7 @@
           <p>
             <a
               class="footer-link"
-              href="https://www.linkedin.com/in/timothy-zhang-65a479230/"
+              href="https://www.linkedin.com/in/timothy-z-65a479230/"
               target="_blank"
               >LinkedIn</a
             >

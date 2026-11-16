@@ -3,10 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Project - Tim</title>
+    <meta name="theme-color" content="#1e1e1e" media="(max-width: 767px)" />
+    <title>Translator project</title>
     <link
       rel="icon"
-      href="https://media.githubusercontent.com/media/timz815/portfolio/main/icon/waving-hand.svg"
+      href="media/icons/waving-hand.svg"
       type="image/svg+xml"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -25,13 +26,18 @@
     />
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <script src="js/nav-underline.js" defer></script>
+    <script src="js/intro-motion.js" defer></script>
     <link rel="stylesheet" href="css/project.css" />
+    <link rel="stylesheet" href="css/popup.css" />
+    <script src="js/popup.js" defer></script>
+    <script src="js/project-nav.js" defer></script>
     <link rel="stylesheet" href="css/carousel.css" />
     <link rel="stylesheet" href="css/lightbox.css" />
     <link
       rel="preload"
       as="image"
-      href="media/translate-banner.png"
+      href="media/translate/translate-banner.png"
       fetchpriority="high"
     />
     <style>
@@ -43,7 +49,7 @@
       body {
         background-color: #fdfbf7;
         margin: 0 auto;
-        font-family: "Lato", sans-serif;
+        font-family: "Lato", "Lato Local", sans-serif;
       }
     </style>
   </head>
@@ -61,55 +67,73 @@
         </nav>
       </div>
     </header>
-    <main role="main">
+    <main role="main" class="project-page translate-project">
       <div class="main-divider">
-        <section class="title-section">
-          <div class="title-card title-card--translate" id="translate-banner">
-            <div class="title-card-content">
-              <div class="title-card-wrapper">
-                <h1 class="card-title" id="translate-banner-title">
-                  AI Movie Translator
-                </h1>
-              </div>
-            </div>
-          </div>
-        </section>
+        <aside class="project-rail">
+          <nav class="project-chapters" aria-label="Case study navigation">
+            <a href="#intro">Intro</a>
+            <a href="#overview">Overview</a>
+            <a href="#process">Process</a>
+            <a href="#dataset">Dataset</a>
+            <a href="#training">Training</a>
+            <a href="#results">Results</a>
+            <a href="#reflection">Reflection</a>
+          </nav>
+        </aside>
         <section class="content-section">
           <div class="article-max-width">
             <div class="article-text-width">
               <section class="intro" id="intro">
                 <div class="para-section">
-                  <h2 class="intro-opening" id="intro-opening">
-                    AI Movie Translator is a Chinese-to-English natural dialogue
-                    translation model for movie and tv-show subtitles.
-                  </h2>
+                  <h1 class="project-page-title" id="translate-banner-title">AI Movie Translator</h1>
+                  <h2 class="intro-opening" id="intro-opening">AI Movie Translator is a Chinese-to-English natural dialogue translation model for movie and tv-show subtitles.</h2>
                   <p>
-                    It is aimed at producing translations that capture meaning
-                    and intent better than traditional machine translations.
+                    It is aimed at producing translations that capture meaning and intent better than traditional machine translations.
                   </p>
-                  <a class="underline-link" href="#results">Jump to Results</a
-                  ><a
-                    class="underline-link"
+                  <a
+                    class="underline-link project-action"
                     href="https://github.com/timz815/360-NLP-Project"
                     target="_blank"
-                    >View Project Code</a
                   >
+                    <span class="project-action-label">View Project Code</span>
+                    <span class="material-symbols-outlined" aria-hidden="true">arrow_right_alt</span>
+                  </a>
+                  <a class="underline-link project-action" href="#results">
+                    <span class="project-action-label">Jump to Results</span>
+                    <span class="material-symbols-outlined project-action-arrow-down" aria-hidden="true">arrow_right_alt</span>
+                  </a>
                 </div>
               </section>
+            </div>
+            <figure class="project-hero" id="translate-banner">
+              <img
+                src="media/translate/translate-banner.png"
+                width="4730"
+                height="700"
+                alt="AI Movie Translator project banner"
+                fetchpriority="high"
+                decoding="async"
+              />
+            </figure>
+            <div class="article-text-width">
               <hr class="doc-divider" />
               <section id="overview">
                 <h2>Project Overview</h2>
                 <div class="overview-container">
                   <div>
                     <div class="para-section">
-                      <h3 id="cal-team">Team</h3>
+                      <h3 id="cal-team">
+                        Team
+                      </h3>
                       <ul>
-                        <li>Jingran Qian</li>
-                        <li>Timothy Zhang</li>
+                        <li>Jingran Q.</li>
+                        <li>Timothy Z.</li>
                       </ul>
                     </div>
                     <div class="para-section">
-                      <h3 class="cal-tools" id="cal-tools">Tools</h3>
+                      <h3 class="cal-tools" id="cal-tools">
+                        Tools
+                      </h3>
                       <ul>
                         <li>Jupyter Notebook</li>
                         <li>Optuna</li>
@@ -119,26 +143,19 @@
                   </div>
                   <div>
                     <div class="para-section">
-                      <h3>Context</h3>
+                      <h3>
+                        Context
+                      </h3>
                       <p>
-                        This was a four week team project (Nov - Dec 2025)
-                        completed as part of an
-                        <a
-                          class="underline-link"
-                          href="https://www.sfu.ca/outlines.html?2025/fall/iat/360/b100"
-                          target="blank_"
-                          >introductory AI course</a
-                        >.
+                        This was a four week team project (Nov - Dec 2025) completed as part of an <a class="underline-link" href="https://www.sfu.ca/outlines.html?2025/fall/iat/360/b100" target="blank_" >introductory AI course</a >.
                       </p>
                     </div>
                     <div class="para-section overview-last" id="overview-last">
-                      <h3>Contributions</h3>
+                      <h3>
+                        Contributions
+                      </h3>
                       <p>
-                        I focused on writing scripts to automate data collection
-                        and training the model. My teammate focused on
-                        collecting high-quality translations from different
-                        genres and checking the dataset for errors to flag and
-                        fix.
+                        I focused on writing scripts to automate data collection and training the model. My teammate focused on collecting high-quality translations from different genres and checking the dataset for errors to flag and fix.
                       </p>
                     </div>
                   </div>
@@ -148,55 +165,31 @@
               <section id="process">
                 <h2>Process Overview</h2>
                 <div class="para-section">
-                  <h3>Problem Space</h3>
+                  <h3>
+                    Problem Space
+                  </h3>
                   <p>
-                    Existing machine translation tools frequently struggle with
-                    movie and TV dialogue, often producing subtitles that are
-                    overly literal and stiff. This creates a poor viewing
-                    experience, especially for dialogue-driven scenes where
-                    nuance, humor, and emotional subtext matter as much as
-                    accuracy.
+                    Existing machine translation tools frequently struggle with movie and TV dialogue, often producing subtitles that are overly literal and stiff. This creates a poor viewing experience, especially for dialogue-driven scenes where nuance, humor, and emotional subtext matter as much as accuracy.
                   </p>
                   <p>
-                    This project explores how fine-tuning a Chinese-to-English
-                    translation model on movie and TV dialogue can produce
-                    subtitles that sound more natural. By training the model on
-                    character dialogue, rather than on generic text, the model
-                    could generate translations that better reflect
-                    conversational intent, tone, and context.
+                    This project explores how fine-tuning a Chinese-to-English translation model on movie and TV dialogue can produce subtitles that sound more natural. By training the model on character dialogue, rather than on generic text, the model could generate translations that better reflect conversational intent, tone, and context.
                   </p>
                   <p>
-                    In practice, this approach can improve the experience for
-                    audiences who want to follow shows before official subtitles
-                    are released or give subtitle teams a higher quality
-                    starting point which could speed up the translation process
-                    by starting from a better base.
+                    In practice, this approach can improve the experience for audiences who want to follow shows before official subtitles are released or give subtitle teams a higher quality starting point which could speed up the translation process by starting from a better base.
                   </p>
                 </div>
                 <div class="para-section">
-                  <h3>Our Process</h3>
+                  <h3>
+                    Our Process
+                  </h3>
                   <p>
-                    We followed a complete workflow to adapt a base model to our
-                    task through fine-tuning, using the standard pipeline of
-                    data collection, cleaning, training, and evaluation. The
-                    work centered on two main challenges: constructing a
-                    high-quality bilingual dialogue dataset and tuning the model
-                    to learn effectively from it.
+                    We followed a complete workflow to adapt a base model to our task through fine-tuning, using the standard pipeline of data collection, cleaning, training, and evaluation. The work centered on two main challenges: constructing a high-quality bilingual dialogue dataset and tuning the model to learn effectively from it.
                   </p>
                   <p>
-                    To approach this systematically, we ran three iterative
-                    cycles. The first was a test run to validate the full
-                    workflow, and identify gaps in the pipeline. The second
-                    focused on improving the initial results through small
-                    adjustments to training settings while refining and
-                    finalizing the dataset to establish a controlled baseline
-                    for comparison. The third cycle focused on deeper
-                    optimization of the training process to achieve the
-                    strongest possible results.
+                    To approach this systematically, we ran three iterative cycles. The first was a test run to validate the full workflow, and identify gaps in the pipeline. The second focused on improving the initial results through small adjustments to training settings while refining and finalizing the dataset to establish a controlled baseline for comparison. The third cycle focused on deeper optimization of the training process to achieve the strongest possible results.
                   </p>
                   <p>
-                    The following sections details how we approached data
-                    collection and details our results from model training.
+                    The following sections details how we approached data collection and details our results from model training.
                   </p>
                 </div>
               </section>
@@ -204,17 +197,11 @@
               <section id="dataset">
                 <h2>Dataset Process</h2>
                 <div class="para-section">
-                  <h3>Data Collection</h3>
+                  <h3>
+                    Data Collection
+                  </h3>
                   <p>
-                    Initially, we planned to build our dataset using a mixture
-                    of sources, including movies and Chinese novels. Given the
-                    scale, we had to rely on automation. While we found
-                    high-quality novel translations in both languages, the text
-                    proved difficult to align. The Chinese text often did not
-                    match the corresponding number of English text and thus
-                    could not be directly paired one-to-one. This meant that
-                    automated text alignment had to be done based on meaning
-                    rather than sentence position.
+                    Initially, we planned to build our dataset using a mixture of sources, including movies and Chinese novels. Given the scale, we had to rely on automation. While we found high-quality novel translations in both languages, the text proved difficult to align. The Chinese text often did not match the corresponding number of English text and thus could not be directly paired one-to-one. This meant that automated text alignment had to be done based on meaning rather than sentence position.
                   </p>
                 </div>
               </section>
@@ -223,61 +210,27 @@
               <div class="image-board">
                 <div class="image-item rounded-nm contain">
                   <img
-                    src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//novel-translate.png"
+                    src="media/translate/novel-translate.png"
                     alt="difference between translations"
                   />
                 </div>
               </div>
-              <figcaption class="article-caption">
-                Sentence differences between translations.
-              </figcaption>
+              <figcaption class="article-caption">Sentence differences between translations.</figcaption>
             </section>
             <div class="article-text-width">
               <section>
                 <div class="para-section">
                   <p>
-                    To develop a method that compared sections of Chinese and
-                    English text based on meaning rather than exact
-                    word-for-word matching, we first translated English passages
-                    into Chinese using a machine translator (using Helsinki NLP
-                    as Google translate API calls cost money) so that both
-                    languages could be compared directly. Then, we used a vector
-                    comparison technique (SBERT) to measure how similar the
-                    meanings of each sentence were, and removed duplicates to
-                    ensure each sentence pair was unique.
+                    To develop a method that compared sections of Chinese and English text based on meaning rather than exact word-for-word matching, we first translated English passages into Chinese using a machine translator (using Helsinki NLP as Google translate API calls cost money) so that both languages could be compared directly. Then, we used a vector comparison technique (SBERT) to measure how similar the meanings of each sentence were, and removed duplicates to ensure each sentence pair was unique.
                   </p>
                   <p>
-                    Even with these precautions, some segments were still
-                    misaligned. To fix this, we ran a second pass that split the
-                    aligned pairs into individual sentences and checked them
-                    again for consistency, while also making sure the lengths of
-                    the sentences were reasonable.
+                    Even with these precautions, some segments were still misaligned. To fix this, we ran a second pass that split the aligned pairs into individual sentences and checked them again for consistency, while also making sure the lengths of the sentences were reasonable.
                   </p>
                   <p>
-                    This approach, however, was computationally expensive and
-                    slow. To meet our project timeline, we shifted focus to just
-                    movie and TV dialogue, which is generally easier to align
-                    because subtitles often follow a one-to-one matching. We
-                    created pairs by matching overlapping timestamps from
-                    downloaded subtitles. To verify the quality of these pairs,
-                    we used a direct semantic comparison technique (LaBSE) to
-                    eliminate the translation step. The resulting method was
-                    computationally simpler and produced alignments comparable
-                    to the previous approach for dialogue, though with fewer
-                    overall samples.
+                    This approach, however, was computationally expensive and slow. To meet our project timeline, we shifted focus to just movie and TV dialogue, which is generally easier to align because subtitles often follow a one-to-one matching. We created pairs by matching overlapping timestamps from downloaded subtitles. To verify the quality of these pairs, we used a direct semantic comparison technique (LaBSE) to eliminate the translation step. The resulting method was computationally simpler and produced alignments comparable to the previous approach for dialogue, though with fewer overall samples.
                   </p>
                   <p>
-                    To provide the model with exposure to diverse dialogue
-                    styles, we collected subtitles from a wide range of genres,
-                    including both Western and Eastern productions, to reduce
-                    regional bias in cultural norms, humor, and expression. Some
-                    of the films and shows included Wildcat (Action Thriller),
-                    No Other Choice (Comedy Thriller), Jingle Bell Heist
-                    (Comedy), One Battle After Another (Drama Thriller), Roofman
-                    (Crime), The Princess Switch 3 (Romance), Bumblebee
-                    (Action), Sangre Del Toro (Documentary), Story of Yanxi
-                    Palace (Historical Drama), 3 Body Problem (Science Fiction),
-                    and Meteor Garden (Romance).
+                    To provide the model with exposure to diverse dialogue styles, we collected subtitles from a wide range of genres, including both Western and Eastern productions, to reduce regional bias in cultural norms, humor, and expression. Some of the films and shows included Wildcat (Action Thriller), No Other Choice (Comedy Thriller), Jingle Bell Heist (Comedy), One Battle After Another (Drama Thriller), Roofman (Crime), The Princess Switch 3 (Romance), Bumblebee (Action), Sangre Del Toro (Documentary), Story of Yanxi Palace (Historical Drama), 3 Body Problem (Science Fiction), and Meteor Garden (Romance).
                   </p>
                 </div>
               </section>
@@ -286,49 +239,35 @@
               <div class="image-board">
                 <div class="image-item rounded-nm contain">
                   <img
-                    src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//dataset-sample.png"
+                    src="media/translate/dataset-sample.png"
                     alt="Sample of our dataset"
                   />
                 </div>
               </div>
-              <figcaption class="article-caption">
-                Sample of our dataset.
-              </figcaption>
+              <figcaption class="article-caption">Sample of our dataset.</figcaption>
             </section>
             <div class="article-text-width">
               <section>
                 <div class="para-section">
                   <p>
-                    The final dataset contained 9,441 English-Chinese subtitle
-                    pairs, up from 5,257 in earlier tests, which we split into
-                    training (8,023), validation (945), and testing (473) sets
-                    as a standard way of making sure the model truly learnt
-                    patterns and not memorized our data. This dataset provided a
-                    solid foundation for fine-tuning the model on realistic,
-                    dialogue focused translation tasks.
+                    The final dataset contained 9,441 English-Chinese subtitle pairs, up from 5,257 in earlier tests, which we split into training (8,023), validation (945), and testing (473) sets as a standard way of making sure the model truly learnt patterns and not memorized our data. This dataset provided a solid foundation for fine-tuning the model on realistic, dialogue focused translation tasks.
                   </p>
                 </div>
               </section>
               <hr class="doc-divider" />
               <section>
-                <h2>Model Training</h2>
+                <h2 id="training">Model Training</h2>
                 <div class="para-section">
-                  <h3>Our Selected Model</h3>
+                  <h3>
+                    Our Selected Model
+                  </h3>
                   <p>
-                    We used Qwen 3 4B, a smaller scale light-weight large
-                    langage model (LLM). LLMs are well suited for this task
-                    because they can reason, understand tone, context, and
-                    implied meaning, while also being capable of translation, in
-                    contrast to traditional AI methods, which are more focused
-                    on word alignment and pattern matching. The downside is
-                    hallucinating, and to reduce the risk of harmful or
-                    misleading outputs, we implemented guardrails in the system
-                    prompts. For example, the model was instructed to translate
-                    faithfully without inferring gender, adding insults, or
-                    reinterpreting sensitive terms.
+                    We used Qwen 3 4B, a smaller scale light-weight large langage model (LLM). LLMs are well suited for this task because they can reason, understand tone, context, and implied meaning, while also being capable of translation, in contrast to traditional AI methods, which are more focused on word alignment and pattern matching. The downside is hallucinating, and to reduce the risk of harmful or misleading outputs, we implemented guardrails in the system prompts. For example, the model was instructed to translate faithfully without inferring gender, adding insults, or reinterpreting sensitive terms.
                   </p>
                 </div>
-                <h3 id="results">Initial Results</h3>
+                <h3 id="results">
+                  Initial Results
+                </h3>
               </section>
             </div>
             <section class="image-viewer slideshow-width">
@@ -339,7 +278,7 @@
                   </button>
                   <section class="gallery-frame">
                     <div class="gallery-image">
-                      <img src="img/01.png" alt="" />
+                      <img src="media/translate/translate-run-1-result-1.png" alt="" />
                     </div>
                   </section>
                   <button class="nav-arrow next">
@@ -352,22 +291,22 @@
                     <div class="thumbnail-row">
                       <button class="thumbnail-item">
                         <img
-                          src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//translate-run-1-result-1.png"
+                          src="media/translate/translate-run-1-result-1.png"
                           alt="slide img"
                         /></button
                       ><button class="thumbnail-item">
                         <img
-                          src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//translate-run-1-result-2.png"
+                          src="media/translate/translate-run-1-result-2.png"
                           alt="slide img"
                         /></button
                       ><button class="thumbnail-item">
                         <img
-                          src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//translate-run-1-result-3.png"
+                          src="media/translate/translate-run-1-result-3.png"
                           alt="slide img"
                         /></button
                       ><button class="thumbnail-item">
                         <img
-                          src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//translate-run-1-result-4.png"
+                          src="media/translate/translate-run-1-result-4.png"
                           alt="slide img"
                         />
                       </button>
@@ -383,9 +322,7 @@
                   </button>
                 </div>
                 <div class="para-section">
-                  <figcaption class="article-caption">
-                    Results from the second run.
-                  </figcaption>
+                  <figcaption class="article-caption">Results from the second run.</figcaption>
                 </div>
               </div>
             </section>
@@ -393,17 +330,12 @@
               <section>
                 <div class="para-section">
                   <p>
-                    In our second run, the model successfully learned meaningful
-                    patterns from the dataset: evaluation on unseen test data
-                    showed that most characters were predicted accurately, and
-                    outputs generally preserved sentence meaning. While idioms,
-                    sarcasm, and subtle cultural references were often
-                    simplified or translated literally, the translations
-                    captured overall meaning, handled pronouns naturally, and
-                    preserved familial relationships.
+                    In our second run, the model successfully learned meaningful patterns from the dataset: evaluation on unseen test data showed that most characters were predicted accurately, and outputs generally preserved sentence meaning. While idioms, sarcasm, and subtle cultural references were often simplified or translated literally, the translations captured overall meaning, handled pronouns naturally, and preserved familial relationships.
                   </p>
                 </div>
-                <h3>Final Results</h3>
+                <h3>
+                  Final Results
+                </h3>
               </section>
             </div>
             <section class="image-viewer slideshow-width">
@@ -414,7 +346,7 @@
                   </button>
                   <section class="gallery-frame">
                     <div class="gallery-image">
-                      <img src="img/01.png" alt="" />
+                      <img src="media/translate/translate-run-2-result-1.png" alt="" />
                     </div>
                   </section>
                   <button class="nav-arrow next">
@@ -427,27 +359,27 @@
                     <div class="thumbnail-row">
                       <button class="thumbnail-item">
                         <img
-                          src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//translate-run-2-result-1.png"
+                          src="media/translate/translate-run-2-result-1.png"
                           alt="slide img"
                         /></button
                       ><button class="thumbnail-item">
                         <img
-                          src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//translate-run-2-result-2.png"
+                          src="media/translate/translate-run-2-result-2.png"
                           alt="slide img"
                         /></button
                       ><button class="thumbnail-item">
                         <img
-                          src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//translate-run-2-result-3.png"
+                          src="media/translate/translate-run-2-result-3.png"
                           alt="slide img"
                         /></button
                       ><button class="thumbnail-item">
                         <img
-                          src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//translate-run-2-result-4.png"
+                          src="media/translate/translate-run-2-result-4.png"
                           alt="slide img"
                         /></button
                       ><button class="thumbnail-item">
                         <img
-                          src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//translate-run-2-result-5.png"
+                          src="media/translate/translate-run-2-result-5.png"
                           alt="slide img"
                         />
                       </button>
@@ -463,60 +395,36 @@
                   </button>
                 </div>
                 <div class="para-section">
-                  <figcaption class="article-caption">
-                    Results from the third run.
-                  </figcaption>
+                  <figcaption class="article-caption">Results from the third run.</figcaption>
                 </div>
               </div>
             </section>
             <div class="article-text-width">
               <div class="para-section">
                 <p>
-                  After observing the initial results, we ran a second round
-                  first using Optuna to explore optimal adjustments to training
-                  parameters. We found increasing the learning rate slightly
-                  improved validation loss and produced smoother sentence
-                  structures, more natural tense and pronoun handling, and
-                  modestly better contextual comprehension for idioms and
-                  sarcasm. For example, a previously literal translation of
-                  sarcasm like "So much surprise" was now rendered more
-                  naturally as "Oh, it's a Monday morning meeting, too."
-                  However, some aggressive or profane expressions became more
-                  literal, which made the tone harsher.
+                  After observing the initial results, we ran a second round first using Optuna to explore optimal adjustments to training parameters. We found increasing the learning rate slightly improved validation loss and produced smoother sentence structures, more natural tense and pronoun handling, and modestly better contextual comprehension for idioms and sarcasm. For example, a previously literal translation of sarcasm like "So much surprise" was now rendered more naturally as "Oh, it's a Monday morning meeting, too." However, some aggressive or profane expressions became more literal, which made the tone harsher.
                 </p>
               </div>
               <div class="para-section">
                 <p>
-                  Overall, for such a small model, it demonstrates strong
-                  fluency and semantic accuracy, particularly in standard and
-                  unambiguous dialogue. Iterative fine-tuning led to incremental
-                  improvements in style, readability, and contextual
-                  comprehension, showing that even small parameter changes can
-                  meaningfully improve user-facing translation quality.
+                  Overall, for such a small model, it demonstrates strong fluency and semantic accuracy, particularly in standard and unambiguous dialogue. Iterative fine-tuning led to incremental improvements in style, readability, and contextual comprehension, showing that even small parameter changes can meaningfully improve user-facing translation quality.
                 </p>
               </div>
               <hr class="doc-divider" />
               <section id="reflection">
-                <h3>Locking Back...</h3>
+                <h3>
+                  Locking Back...
+                </h3>
                 <p>
-                  This project reinforced that cracking a complex problem
-                  requires relentless exploration. Our success came from
-                  constantly iterating, testing ideas, and observing small wins
-                  and what made them work. It also highlighted the importance of
-                  knowing when to pivot—for example, shifting from novels to
-                  movie and TV dialogue—and when to persevere, such as
-                  continuously refining the dialogue alignment to build our
-                  dataset. Ultimately, the experience showed that solving
-                  challenging technical problems relies as much on curiosity,
-                  judgment, and persistence as it does on tools or algorithms.
+                  This project reinforced that cracking a complex problem requires relentless exploration. Our success came from constantly iterating, testing ideas, and observing small wins and what made them work. It also highlighted the importance of knowing when to pivot—for example, shifting from novels to movie and TV dialogue—and when to persevere, such as continuously refining the dialogue alignment to build our dataset. Ultimately, the experience showed that solving challenging technical problems relies as much on curiosity, judgment, and persistence as it does on tools or algorithms.
                 </p>
               </section>
               <section class="article-nav" id="article-nav">
                 <a class="left-article" href="calendar-project.html"
                   ><span class="material-symbols-outlined">arrow_left_alt</span
                   ><span class="article-link">Calendar</span></a
-                ><a class="right-article" href="wrco-project.html"
-                  ><span class="article-link">Orchestra</span
+                ><a class="right-article" href="sewing-project.html"
+                  ><span class="article-link">Sewing</span
                   ><span class="material-symbols-outlined"
                     >arrow_right_alt</span
                   ></a
@@ -568,29 +476,25 @@
     <footer role="contentinfo">
       <div class="footer-divider">
         <section class="footer-column">
-          <h3>Github Pages</h3>
-          <p>Designed and coded by me :)</p>
+          <h3>
+            Github Pages
+          </h3>
           <p>
-            <a
-              class="footer-link"
-              href="https://github.com/timz815/portfolio"
-              target="_blank"
-              >Page updated: 05-17-2026</a
-            >
+            <a class="footer-link" href="https://github.com/timz815/portfolio" target="_blank" >View project code here!</a >
+          </p>
+          <p>
+            Updated: 09-19-2026
           </p>
         </section>
         <section class="footer-column">
-          <h3>Contact</h3>
+          <h3>
+            Contact
+          </h3>
           <p>
             <a class="footer-link" href="mailto:tza92@sfu.ca">tza92@sfu.ca</a>
           </p>
           <p>
-            <a
-              class="footer-link"
-              href="https://www.linkedin.com/in/timothy-zhang-65a479230/"
-              target="_blank"
-              >LinkedIn</a
-            >
+            <a class="footer-link" href="https://www.linkedin.com/in/timothy-z-65a479230/" target="_blank" >LinkedIn</a >
           </p>
         </section>
         <section class="footer-column footer-right">
@@ -601,6 +505,7 @@
         </section>
       </div>
     </footer>
+    <script src="js/image-transparency.js"></script>
     <script src="js/lightbox.js"></script>
     <script src="js/carousel.js"></script>
     <script src="js/backtotop.js"></script>

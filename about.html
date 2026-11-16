@@ -3,10 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1e1e1e" media="(max-width: 767px)" />
     <title>About - Tim</title>
     <link
       rel="icon"
-      href="https://media.githubusercontent.com/media/timz815/portfolio/main/icon/waving-hand.svg"
+      href="media/icons/waving-hand.svg"
       type="image/svg+xml"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,12 +22,14 @@
     />
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <script src="js/nav-underline.js" defer></script>
+    <script src="js/intro-motion.js" defer></script>
     <link rel="stylesheet" href="css/about.css" />
     <link rel="stylesheet" href="css/lightbox.css" />
     <link
       rel="preload"
       as="image"
-      href="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//duck.jpg"
+      href="media/about/duck.jpg"
       fetchpriority="high"
     />
     <style>
@@ -38,7 +41,7 @@
       body {
         background-color: #fdfbf7;
         margin: 0 auto;
-        font-family: "Lato", sans-serif;
+        font-family: "Lato", "Lato Local", sans-serif;
       }
     </style>
   </head>
@@ -51,7 +54,7 @@
           </div>
           <div class="nav-list">
             <a class="nav-link" href="index.html#works">Works</a
-            ><a class="nav-link" href="about.html">About</a>
+            ><a class="nav-link" href="about.html" aria-current="page">About</a>
           </div>
         </nav>
       </div>
@@ -64,7 +67,7 @@
             <div class="image-board">
               <div class="image-item img-height img-width cover rounded">
                 <img
-                  src="https://raw.githubusercontent.com/timz815/portfolio/refs/heads/main/media//duck.jpg"
+                  src="media/about/duck.jpg"
                   alt="A drawing of a saxophone duck"
                 />
               </div>
@@ -149,15 +152,15 @@
       <div class="footer-divider">
         <section class="footer-column">
           <h3>Github Pages</h3>
-          <p>Designed and coded by me :)</p>
           <p>
             <a
               class="footer-link"
               href="https://github.com/timz815/portfolio"
               target="_blank"
-              >Page updated: 05-17-2026</a
+              >View project code here!</a
             >
           </p>
+          <p>Updated: 09-19-2026</p>
         </section>
         <section class="footer-column">
           <h3>Contact</h3>
@@ -167,7 +170,7 @@
           <p>
             <a
               class="footer-link"
-              href="https://www.linkedin.com/in/timothy-zhang-65a479230/"
+              href="https://www.linkedin.com/in/timothy-z-65a479230/"
               target="_blank"
               >LinkedIn</a
             >
@@ -181,6 +184,7 @@
         </section>
       </div>
     </footer>
+    <script src="js/image-transparency.js"></script>
     <script src="js/lightbox.js"></script>
   </body>
 </html>
