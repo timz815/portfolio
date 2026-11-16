@@ -94,17 +94,11 @@ body:has(.lightbox.active) .floating-back-to-top {
   width: 2.25rem;
 }
 @media (max-width: 61.25rem) {
-  .lightbox-nav .lightbox-controls {
-    gap: 0.4rem;
-  }
   .lightbox-nav .lightbox-btn {
     width: 1.8rem;
   }
 }
 @media (max-width: 51.25rem) {
-  .lightbox-nav .lightbox-controls {
-    gap: 0.25rem;
-  }
   .lightbox-nav .lightbox-btn {
     width: 1.5rem;
   }

@@ -652,11 +652,6 @@
     padding: 1.25rem;
   }
 }
-@media (max-width: 28rem) {
-  .insight-card {
-    padding: 1.25rem;
-  }
-}
 .insight-card h3 {
   padding-left: 0.25rem;
   padding-bottom: 0.6rem;

@@ -355,14 +355,6 @@ footer {
     text-align: right;
   }
 }
-@media (min-width: 54rem) {
-  .footer-right {
-    text-align: right;
-  }
-  footer {
-    grid-template-columns: 2fr 1fr 1fr;
-  }
-}
 .footer-column .back-to-top {
   text-decoration: none;
   display: inline-flex;
