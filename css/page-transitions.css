@@ -1,0 +1,27 @@
+html.page-entering body > main,
+html.page-entering body > footer {
+  animation: page-fade-in 320ms ease-out both;
+}
+
+html.page-leaving body > main,
+html.page-leaving body > footer {
+  animation: none;
+  opacity: 0;
+  transition: opacity 220ms ease-in;
+}
+
+@keyframes page-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.page-entering body > main,
+  html.page-entering body > footer,
+  html.page-leaving body > main,
+  html.page-leaving body > footer {
+    animation: none;
+    opacity: 1;
+    transition: none;
+  }
+}
